@@ -2,7 +2,8 @@
   "name": "myanimecommunity",
   "version": "0.1.0",
   "private": true,
-  "license": "MIT",
+  "license": "GPL-3.0 license",
+  "author": "Nineria",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

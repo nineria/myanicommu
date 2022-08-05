@@ -49,6 +49,7 @@ export default function ButtonControl({ setOpened, postRef, type }) {
       ),
       zIndex: "999",
       centered: true,
+      withCloseButton: false,
       classNames: {
         modal: "bg-foreground",
         overlay: "bg-background",
