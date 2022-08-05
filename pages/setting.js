@@ -12,7 +12,7 @@ import Loading from "@components/Loading.js";
 import { firestore, postToJSON } from "@lib/firebase.js";
 import Metatags from "@components/Metatags.js";
 
-const LIMIT = 10;
+const LIMIT = 3;
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API

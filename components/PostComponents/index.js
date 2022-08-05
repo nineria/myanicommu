@@ -59,7 +59,7 @@ export default function PostComponents({ post, postRef }) {
         await userStatistics.get()
       ).docs.map((data) => data.data());
 
-      const uid = auth.currentUser.uid;
+      const uid = auth.currentUser?.uid;
 
       userStatisticsPosts.map((like) => {
         if (like.uid === uid) {

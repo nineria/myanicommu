@@ -18,7 +18,7 @@ export default function Status({ header, headerLink, body, date, post }) {
           {/* Header */}
           <Link href={headerLink}>
             <a className="flex items-center md:text-base text-sm text-title ">
-              <span className="truncate cursor-pointer hover:underline">
+              <span className="truncate cursor-pointer max-w-[700px] hover:underline">
                 {header}
               </span>
               <span className="ml-2 px-1 bg-content rounded-sm text-white text-xs">

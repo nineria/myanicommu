@@ -28,8 +28,7 @@ export async function getServerSideProps() {
   const rawPosts = (await postsQuery.get()).docs.map(postToJSON);
 
   const posts = rawPosts.filter((post) => {
-    const tag = post.tag.some((item) => item.label === "ปัญหา");
-    if (tag) return post;
+    return post.tag.some((item) => item.label === "ปัญหา");
   });
 
   const announcementsQuery = firestore

@@ -6,7 +6,6 @@ import { Container } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import AuthCheck from "hooks/AuthCheck";
 import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
-import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
 import { useRouter } from "next/router";
 import Metatags from "@components/Metatags";
@@ -62,7 +61,7 @@ export default function UserProfilePage({
   const [userRef, setUserRef] = useState();
 
   useEffect(() => {
-    if (!user || !posts) router.push("/404");
+    if (!user || !posts) router.push("/");
     const localData = localStorage.getItem("themes");
     if (localData == null) {
       localStorage.setItem("themes", "red-light");
@@ -102,7 +101,7 @@ export default function UserProfilePage({
   // ];
 
   return (
-    <AuthCheck fallback={username ? <Loading /> : null}>
+    <AuthCheck>
       <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/profile" isBusy />
         <Metatags />

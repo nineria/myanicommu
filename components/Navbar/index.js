@@ -21,7 +21,7 @@ export default function Navbar({ page, isBusy = false }) {
 
   const signOut = () => {
     auth.signOut();
-    router.reload();
+    router.push("/");
   };
 
   return (
