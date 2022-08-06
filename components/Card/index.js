@@ -8,7 +8,7 @@ import SmallScreen from "./SmallScreen";
 import LargeScreen from "./LargeScreen";
 
 export default function Card({ posts, layout }) {
-  const [data, setData] = useState(posts);
+  const [data] = useState(posts);
   const [stars, setStars] = useState();
   const [likes, setLikes] = useState();
 

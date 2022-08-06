@@ -11,9 +11,6 @@ function MyApp({ Component, pageProps }) {
   const userData = useUserData();
   const [colorScheme, setColorScheme] = useState("dark");
 
-  // const toggleColorScheme = (value) =>
-  //   setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
-
   const toggleColorScheme = useCallback(
     (value) => {
       setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));

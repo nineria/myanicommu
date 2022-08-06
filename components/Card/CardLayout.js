@@ -2,8 +2,11 @@
 import Card from "components/Card";
 import { Grid, Stack } from "@mantine/core";
 import { Animate } from "react-simple-animate";
+import Loading from "@components/Loading";
 
-export default function CardLayout({ posts, layout }) {
+export default function CardLayout({ posts, layout, loading }) {
+  if (loading) return <Loading />;
+
   const postGrids = posts.map((data, index) => (
     <Grid.Col key={index} xs={6} md={4}>
       <Card layout={layout} posts={data} />

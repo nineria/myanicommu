@@ -1,29 +1,24 @@
 import Navbar from "@components/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
 import PostLayout from "@components/Card/CardLayout";
 import {
   Anchor,
   Breadcrumbs,
-  Button,
   Container,
-  Group,
+  Pagination,
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
-import { firestore, fromMillis, postToJSON } from "lib/firebase";
+import { firestore, postToJSON } from "lib/firebase";
 import Metatags from "@components/Metatags";
-import Loading from "@components/Loading";
 import Announcement from "@components/Announcement";
-
-// Max post to query per page
-const LIMIT = 12;
+import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
   const postsQuery = firestore
     .collectionGroup("posts")
-    .orderBy("createdAt", "desc")
-    .limit(LIMIT);
+    .orderBy("createdAt", "desc");
 
   const posts = (await postsQuery.get()).docs.map(postToJSON);
 
@@ -42,67 +37,34 @@ export async function getServerSideProps() {
 
 export default function PostsPage(props) {
   const [layout, setLayout] = useState("grid");
+  const router = useRouter();
 
   const [posts, setPosts] = useState(props.posts);
-
-  const [postsEnd, setPostsEnd] = useState(false);
-
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
+  const [postsPerPage] = useState(12);
 
-  const [page, setPage] = useState(1);
-
-  const showNext = ({ item }) => {
-    setLoading(true);
-    setPostsEnd(false);
-    const fetchNextData = async () => {
-      const cursor =
-        typeof item.createdAt === "number"
-          ? fromMillis(item.createdAt)
-          : item.createdAt;
-
-      const query = firestore
+  useEffect(() => {
+    if (router.query.page) {
+      setCurrentPage(parseInt(router.query.page));
+    }
+    const fetchPosts = async () => {
+      setLoading(true);
+      const postsQuery = firestore
         .collectionGroup("posts")
-        .orderBy("createdAt", "desc")
-        .startAfter(cursor)
-        .limit(LIMIT);
-
-      const newPosts = (await query.get()).docs.map((doc) => doc.data());
-
-      if (newPosts.length <= LIMIT) setPostsEnd(true);
-
-      setPosts(newPosts);
-      setPage(page + 1);
-    };
-    fetchNextData();
-    setTimeout(() => {
+        .orderBy("createdAt", "desc");
+      const posts = (await postsQuery.get()).docs.map(postToJSON);
+      setPosts(posts);
       setLoading(false);
-    }, 1000);
-  };
-
-  const showPrevious = ({ item }) => {
-    setLoading(true);
-    setPostsEnd(false);
-    const fetchNextData = async () => {
-      const cursor =
-        typeof item.createdAt === "number"
-          ? fromMillis(item.createdAt)
-          : item.createdAt;
-
-      const query = firestore
-        .collectionGroup("posts")
-        .orderBy("createdAt", "desc")
-        .endBefore(cursor)
-        .limitToLast(LIMIT);
-
-      const newPosts = (await query.get()).docs.map((doc) => doc.data());
-      setPosts(newPosts);
-      setPage(page - 1);
     };
-    fetchNextData();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
+
+    fetchPosts();
+  }, [router.query.page]);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
@@ -121,44 +83,45 @@ export default function PostsPage(props) {
   return (
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
-        {/* <div className="bg-background text-white "> */}
         <Metatags />
         <Navbar page="/posts" />
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
-            {/* Announcement */}
             {announcements}
-            {/* Posts Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
-            {/* Posts */}
-            {loading ? (
-              <Loading />
-            ) : (
-              <>
-                <PostLayout posts={posts} layout={layout} />
-                <Group>
-                  <Button
-                    type="submit"
-                    className="bg-content hover:bg-content hover:opacity-75"
-                    size="xs"
-                    onClick={() => showPrevious({ item: posts[0] })}
-                    disabled={page === 1 ? true : false}
-                  >
-                    ก่อนหน้า
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="bg-content hover:bg-content hover:opacity-75"
-                    size="xs"
-                    onClick={() => showNext({ item: posts[posts.length - 1] })}
-                    disabled={postsEnd}
-                  >
-                    ถัดไป
-                  </Button>
-                </Group>
-              </>
-            )}
+            <Pagination
+              page={currentPage}
+              onChange={(pageNumber) => {
+                setCurrentPage(pageNumber);
+                router.push(`posts/?page=${pageNumber}`);
+              }}
+              total={Math.ceil(posts.length / postsPerPage)}
+              classNames={{
+                active: "bg-content",
+                item: "bg-foreground",
+              }}
+              size="sm"
+            />
+            <PostLayout
+              posts={currentPosts}
+              layout={layout}
+              loading={loading}
+            />
+            <Pagination
+              page={currentPage}
+              onChange={(pageNumber) => {
+                setCurrentPage(pageNumber);
+
+                router.push(`posts/?page=${pageNumber}`);
+              }}
+              total={Math.ceil(posts.length / postsPerPage)}
+              classNames={{
+                active: "bg-content",
+                item: "bg-foreground",
+              }}
+              size="sm"
+            />
           </Stack>
         </Container>
       </div>
