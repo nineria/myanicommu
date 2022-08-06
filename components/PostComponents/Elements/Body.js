@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Button, Group, Image, Modal, Space } from "@mantine/core";
+import { Button, Group, Image, Modal, Space, Stack, Text } from "@mantine/core";
 import Edit from "../Edit";
 import {
   AlertTriangle,
   Edit as EditIcon,
   ThumbUp,
   Trash,
+  X,
 } from "tabler-icons-react";
 import { auth, firestore } from "lib/firebase";
 import AuthCheck from "hooks/AuthCheck";
@@ -13,6 +14,9 @@ import RichTextEditor from "utils/RichText";
 import AuthorCheck from "hooks/AuthorCheck";
 import AdminCheck from "hooks/AdminCheck";
 import { UserContext } from "lib/context";
+import { showNotification } from "@mantine/notifications";
+import { useModals } from "@mantine/modals";
+import { useRouter } from "next/router";
 
 export default function Body({
   post,
@@ -25,6 +29,9 @@ export default function Body({
   const [opened, setOpened] = useState(false);
 
   const { user } = useContext(UserContext);
+
+  const modals = useModals();
+  const router = useRouter();
 
   const updatedAt =
     typeof post?.updatedAt === "number"
@@ -107,6 +114,66 @@ export default function Body({
     }
   };
 
+  const handleAdminDelete = () => {
+    const handleOnClick = async () => {
+      await postRef.delete();
+
+      const userStatistics = firestore.collection("statistics").doc(post.uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        posts: userStatisticsPosts.posts - 1,
+      });
+
+      showNotification({
+        color: "red",
+        title: "ลบโพสต์แล้ว",
+        icon: <X size={18} />,
+        classNames: {
+          root: "bg-foreground border-red-400",
+        },
+      });
+      modals.closeModal(id);
+
+      router.replace("/posts");
+    };
+    const id = modals.openModal({
+      title: (
+        <Stack>
+          <Text size="sm">คุณต้องการลบโพสต์นี้หรือไม่?</Text>
+          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+        </Stack>
+      ),
+      zIndex: "999",
+      centered: true,
+      classNames: {
+        modal: "bg-foreground",
+        overlay: "bg-background",
+      },
+      size: "sm",
+      children: (
+        <Stack size="xs">
+          <Group position="right">
+            <Button
+              className="bg-background text-title hover:bg-background hover:opacity-75"
+              size="xs"
+              onClick={() => modals.closeModal(id)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size="xs"
+              onClick={() => handleOnClick()}
+            >
+              ยืนยัน
+            </Button>
+          </Group>
+        </Stack>
+      ),
+    });
+  };
+
   return (
     <div className="relative p-2 text-title text-opacity-90 w-full ">
       <Group position="apart">
@@ -145,6 +212,7 @@ export default function Body({
           {user && (
             <AdminCheck>
               <Button
+                onClick={() => handleAdminDelete()}
                 leftIcon={<Trash size={14} />}
                 compact
                 className="bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"

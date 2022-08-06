@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Button, Group, Modal } from "@mantine/core";
+import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import {
   AlertTriangle,
   Edit as EditIcon,
   ThumbUp,
   Trash,
+  X,
 } from "tabler-icons-react";
 import RichTextEditor from "utils/RichText";
 import { auth, firestore } from "lib/firebase";
@@ -13,6 +14,9 @@ import { UserContext } from "lib/context";
 import AuthorCheck from "hooks/AuthorCheck";
 import AdminCheck from "hooks/AdminCheck";
 import AuthCheck from "hooks/AuthCheck";
+import { useModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
+import { useRouter } from "next/router";
 
 export default function Body({
   comment,
@@ -26,6 +30,9 @@ export default function Body({
   const [opened, setOpened] = useState(false);
 
   const { user } = useContext(UserContext);
+
+  const modals = useModals();
+  const router = useRouter();
 
   const timestamp = new Date(comment.updatedAt.seconds * 1000);
 
@@ -111,6 +118,68 @@ export default function Body({
     }
   };
 
+  const handleAdminDelete = () => {
+    const handleOnClick = async () => {
+      const userStatistics = firestore
+        .collection("statistics")
+        .doc(comment.uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        comments: userStatisticsPosts.comments - 1,
+      });
+
+      await commentRef.delete();
+
+      showNotification({
+        color: "red",
+        title: "ลบคอมเมนต์แล้ว",
+        icon: <X size={18} />,
+        classNames: {
+          root: "bg-foreground border-red-400",
+        },
+      });
+      modals.closeModal(id);
+
+      router.reload();
+    };
+    const id = modals.openModal({
+      title: (
+        <Stack>
+          <Text size="sm">คุณต้องการลบคอมเมนต์นี้หรือไม่?</Text>
+          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+        </Stack>
+      ),
+      zIndex: "999",
+      centered: true,
+      classNames: {
+        modal: "bg-foreground",
+        overlay: "bg-background",
+      },
+      size: "sm",
+      children: (
+        <Stack size="xs">
+          <Group position="right">
+            <Button
+              className="bg-background text-title hover:bg-background hover:opacity-75"
+              size="xs"
+              onClick={() => modals.closeModal(id)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size="xs"
+              onClick={() => handleOnClick()}
+            >
+              ยืนยัน
+            </Button>
+          </Group>
+        </Stack>
+      ),
+    });
+  };
+
   return (
     <div className="relative mt-11 md:mt-0 text-title text-opacity-90 w-full min-h-[100px]">
       <Modal
@@ -154,6 +223,7 @@ export default function Body({
           {user && (
             <AdminCheck>
               <Button
+                onClick={() => handleAdminDelete()}
                 leftIcon={<Trash size={14} />}
                 compact
                 className="z-10 bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
