@@ -1,35 +1,32 @@
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
 import PostLayout from "@components/Card/CardLayout";
 import {
   Anchor,
   Breadcrumbs,
-  Button,
   Container,
-  Group,
+  Pagination,
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
-import { firestore, fromMillis, postToJSON } from "@lib/firebase";
+import { firestore, postToJSON } from "@lib/firebase";
 import Metatags from "@components/Metatags";
-import Loading from "@components/Loading";
-
-// Max post to query per page
-const LIMIT = 12;
+import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
   const postsQuery = firestore
     .collectionGroup("posts")
-    .orderBy("createdAt", "desc")
-    .limit(LIMIT);
+    .orderBy("createdAt", "desc");
 
   const rawPosts = (await postsQuery.get()).docs.map(postToJSON);
 
-  const posts = rawPosts.filter((post) => {
-    return post.tag.some((item) => item.label === "คำถาม");
-  });
+  const posts = rawPosts
+    .filter((post) => {
+      return post.tag[0].label === "คำถาม" ? true : false;
+    })
+    .map((filtered) => filtered);
 
   const announcementsQuery = firestore
     .collectionGroup("announcements")
@@ -46,72 +43,48 @@ export async function getServerSideProps() {
 
 export default function QAndAsPage(props) {
   const [layout, setLayout] = useState("grid");
+  const router = useRouter();
 
   const [posts, setPosts] = useState(props.posts);
-
-  const [postsEnd, setPostsEnd] = useState(false);
-
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
+  const [postsPerPage] = useState(12);
 
-  const [page, setPage] = useState(1);
-
-  const showNext = ({ item }) => {
-    setLoading(true);
-    setPostsEnd(false);
-    const fetchNextData = async () => {
-      const cursor =
-        typeof item.createdAt === "number"
-          ? fromMillis(item.createdAt)
-          : item.createdAt;
-
-      const query = firestore
+  useEffect(() => {
+    if (router.query.page) {
+      setCurrentPage(parseInt(router.query.page));
+    }
+    const fetchPosts = async () => {
+      setLoading(true);
+      const postsQuery = firestore
         .collectionGroup("posts")
-        .orderBy("createdAt", "desc")
-        .startAfter(cursor)
-        .limit(LIMIT);
+        .orderBy("createdAt", "desc");
 
-      const newPosts = (await query.get()).docs.map((doc) => doc.data());
+      const rawPosts = (await postsQuery.get()).docs.map(postToJSON);
 
-      if (newPosts.length <= LIMIT) setPostsEnd(true);
+      const posts = rawPosts
+        .filter((post) => {
+          return post.tag[0].label === "คำถาม" ? true : false;
+        })
+        .map((filtered) => filtered);
 
-      setPosts(newPosts);
-      setPage(page + 1);
-    };
-    fetchNextData();
-    setTimeout(() => {
+      setPosts(posts);
       setLoading(false);
-    }, 1000);
-  };
-
-  const showPrevious = ({ item }) => {
-    setLoading(true);
-    setPostsEnd(false);
-    const fetchNextData = async () => {
-      const cursor =
-        typeof item.createdAt === "number"
-          ? fromMillis(item.createdAt)
-          : item.createdAt;
-
-      const query = firestore
-        .collectionGroup("posts")
-        .orderBy("createdAt", "desc")
-        .endBefore(cursor)
-        .limitToLast(LIMIT);
-
-      const newPosts = (await query.get()).docs.map((doc) => doc.data());
-      setPosts(newPosts);
-      setPage(page - 1);
     };
-    fetchNextData();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
+
+    fetchPosts();
+  }, [router.query.page]);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPosts = Math.ceil(posts.length / postsPerPage);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
     { title: "โพสต์ทั้งหมด", href: "/posts" },
-    { title: "Q&A ถามตอบ", href: "#" },
+    { title: "คำถาม", href: "#" },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}
@@ -125,43 +98,50 @@ export default function QAndAsPage(props) {
   return (
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
-        {/* <div className="bg-background text-white "> */}
         <Metatags />
         <Navbar page="/qandas" />
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
-            {/* Announcement */}
             {announcements}
-            {/* Posts Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
-            {/* Posts */}
-            {loading ? (
-              <Loading />
-            ) : (
-              <>
-                <PostLayout posts={posts} layout={layout} />
-                <Group>
-                  <Button
-                    type="submit"
-                    className="bg-content hover:bg-content hover:opacity-75"
-                    size="xs"
-                    onClick={() => showPrevious({ item: posts[0] })}
-                    disabled={page === 1 ? true : false}
-                  >
-                    ก่อนหน้า
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="bg-content hover:bg-content hover:opacity-75"
-                    size="xs"
-                    onClick={() => showNext({ item: posts[posts.length - 1] })}
-                    disabled={postsEnd}
-                  >
-                    ถัดไป
-                  </Button>
-                </Group>
-              </>
+            {totalPosts > 1 && (
+              <Pagination
+                page={currentPage}
+                onChange={(pageNumber) => {
+                  setCurrentPage(pageNumber);
+                  router.push(`qandas/?page=${pageNumber}`);
+                }}
+                total={totalPosts}
+                classNames={{
+                  active: "bg-content",
+                  item: "bg-foreground",
+                }}
+                size="sm"
+              />
+            )}
+            <PostLayout
+              posts={currentPosts}
+              layout={layout}
+              loading={loading}
+            />
+            {posts.length < 1 && (
+              <div className="flex justify-center">ยังไม่มีโพสต์ 😭</div>
+            )}
+            {totalPosts > 1 && (
+              <Pagination
+                page={currentPage}
+                onChange={(pageNumber) => {
+                  setCurrentPage(pageNumber);
+                  router.push(`qandas/?page=${pageNumber}`);
+                }}
+                total={totalPosts}
+                classNames={{
+                  active: "bg-content",
+                  item: "bg-foreground",
+                }}
+                size="sm"
+              />
             )}
           </Stack>
         </Container>

@@ -65,6 +65,7 @@ export default function PostsPage(props) {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPosts = Math.ceil(posts.length / postsPerPage);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
@@ -90,38 +91,44 @@ export default function PostsPage(props) {
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
             {announcements}
             <PostsMenuController layout={layout} setLayout={setLayout} />
-            <Pagination
-              page={currentPage}
-              onChange={(pageNumber) => {
-                setCurrentPage(pageNumber);
-                router.push(`posts/?page=${pageNumber}`);
-              }}
-              total={Math.ceil(posts.length / postsPerPage)}
-              classNames={{
-                active: "bg-content",
-                item: "bg-foreground",
-              }}
-              size="sm"
-            />
+            {totalPosts > 1 && (
+              <Pagination
+                page={currentPage}
+                onChange={(pageNumber) => {
+                  setCurrentPage(pageNumber);
+                  router.push(`posts/?page=${pageNumber}`);
+                }}
+                total={totalPosts}
+                classNames={{
+                  active: "bg-content",
+                  item: "bg-foreground",
+                }}
+                size="sm"
+              />
+            )}
             <PostLayout
               posts={currentPosts}
               layout={layout}
               loading={loading}
             />
-            <Pagination
-              page={currentPage}
-              onChange={(pageNumber) => {
-                setCurrentPage(pageNumber);
-
-                router.push(`posts/?page=${pageNumber}`);
-              }}
-              total={Math.ceil(posts.length / postsPerPage)}
-              classNames={{
-                active: "bg-content",
-                item: "bg-foreground",
-              }}
-              size="sm"
-            />
+            {posts.length < 1 && (
+              <div className="flex justify-center">ยังไม่มีโพสต์</div>
+            )}
+            {totalPosts > 1 && (
+              <Pagination
+                page={currentPage}
+                onChange={(pageNumber) => {
+                  setCurrentPage(pageNumber);
+                  router.push(`posts/?page=${pageNumber}`);
+                }}
+                total={totalPosts}
+                classNames={{
+                  active: "bg-content",
+                  item: "bg-foreground",
+                }}
+                size="sm"
+              />
+            )}
           </Stack>
         </Container>
       </div>
