@@ -1,46 +1,45 @@
-import React, { useContext, useState } from "react";
-import { Button, Modal, Stack, Text } from "@mantine/core";
-import WebsiteRulePage from "@components/WebsiteRule";
-import RichTextEditor from "utils/RichText";
-import { UserContext } from "lib/context";
-import { auth, firestore, serverTimestamp } from "lib/firebase";
-import { showNotification } from "@mantine/notifications";
-import { Check } from "tabler-icons-react";
-import Logo from "@components/Logo";
-import WebsiteRule from "@components/WebsiteRule";
-import { useRouter } from "next/router";
-import { useModals } from "@mantine/modals";
-import Verify from "@components/Verify";
-import LeftMenuAdd from "./Elements/LeftMenuAdd";
+import Logo from '@components/Logo';
+import Verify from '@components/Verify';
+import {
+  default as WebsiteRule,
+  default as WebsiteRulePage,
+} from '@components/WebsiteRule';
+import { Button, Modal, Stack, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
+import { showNotification } from '@mantine/notifications';
+import { UserContext } from 'lib/context';
+import { auth, firestore, serverTimestamp } from 'lib/firebase';
+import React, { useContext, useState } from 'react';
+import { Check } from 'tabler-icons-react';
+import RichTextEditor from 'utils/RichText';
+import LeftMenuAdd from './Elements/LeftMenuAdd';
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append('image', image);
 
     fetch(
-      "https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463",
+      'https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463',
       {
-        method: "POST",
+        method: 'POST',
         body: formData,
       }
     )
       .then((response) => response.json())
       .then((result) => resolve(result.data.url))
-      .catch(() => reject(new Error("Upload failed")));
+      .catch(() => reject(new Error('Upload failed')));
   });
 
 export default function Add({ post }) {
   const modals = useModals();
   const { userData } = useContext(UserContext);
-  const [value, onChange] = useState("");
-
-  const router = useRouter();
+  const [value, onChange] = useState('');
 
   const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
 
   const HandleSubmit = async () => {
-    if (value === "<p><br></p>") {
+    if (value === '<p><br></p>') {
       const id = modals.openModal({
         title: (
           <Stack>
@@ -48,14 +47,14 @@ export default function Add({ post }) {
             <Text size="xs">กรุณาใส่ข้อความที่ต้องการตอบกลับ</Text>
           </Stack>
         ),
-        zIndex: "999",
+        zIndex: '999',
         centered: true,
         classNames: {
-          modal: "bg-foreground",
-          overlay: "bg-background",
+          modal: 'bg-foreground',
+          overlay: 'bg-background',
         },
         withCloseButton: false,
-        size: "sm",
+        size: 'sm',
         children: (
           <Button
             fullWidth
@@ -73,18 +72,18 @@ export default function Add({ post }) {
 
     const uid = auth.currentUser.uid;
 
-    const userStatistics = firestore.collection("statistics").doc(uid);
+    const userStatistics = firestore.collection('statistics').doc(uid);
     const userStatisticsPosts = (await userStatistics.get()).data();
     await userStatistics.update({
       comments: userStatisticsPosts.comments + 1,
     });
 
     const ref = firestore
-      .collection("users")
+      .collection('users')
       .doc(post.uid)
-      .collection("posts")
+      .collection('posts')
       .doc(post.slug)
-      .collection("comments")
+      .collection('comments')
       .doc();
 
     const data = {
@@ -101,14 +100,14 @@ export default function Add({ post }) {
     await ref.set(data);
 
     showNotification({
-      color: "teal",
+      color: 'teal',
       title: `${userData?.username} ได้เขียนคอมเมต์แล้ว`,
       icon: <Check size={18} />,
       classNames: {
-        root: "bg-foreground border-teal-400",
+        root: 'bg-foreground border-teal-400',
       },
     });
-    router.reload();
+    // router.reload();
   };
 
   return (
@@ -120,9 +119,9 @@ export default function Add({ post }) {
           <div className="border-[1px] border-white border-opacity-10 rounded-sm p-2">
             <RichTextEditor
               controls={[
-                ["bold", "italic", "underline", "link"],
-                ["h3", "h4"],
-                ["image", "video"],
+                ['bold', 'italic', 'underline', 'link'],
+                ['h3', 'h4'],
+                ['image', 'video'],
               ]}
               sticky={true}
               stickyOffset={55}
@@ -131,10 +130,10 @@ export default function Add({ post }) {
               placeholder="คุณกำลังคิดอะไรอยู่"
               onImageUpload={handleImageUpload}
               classNames={{
-                root: "bg-black/10 text-title border-[#fff] border-opacity-20",
-                toolbar: "bg-foreground text-title",
+                root: 'bg-black/10 text-title border-[#fff] border-opacity-20',
+                toolbar: 'bg-foreground text-title',
                 toolbarControl:
-                  "bg-foreground border-title border-opacity-20 hover:bg-background",
+                  'bg-foreground border-title border-opacity-20 hover:bg-background',
               }}
             />
 
@@ -147,15 +146,15 @@ export default function Add({ post }) {
                 onClose={() => setOpenedWebsiteRule(false)}
                 title={<Logo />}
                 classNames={{
-                  modal: "bg-foreground",
-                  overlay: "bg-background",
-                  title: "text-title",
+                  modal: 'bg-foreground',
+                  overlay: 'bg-background',
+                  title: 'text-title',
                 }}
               >
                 {openedWebsiteRule && <WebsiteRulePage />}
               </Modal>
               <WebsiteRule />
-              {userData && userData.email === "" ? (
+              {userData && userData.email === '' ? (
                 <Verify>ตอบกลับ</Verify>
               ) : (
                 <Button

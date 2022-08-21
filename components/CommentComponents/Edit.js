@@ -1,31 +1,31 @@
-import React, { useContext } from "react";
-import { useForm } from "@mantine/hooks";
-import { Button, Group, InputWrapper, Stack, Text } from "@mantine/core";
-import AuthCheck from "hooks/AuthCheck";
-import { firestore, serverTimestamp } from "lib/firebase";
-import RichTextEditor from "utils/RichText";
-import { showNotification } from "@mantine/notifications";
-import { Check, X } from "tabler-icons-react";
-import { useModals } from "@mantine/modals";
-import WebsiteRule from "components/WebsiteRule";
-import { UserContext } from "lib/context";
-import { useRouter } from "next/router";
+import { Button, Group, InputWrapper, Stack, Text } from '@mantine/core';
+import { useForm } from '@mantine/hooks';
+import { useModals } from '@mantine/modals';
+import { showNotification } from '@mantine/notifications';
+import WebsiteRule from 'components/WebsiteRule';
+import AuthCheck from 'hooks/AuthCheck';
+import { UserContext } from 'lib/context';
+import { firestore, serverTimestamp } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
+import { Check, X } from 'tabler-icons-react';
+import RichTextEditor from 'utils/RichText';
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append('image', image);
 
     fetch(
-      "https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463",
+      'https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463',
       {
-        method: "POST",
+        method: 'POST',
         body: formData,
       }
     )
       .then((response) => response.json())
       .then((result) => resolve(result.data.url))
-      .catch(() => reject(new Error("Upload failed")));
+      .catch(() => reject(new Error('Upload failed')));
   });
 
 export default function Edit({ comment, commentRef, setOpened, post }) {
@@ -45,7 +45,6 @@ export default function Edit({ comment, commentRef, setOpened, post }) {
 
 function CommentForm({ comment, commentRef, setOpened }) {
   const router = useRouter();
-  console.log(comment);
   const { userData } = useContext(UserContext);
 
   const modals = useModals();
@@ -65,11 +64,11 @@ function CommentForm({ comment, commentRef, setOpened }) {
     });
 
     showNotification({
-      color: "teal",
-      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+      color: 'teal',
+      title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
       icon: <Check size={18} />,
       classNames: {
-        root: "bg-foreground border-teal-400",
+        root: 'bg-foreground border-teal-400',
       },
     });
 
@@ -80,11 +79,11 @@ function CommentForm({ comment, commentRef, setOpened }) {
 
   const handleCancel = () => {
     showNotification({
-      color: "yellow",
-      title: "ยกเลิกการแก้ไขแล้ว",
+      color: 'yellow',
+      title: 'ยกเลิกการแก้ไขแล้ว',
       icon: <X size={18} />,
       classNames: {
-        root: "bg-foreground border-yellow-400",
+        root: 'bg-foreground border-yellow-400',
       },
     });
     setOpened(false);
@@ -93,7 +92,7 @@ function CommentForm({ comment, commentRef, setOpened }) {
   const handleDelete = () => {
     const handleOnClick = async () => {
       const userStatistics = firestore
-        .collection("statistics")
+        .collection('statistics')
         .doc(comment.uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
       await userStatistics.update({
@@ -103,11 +102,11 @@ function CommentForm({ comment, commentRef, setOpened }) {
       await commentRef.delete();
 
       showNotification({
-        color: "red",
-        title: "ลบคอมเมนต์แล้ว",
+        color: 'red',
+        title: 'ลบคอมเมนต์แล้ว',
         icon: <X size={18} />,
         classNames: {
-          root: "bg-foreground border-red-400",
+          root: 'bg-foreground border-red-400',
         },
       });
       modals.closeModal(id);
@@ -123,13 +122,13 @@ function CommentForm({ comment, commentRef, setOpened }) {
           <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
       children: (
         <Stack size="xs">
           <Group position="right">
@@ -162,20 +161,20 @@ function CommentForm({ comment, commentRef, setOpened }) {
       >
         <RichTextEditor
           controls={[
-            ["bold", "italic", "underline", "link"],
-            ["h3", "h4"],
-            ["image", "video"],
+            ['bold', 'italic', 'underline', 'link'],
+            ['h3', 'h4'],
+            ['image', 'video'],
           ]}
           sticky={true}
           stickyOffset={-55}
-          {...form.getInputProps("content")}
+          {...form.getInputProps('content')}
           placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
           onImageUpload={handleImageUpload}
           classNames={{
-            root: "bg-black/5 text-title border-[#fff] border-opacity-20",
-            toolbar: "bg-foreground text-title",
+            root: 'bg-black/5 text-title border-[#fff] border-opacity-20',
+            toolbar: 'bg-foreground text-title',
             toolbarControl:
-              "bg-foreground border-title border-opacity-20 hover:bg-background",
+              'bg-foreground border-title border-opacity-20 hover:bg-background',
           }}
         />
       </InputWrapper>

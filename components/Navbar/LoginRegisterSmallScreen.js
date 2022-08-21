@@ -1,5 +1,6 @@
-import { LoginPopUp } from "@components/LoginRegister/LoginPopUp";
-import { Menu } from "@mantine/core";
+import { LoginPopUp } from '@components/LoginRegister/LoginPopUp';
+import { Menu } from '@mantine/core';
+import React from 'react';
 
 export default function LoginRegisterSmallScreen() {
   return (

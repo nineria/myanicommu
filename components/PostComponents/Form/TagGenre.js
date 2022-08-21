@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-// Components
-import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
-// Icons
-import { Tag, X } from "tabler-icons-react";
+import { ActionIcon, Badge, Group, Input, InputWrapper } from '@mantine/core';
+import React, { useState } from 'react';
+import { Tag, X } from 'tabler-icons-react';
 
 export default function TagGenre({ data, setData }) {
   const [tags, setTags] = useState([]); // Used to update page
@@ -33,15 +31,15 @@ export default function TagGenre({ data, setData }) {
   ));
 
   const handleKeyDown = (e) => {
-    if (e.key !== "Enter") return;
+    if (e.key !== 'Enter') return;
 
     const value = e.target.value;
 
     if (!value.trim()) return;
 
-    const str = value.replace(/[, ]+/g, " ").trim();
+    const str = value.replace(/[, ]+/g, ' ').trim();
 
-    const list = str.split(" ");
+    const list = str.split(' ');
 
     list.map((item) => {
       data.push(item);
@@ -49,7 +47,7 @@ export default function TagGenre({ data, setData }) {
       setTags([...tags, item]);
     });
 
-    e.target.value = "";
+    e.target.value = '';
     e.preventDefault();
   };
 
@@ -72,7 +70,7 @@ export default function TagGenre({ data, setData }) {
           placeholder="เพิ่ม"
           onKeyDown={handleKeyDown}
           classNames={{
-            input: "bg-transparent bg-opacity-50 border-none",
+            input: 'bg-transparent bg-opacity-50 border-none',
           }}
           size="xs"
         />

@@ -1,12 +1,12 @@
-import AdminCheck from "hooks/AdminCheck";
-import { getUserWithUsername } from "lib/firebase";
-import { Badge, Button, Group, Stack, Text } from "@mantine/core";
-import { useModals } from "@mantine/modals";
-import { showNotification } from "@mantine/notifications";
-import { useRouter } from "next/router";
-import React from "react";
-import { X } from "tabler-icons-react";
-import GiveUserRanks from "../GiveUserRank";
+import { Badge, Button, Group, Stack, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
+import { showNotification } from '@mantine/notifications';
+import AdminCheck from 'hooks/AdminCheck';
+import { getUserWithUsername } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { X } from 'tabler-icons-react';
+import GiveUserRanks from '../GiveUserRank';
 
 export default function UserRanks({ user, userRanks }) {
   const modals = useModals();
@@ -16,22 +16,20 @@ export default function UserRanks({ user, userRanks }) {
   const removeUserRank = (slug, label) => {
     const handleOnClick = async () => {
       const userDoc = await getUserWithUsername(user.username);
-      const ranksRef = await userDoc.ref.collection("ranks").doc(slug);
+      const ranksRef = await userDoc.ref.collection('ranks').doc(slug);
       await ranksRef.delete();
 
       router.replace(`/${user.username}`);
 
       showNotification({
-        color: "red",
+        color: 'red',
         title: `ถอดแรงค์ ${label} ของ ${user.username} ออกแล้ว`,
         icon: <X size={18} />,
         classNames: {
-          root: "bg-foreground border-red-400",
+          root: 'bg-foreground border-red-400',
         },
       });
       modals.closeModal(id);
-
-      setOpened(false);
 
       router.replace(`/${user.username}`);
     };
@@ -39,19 +37,19 @@ export default function UserRanks({ user, userRanks }) {
       title: (
         <Stack>
           <Text size="sm">
-            คุณต้องการถอดแรงค์ <span className="text-content">{label}</span> ของ{" "}
+            คุณต้องการถอดแรงค์ <span className="text-content">{label}</span> ของ{' '}
             <span className="text-content">{user.username}</span> ออกหรือไม่?
           </Text>
         </Stack>
       ),
       withCloseButton: false,
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
       children: (
         <Stack size="xs">
           <Group position="right">

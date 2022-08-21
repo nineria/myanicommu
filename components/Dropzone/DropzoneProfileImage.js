@@ -1,24 +1,24 @@
-import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
-import { Upload, Photo, X } from "tabler-icons-react";
-import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
-import { useModals } from "@mantine/modals";
-import { useState } from "react";
+import { Button, Group, Stack, Text, useMantineTheme } from '@mantine/core';
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+import { useModals } from '@mantine/modals';
+import React, { useState } from 'react';
+import { Photo, Upload, X } from 'tabler-icons-react';
 
 const imageUpload = (image) =>
   new Promise((resolve, reject) => {
     const formData = new FormData();
-    formData.append("image", image[0]);
+    formData.append('image', image[0]);
 
     fetch(
-      "https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463",
+      'https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463',
       {
-        method: "POST",
+        method: 'POST',
         body: formData,
       }
     )
       .then((response) => response.json())
       .then((result) => resolve(result.data.url))
-      .catch(() => reject(new Error("Upload failed")));
+      .catch(() => reject(new Error('Upload failed')));
   });
 
 function ImageUploadIcon({ status, size }) {
@@ -37,7 +37,7 @@ const dropzoneChildren = (status) => (
   <Group
     position="center"
     spacing="xl"
-    style={{ minHeight: 220, pointerEvents: "none" }}
+    style={{ minHeight: 220, pointerEvents: 'none' }}
   >
     <ImageUploadIcon status={status} size={50} />
 
@@ -61,8 +61,8 @@ export function DropzoneProfileImage({ setImage }) {
 
   const openConfirmModal = () => {
     const id = modals.openModal({
-      title: "เกิดข้อผิดพลาด!",
-      zIndex: "999",
+      title: 'เกิดข้อผิดพลาด!',
+      zIndex: '999',
       centered: true,
       children: (
         <Stack>
@@ -81,10 +81,10 @@ export function DropzoneProfileImage({ setImage }) {
         </Stack>
       ),
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
     });
   };
 

@@ -1,21 +1,23 @@
-import React, { useState } from "react";
 import {
   Button,
   Divider,
+  Group,
   Stack,
   Text,
-  Group,
   TextInput,
   Title,
-} from "@mantine/core";
+} from '@mantine/core';
+import React, { useState } from 'react';
 
-import { auth, firestore } from "lib/firebase";
+import { auth, firestore } from 'lib/firebase';
 
-import { useModals } from "@mantine/modals";
+import { useModals } from '@mantine/modals';
+import { useRouter } from 'next/router';
 
 export default function DeleteAccountForm({ user, setOpenedConfirm }) {
   const [usernameValid, setUsernameValid] = useState(false);
   const [confirmValid, setConfirmValid] = useState(false);
+  const router = useRouter();
 
   const modals = useModals();
 
@@ -23,7 +25,7 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
     const handleSignOut = async () => {
       await auth.signOut();
       modals.closeModal(id);
-      router.push("/");
+      router.push('/');
     };
 
     const id = modals.openModal({
@@ -39,13 +41,13 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
         </Stack>
       ),
       withCloseButton: false,
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
       children: (
         <Stack size="xs">
           <Group position="right">
@@ -75,25 +77,25 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
   const deleteAccount = async () => {
     try {
       await firestore
-        .collection("statistics")
+        .collection('statistics')
         .doc(auth.currentUser.uid)
         .delete();
-      await firestore.collection("usernames").doc(user.username).delete();
+      await firestore.collection('usernames').doc(user.username).delete();
       await firestore
-        .collection("users")
+        .collection('users')
         .doc(auth.currentUser.uid)
-        .collection("ranks")
+        .collection('ranks')
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             doc.ref.delete();
           });
         });
-      await firestore.collection("users").doc(auth.currentUser.uid).delete();
+      await firestore.collection('users').doc(auth.currentUser.uid).delete();
       await auth.currentUser.delete();
-      router.push("/");
+      router.push('/');
     } catch (error) {
-      console.log("ERROR => ", auth.currentUser.uid, error);
+      console.log('ERROR => ', auth.currentUser.uid, error);
       loginAgain();
     }
   };
@@ -104,7 +106,7 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
   };
 
   const checkConfirm = (e) => {
-    if (e.target.value !== "ลบบัญชีส่วนบุคคลของฉัน") setConfirmValid(false);
+    if (e.target.value !== 'ลบบัญชีส่วนบุคคลของฉัน') setConfirmValid(false);
     else setConfirmValid(true);
   };
 

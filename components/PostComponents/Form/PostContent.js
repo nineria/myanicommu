@@ -1,22 +1,23 @@
 // Components
-import { InputWrapper } from "@mantine/core";
-import RichTextEditor from "utils/RichText";
+import { InputWrapper } from '@mantine/core';
+import React from 'react';
+import RichTextEditor from 'utils/RichText';
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append('image', image);
 
     fetch(
-      "https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463",
+      'https://api.imgbb.com/1/upload?key=c87f45db6d1d5ccc1b31d0f69d380463',
       {
-        method: "POST",
+        method: 'POST',
         body: formData,
       }
     )
       .then((response) => response.json())
       .then((result) => resolve(result.data.url))
-      .catch(() => reject(new Error("Upload failed")));
+      .catch(() => reject(new Error('Upload failed')));
   });
 
 export default function PostContent(props) {
@@ -33,10 +34,10 @@ export default function PostContent(props) {
         placeholder="คุณกำลังคิดอะไรอยู่"
         onImageUpload={handleImageUpload}
         classNames={{
-          root: "bg-black/5 text-title border-[#fff] border-opacity-20",
-          toolbar: "bg-foreground text-title",
+          root: 'bg-black/5 text-title border-[#fff] border-opacity-20',
+          toolbar: 'bg-foreground text-title',
           toolbarControl:
-            "bg-foreground border-title border-opacity-20 hover:bg-background",
+            'bg-foreground border-title border-opacity-20 hover:bg-background',
         }}
       />
     </InputWrapper>

@@ -1,16 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 // Context
-import { UserContext } from "lib/context";
+import { UserContext } from 'lib/context';
 // Components
-import Post from "./Elements/Body";
-import Add from "components/HomeComponents/Add";
-import { Button, Container, Modal } from "@mantine/core";
+import { Button, Container, Modal } from '@mantine/core';
+import Add from 'components/HomeComponents/Add';
+import Post from './Elements/Body';
 // Icons
-import { Animate } from "react-simple-animate";
-import AdminCheck from "hooks/AdminCheck";
-import { firestore } from "lib/firebase";
+import AdminCheck from 'hooks/AdminCheck';
+import { firestore } from 'lib/firebase';
+import React from 'react';
+import { Animate } from 'react-simple-animate';
 
-export const admin = "ผู้ดูแลระบบ";
+export const admin = 'ผู้ดูแลระบบ';
 
 export default function HomeComponents({ homePosts }) {
   const { user } = useContext(UserContext);
@@ -22,8 +23,8 @@ export default function HomeComponents({ homePosts }) {
   useEffect(() => {
     const getToDayPost = async () => {
       const query = firestore
-        .collectionGroup("posts")
-        .orderBy("createdAt", "desc")
+        .collectionGroup('posts')
+        .orderBy('createdAt', 'desc')
         .limit(3);
       const newPosts = (await query.get()).docs.map((doc) => doc.data());
       setNewPostToDay(newPosts);
@@ -37,10 +38,10 @@ export default function HomeComponents({ homePosts }) {
         <Animate
           play
           start={{
-            transform: "translateY(1%)",
-            opacity: "0",
+            transform: 'translateY(1%)',
+            opacity: '0',
           }}
-          end={{ transform: "translateY(0%)", opacity: "1" }}
+          end={{ transform: 'translateY(0%)', opacity: '1' }}
         >
           <div className="flex flex-col gap-2">
             {/* Add home post */}
@@ -55,9 +56,9 @@ export default function HomeComponents({ homePosts }) {
                     title="สร้างโพสต์ - หน้าหลัก"
                     centered
                     classNames={{
-                      modal: "bg-foreground",
-                      overlay: "bg-background",
-                      title: "text-title",
+                      modal: 'bg-foreground',
+                      overlay: 'bg-background',
+                      title: 'text-title',
                     }}
                   >
                     <Add setOpened={setOpened} />

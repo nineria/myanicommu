@@ -1,4 +1,5 @@
-import Post from "@components/HomeComponents/Elements/Body";
+import Post from '@components/HomeComponents/Elements/Body';
+import React from 'react';
 
 export default function ResultSample({ posts }) {
   return (

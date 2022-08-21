@@ -1,12 +1,11 @@
 // Components
-import { Button, Group, Stack, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
-// import { useModals } from "@mantine/modals";
-// Icons
-import { X } from "tabler-icons-react";
-import { useModals } from "@mantine/modals";
-import { useRouter } from "next/router";
-import { firestore } from "lib/firebase";
+import { Button, Group, Stack, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
+import { showNotification } from '@mantine/notifications';
+import { firestore } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { X } from 'tabler-icons-react';
 
 export function ButtonControl({ setOpened, post, postRef, type }) {
   const modals = useModals();
@@ -17,25 +16,25 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
     const handleOnClick = async () => {
       await postRef.delete();
 
-      const userStatistics = firestore.collection("statistics").doc(post.uid);
+      const userStatistics = firestore.collection('statistics').doc(post.uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
       await userStatistics.update({
         posts: userStatisticsPosts.posts - 1,
       });
 
       showNotification({
-        color: "red",
-        title: "ลบโพสต์แล้ว",
+        color: 'red',
+        title: 'ลบโพสต์แล้ว',
         icon: <X size={18} />,
         classNames: {
-          root: "bg-foreground border-red-400",
+          root: 'bg-foreground border-red-400',
         },
       });
       modals.closeModal(id);
 
       setOpened(false);
 
-      router.replace("/posts");
+      router.replace('/posts');
     };
     const id = modals.openModal({
       title: (
@@ -44,13 +43,13 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
           <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
       children: (
         <Stack size="xs">
           <Group position="right">
@@ -77,7 +76,7 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
 
   return (
     <Group mt="md" position="apart">
-      {type === "add" ? (
+      {type === 'add' ? (
         <div />
       ) : (
         <Button

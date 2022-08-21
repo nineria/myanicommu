@@ -1,26 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 // Components
 import {
-  createStyles,
-  Table,
-  ScrollArea,
-  UnstyledButton,
-  Group,
-  Text,
-  Center,
-  TextInput,
-  Card,
   Anchor,
-  Progress,
-} from "@mantine/core";
+  Card,
+  Center,
+  createStyles,
+  Group,
+  ScrollArea,
+  Table,
+  Text,
+  TextInput,
+  UnstyledButton,
+} from '@mantine/core';
 // Icons
-import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
-import Link from "next/link";
-import { UserContext } from "@lib/context";
+import { UserContext } from '@lib/context';
+import Link from 'next/link';
+import { ChevronDown, ChevronUp, Search, Selector } from 'tabler-icons-react';
 
 const useStyles = createStyles(() => ({
   th: {
-    padding: "0 !important",
+    padding: '0 !important',
   },
 }));
 
@@ -73,15 +72,14 @@ function sortData(data, payload) {
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 export function TableSort({ user, posts, statistics }) {
   const { username } = useContext(UserContext);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [sortedData, setSortedData] = useState(posts);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
-
-  const { classes, theme } = useStyles();
 
   const setSorting = (field) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -104,28 +102,30 @@ export function TableSort({ user, posts, statistics }) {
 
   const rows = sortedData.map((row) => {
     const totalReviews = statistics.likes + statistics.stars;
+    // eslint-disable-next-line no-unused-vars
     const positiveReviews = (statistics.likes / totalReviews) * 100;
+    // eslint-disable-next-line no-unused-vars
     const negativeReviews = (statistics.stars / totalReviews) * 100;
 
     const createdAtTimestamp =
-      typeof row?.createdAt === "number"
+      typeof row?.createdAt === 'number'
         ? new Date(row.createdAt)
         : row.createdAt?.toDate();
 
     const updatedAtTimestamp =
-      typeof row?.createdAt === "number"
+      typeof row?.createdAt === 'number'
         ? new Date(row.createdAt)
         : row.createdAt?.toDate();
 
-    const createdAt = createdAtTimestamp?.toLocaleDateString("th-th", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    const createdAt = createdAtTimestamp?.toLocaleDateString('th-th', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     });
-    const updatedAt = updatedAtTimestamp?.toLocaleDateString("th-th", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    const updatedAt = updatedAtTimestamp?.toLocaleDateString('th-th', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     });
 
     return (
@@ -199,7 +199,7 @@ export function TableSort({ user, posts, statistics }) {
           icon={<Search size={14} />}
           value={search}
           classNames={{
-            input: "bg-accent bg-opacity-50",
+            input: 'bg-accent bg-opacity-50',
           }}
           onChange={handleSearchChange}
         />
@@ -212,23 +212,23 @@ export function TableSort({ user, posts, statistics }) {
           <thead>
             <tr>
               <Th
-                sorted={sortBy === "title"}
+                sorted={sortBy === 'title'}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("title")}
+                onSort={() => setSorting('title')}
               >
                 หัวข้อ
               </Th>
               <Th
-                sorted={sortBy === "createdAt"}
+                sorted={sortBy === 'createdAt'}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("createdAt")}
+                onSort={() => setSorting('createdAt')}
               >
                 สร้าง
               </Th>
               <Th
-                sorted={sortBy === "updatedAt"}
+                sorted={sortBy === 'updatedAt'}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("updatedAt")}
+                onSort={() => setSorting('updatedAt')}
               >
                 แก้ไขล่าสุด
               </Th>

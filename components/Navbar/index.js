@@ -1,16 +1,17 @@
-import { useState, useContext } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
 // Context
-import { UserContext } from "lib/context";
-import { auth } from "@lib/firebase";
+import { auth } from '@lib/firebase';
+import { UserContext } from 'lib/context';
 // Components
-import { Container } from "@mantine/core";
-import MyAniLogo from "./MyAniLogo";
-import UserMenu from "./DropdownMenu";
-import Login from "../LoginRegister";
-import NavbarMenu from "./NavbarMenu";
-import { navbarProperty } from "@constants/NavbarData";
-import LoginRegisterSmallScreen from "./LoginRegisterSmallScreen";
+import { navbarProperty } from '@constants/NavbarData';
+import { Container } from '@mantine/core';
+import React from 'react';
+import Login from '../LoginRegister';
+import UserMenu from './DropdownMenu';
+import LoginRegisterSmallScreen from './LoginRegisterSmallScreen';
+import MyAniLogo from './MyAniLogo';
+import NavbarMenu from './NavbarMenu';
 
 export default function Navbar({ page, isBusy = false }) {
   const { username, userData } = useContext(UserContext); // User data
@@ -21,7 +22,7 @@ export default function Navbar({ page, isBusy = false }) {
 
   const signOut = () => {
     auth.signOut();
-    router.push("/");
+    router.push('/');
   };
 
   return (

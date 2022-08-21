@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 // Hooks
-import { useForm } from "@mantine/hooks";
+import { useForm } from '@mantine/hooks';
 // Components
-import { Divider, Stack } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
-import ButtonControl from "./Elements/ButtonControl";
-import Content from "./Elements/Content";
-import Header from "./Elements/Header";
-import Title from "./Elements/Title";
+import { Divider, Stack } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
+import ButtonControl from './Elements/ButtonControl';
+import Content from './Elements/Content';
+import Header from './Elements/Header';
+import Title from './Elements/Title';
 // Icons
-import { Check } from "tabler-icons-react";
-import { firestore, getUserWithUsername, serverTimestamp } from "@lib/firebase";
-import { useRouter } from "next/router";
-import WebsiteRule from "@components/WebsiteRule";
+import WebsiteRule from '@components/WebsiteRule';
+import { firestore, getUserWithUsername, serverTimestamp } from '@lib/firebase';
+import { useRouter } from 'next/router';
+import { Check } from 'tabler-icons-react';
 
 export default function Edit(props) {
   const router = useRouter();
 
-  const [posts, setPosts] = useState(props.postData);
+  const [posts] = useState(props.postData);
 
   const [postRef, setPostRef] = useState();
 
   useEffect(() => {
     const getPost = async () => {
       const userDoc = await getUserWithUsername(posts.username);
-      const postRef = await userDoc.ref.collection("homePosts").doc(posts.slug);
+      const postRef = await userDoc.ref.collection('homePosts').doc(posts.slug);
 
       setPostRef(postRef);
     };
@@ -34,9 +34,9 @@ export default function Edit(props) {
 
   const HandleChange = async (values) => {
     const ref = firestore
-      .collection("users")
+      .collection('users')
       .doc(posts.uid)
-      .collection("homePosts")
+      .collection('homePosts')
       .doc(posts.slug);
 
     await ref.update({
@@ -49,11 +49,11 @@ export default function Edit(props) {
     });
 
     showNotification({
-      color: "teal",
-      title: "แก้ไขโพสต์หลักแล้ว",
+      color: 'teal',
+      title: 'แก้ไขโพสต์หลักแล้ว',
       icon: <Check size={18} />,
       classNames: {
-        root: "bg-foreground",
+        root: 'bg-foreground',
       },
     });
 
@@ -76,15 +76,15 @@ export default function Edit(props) {
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <Stack spacing="sm">
         <Title
-          titleLink={form.getInputProps("titleLink")}
-          title={form.getInputProps("title")}
+          titleLink={form.getInputProps('titleLink')}
+          title={form.getInputProps('title')}
         />
         <Divider label="หัวข้อย่อย และเนื้อหา" labelPosition="center" />
         <Header
-          headerLink={form.getInputProps("headerLink")}
-          header={form.getInputProps("header")}
+          headerLink={form.getInputProps('headerLink')}
+          header={form.getInputProps('header')}
         />
-        <Content body={form.getInputProps("body")} />
+        <Content body={form.getInputProps('body')} />
         <WebsiteRule />
         <ButtonControl setOpened={props.setOpened} postRef={postRef} />
       </Stack>

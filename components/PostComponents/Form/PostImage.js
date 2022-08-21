@@ -1,6 +1,7 @@
 // Components
-import { Card, InputWrapper } from "@mantine/core";
-import { DropzoneImage } from "@components/Dropzone/DropzoneImage";
+import { DropzoneImage } from '@components/Dropzone/DropzoneImage';
+import { Card, InputWrapper } from '@mantine/core';
+import React from 'react';
 
 export default function PostImage({ image, setImage }) {
   return (
@@ -15,8 +16,8 @@ export default function PostImage({ image, setImage }) {
             sx={{
               backgroundImage: `url(${image})`,
               minHeight: 300,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           >
             <DropzoneImage setImage={setImage} />

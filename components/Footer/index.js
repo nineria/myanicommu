@@ -1,81 +1,81 @@
-import Link from "next/link";
+import Link from 'next/link';
 // Components
-import { Text, Container, ActionIcon, Group, Divider } from "@mantine/core";
+import { ActionIcon, Container, Divider, Group, Text } from '@mantine/core';
 // Icons, Logo
+import MyAniLogo from 'components/Navbar/MyAniLogo';
+import { UserContext } from 'lib/context';
+import React, { useContext } from 'react';
 import {
-  BrandTwitter,
-  BrandInstagram,
   BrandFacebook,
   BrandGithub,
-} from "tabler-icons-react";
-import MyAniLogo from "components/Navbar/MyAniLogo";
-import { useContext } from "react";
-import { UserContext } from "lib/context";
+  BrandInstagram,
+  BrandTwitter,
+} from 'tabler-icons-react';
 
 export function Footer() {
   const { username } = useContext(UserContext);
 
   const data = [
     {
-      title: "ชุมชนคนรักอนิเมะ",
+      title: 'ชุมชนคนรักอนิเมะ',
       links: [
         {
-          label: "โพสต์ใหม่",
-          link: "/posts",
+          label: 'โพสต์ใหม่',
+          link: '/posts',
         },
         {
-          label: "ข่าวสาร",
-          link: "/news",
+          label: 'ข่าวสาร',
+          link: '/news',
         },
         {
-          label: "รีวิว",
-          link: "/reviews",
+          label: 'รีวิว',
+          link: '/reviews',
         },
         {
-          label: "Q&A ถามตอบ",
-          link: "/qandas",
+          label: 'Q&A ถามตอบ',
+          link: '/qandas',
         },
       ],
     },
     {
-      title: "จัดการข้อมูล",
+      title: 'จัดการข้อมูล',
       links: [
         {
-          label: "โปรไฟล์",
+          label: 'โปรไฟล์',
           link: `/${username}`,
         },
         {
-          label: "ตั้งค่า",
-          link: "/setting",
+          label: 'ตั้งค่า',
+          link: '/setting',
         },
         {
-          label: "คำถามที่พบบ่อย",
-          link: "/faq",
+          label: 'คำถามที่พบบ่อย',
+          link: '/faq',
         },
         {
-          label: "ออกจากระบบ",
-          link: "#",
+          label: 'ออกจากระบบ',
+          link: '#',
         },
       ],
     },
     {
-      title: "ข้อมูลเว็บไซต์",
+      title: 'ข้อมูลเว็บไซต์',
       links: [
         {
-          label: "จำนวนโพสต์ : " + "145K",
-          link: "#",
+          label: 'จำนวนโพสต์ : ' + '145K',
+          link: '#',
         },
         {
-          label: "จำนวนสมาชิก : " + "1M",
-          link: "#",
+          label: 'จำนวนสมาชิก : ' + '1M',
+          link: '#',
         },
         {
-          label: "-",
-          link: "#",
+          label: '-',
+          link: '#',
         },
         {
-          label: "-",
-          link: "#",
+          label: '-',
+          link: '#',
         },
       ],
     },

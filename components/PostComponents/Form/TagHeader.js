@@ -1,56 +1,55 @@
-// Components
-import { Badge, Group, InputWrapper, MultiSelect } from "@mantine/core";
-// Icons
-import { Tag } from "tabler-icons-react";
+import { Badge, Group, InputWrapper, MultiSelect } from '@mantine/core';
+import React from 'react';
+import { Tag } from 'tabler-icons-react';
 
 const tagsData = [
   {
-    label: "คำถาม",
+    label: 'คำถาม',
     value: {
-      label: "คำถาม",
+      label: 'คำถาม',
       color: {
-        from: "indigo",
-        to: "cyan",
+        from: 'indigo',
+        to: 'cyan',
       },
     },
   },
   {
-    label: "สปอย",
+    label: 'สปอย',
     value: {
-      label: "สปอย",
+      label: 'สปอย',
       color: {
-        from: "red",
-        to: "red",
+        from: 'red',
+        to: 'red',
       },
     },
   },
   {
-    label: "รีวิว",
+    label: 'รีวิว',
     value: {
-      label: "รีวิว",
+      label: 'รีวิว',
       color: {
-        from: "teal",
-        to: "lime",
+        from: 'teal',
+        to: 'lime',
       },
     },
   },
   {
-    label: "ข่าวสาร",
+    label: 'ข่าวสาร',
     value: {
-      label: "ข่าวสาร",
+      label: 'ข่าวสาร',
       color: {
-        from: "orange",
-        to: "red",
+        from: 'orange',
+        to: 'red',
       },
     },
   },
   {
-    label: "ปัญหา",
+    label: 'ปัญหา',
     value: {
-      label: "ปัญหา",
+      label: 'ปัญหา',
       color: {
-        from: "#000000",
-        to: "#434343",
+        from: '#000000',
+        to: '#434343',
       },
     },
   },

@@ -1,20 +1,21 @@
-import { Footer } from "@components/Footer";
+import { Footer } from '@components/Footer';
+import React from 'react';
 
-import HomeComponents from "@components/HomeComponents";
-import Metatags from "@components/Metatags";
-import Navbar from "@components/Navbar";
-import { firestore, postToJSON } from "@lib/firebase";
-import { useThemeContext } from "@lib/useTheme";
+import HomeComponents from '@components/HomeComponents';
+import Metatags from '@components/Metatags';
+import Navbar from '@components/Navbar';
+import { firestore, postToJSON } from '@lib/firebase';
+import { useThemeContext } from '@lib/useTheme';
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from 'react';
 
 // Max post to query per page
 const LIMIT = 10;
 
 export async function getServerSideProps() {
   const postsQuery = firestore
-    .collectionGroup("homePosts")
-    .orderBy("createdAt", "asc")
+    .collectionGroup('homePosts')
+    .orderBy('createdAt', 'asc')
     .limit(LIMIT);
 
   const homePosts = (await postsQuery.get()).docs.map(postToJSON);
@@ -25,15 +26,15 @@ export async function getServerSideProps() {
 }
 
 export default function HomePage(props) {
-  const [posts, setPosts] = useState(props.homePosts);
+  const [posts] = useState(props.homePosts);
 
   const { setTheme } = useThemeContext();
 
   useEffect(() => {
-    const localData = localStorage.getItem("themes");
+    const localData = localStorage.getItem('themes');
     if (localData == null) {
-      localStorage.setItem("themes", "red-light");
-      setTheme("red-light");
+      localStorage.setItem('themes', 'red-light');
+      setTheme('red-light');
     }
     setTheme(localData);
   }, [setTheme]);

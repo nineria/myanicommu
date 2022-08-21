@@ -1,9 +1,10 @@
-import Head from "next/head";
+import Head from 'next/head';
+import React from 'react';
 
 export default function Metatags({
-  title = "ยินดีต้อนรับสู่ MyAnimeCommunity!",
-  description = "รวมพลคนรักอนิเมะ พูดคุยแลกเปลี่ยนความรู้เกี่ยวกับ อนิเมะ มังงะ และ ไลท์โนเวล!",
-  image = "https://i.ibb.co/mhVXDPw/1.png",
+  title = 'ยินดีต้อนรับสู่ MyAnimeCommunity!',
+  description = 'รวมพลคนรักอนิเมะ พูดคุยแลกเปลี่ยนความรู้เกี่ยวกับ อนิเมะ มังงะ และ ไลท์โนเวล!',
+  image = 'https://i.ibb.co/mhVXDPw/1.png',
 }) {
   return (
     <Head>

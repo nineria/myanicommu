@@ -1,8 +1,8 @@
-import { UserContext } from "lib/context";
-import { Button, Group, Stack, Text } from "@mantine/core";
-import { useModals } from "@mantine/modals";
-import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import { Button, Group, Stack, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
+import { UserContext } from 'lib/context';
+import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
 
 export default function Verify(props) {
   const { username } = useContext(UserContext);
@@ -21,17 +21,17 @@ export default function Verify(props) {
             ลงบนเว็บไซต์ MyAnimeCommunity ได้
           </Text>
           <Text size="xs">
-            {`โปรดยืนยันตัวตนที่ \"แก้ไขรายละเอียด\" ณ โปรไฟล์ของผู้ใช้`}
+            โปรดยืนยันตัวตนที่ &quot;แก้ไขรายละเอียด&quot; ณ โปรไฟล์ของผู้ใช้
           </Text>
         </Stack>
       ),
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
       children: (
         <Stack size="xs">
           <Group position="right">

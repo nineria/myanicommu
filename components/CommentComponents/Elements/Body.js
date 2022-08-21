@@ -1,22 +1,21 @@
-import React, { useContext, useState } from "react";
-import { Button, Group, Modal, Stack, Text } from "@mantine/core";
+import { Button, Group, Modal, Stack, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
+import { showNotification } from '@mantine/notifications';
+import AdminCheck from 'hooks/AdminCheck';
+import AuthCheck from 'hooks/AuthCheck';
+import AuthorCheck from 'hooks/AuthorCheck';
+import { UserContext } from 'lib/context';
+import { auth, firestore } from 'lib/firebase';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   AlertTriangle,
   Edit as EditIcon,
   ThumbUp,
   Trash,
   X,
-} from "tabler-icons-react";
-import RichTextEditor from "utils/RichText";
-import { auth, firestore } from "lib/firebase";
-import Edit from "../Edit";
-import { UserContext } from "lib/context";
-import AuthorCheck from "hooks/AuthorCheck";
-import AdminCheck from "hooks/AdminCheck";
-import AuthCheck from "hooks/AuthCheck";
-import { useModals } from "@mantine/modals";
-import { showNotification } from "@mantine/notifications";
-import { useRouter } from "next/router";
+} from 'tabler-icons-react';
+import RichTextEditor from 'utils/RichText';
+import Edit from '../Edit';
 
 export default function Body({
   comment,
@@ -28,34 +27,40 @@ export default function Body({
   setLikeState,
 }) {
   const [opened, setOpened] = useState(false);
+  const [date, setDate] = useState(false);
 
   const { user } = useContext(UserContext);
 
   const modals = useModals();
-  const router = useRouter();
 
-  const timestamp = new Date(comment.updatedAt.seconds * 1000);
+  useEffect(() => {
+    const timestamp = new Date(comment.updatedAt.seconds * 1000);
 
-  const date = timestamp?.toLocaleDateString("th-th", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+    const date = timestamp?.toLocaleDateString('th-th', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+
+    setDate(date);
+  }, []);
+
+  // console.log(comment?.updatedAt);
 
   const handleLike = async () => {
     const uid = auth.currentUser.uid;
 
     let exist = false;
-    let change = "";
+    let change = '';
 
     const userStatistics = firestore
-      .collection("users")
+      .collection('users')
       .doc(post.uid)
-      .collection("posts")
+      .collection('posts')
       .doc(post.slug)
-      .collection("comments")
+      .collection('comments')
       .doc(comment.slug)
-      .collection("likes");
+      .collection('likes');
 
     const userStatisticsPosts = await (
       await userStatistics.get()
@@ -72,40 +77,40 @@ export default function Body({
     if (exist) {
       setLikeState(false);
 
-      const userStatistics = firestore.collection("statistics").doc(uid);
+      const userStatistics = firestore.collection('statistics').doc(uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
       await userStatistics.update({
         likes: userStatisticsPosts.likes - 1,
       });
 
       const ref = firestore
-        .collection("users")
+        .collection('users')
         .doc(post.uid)
-        .collection("posts")
+        .collection('posts')
         .doc(post.slug)
-        .collection("comments")
+        .collection('comments')
         .doc(comment.slug)
-        .collection("likes")
+        .collection('likes')
         .doc(change);
 
       await ref.delete();
       setLikes(likes - 1);
     } else {
       setLikeState(true);
-      const userStatistics = firestore.collection("statistics").doc(uid);
+      const userStatistics = firestore.collection('statistics').doc(uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
       await userStatistics.update({
         likes: userStatisticsPosts.likes + 1,
       });
 
       const ref = firestore
-        .collection("users")
+        .collection('users')
         .doc(post.uid)
-        .collection("posts")
+        .collection('posts')
         .doc(post.slug)
-        .collection("comments")
+        .collection('comments')
         .doc(comment.slug)
-        .collection("likes")
+        .collection('likes')
         .doc();
 
       await ref.set({
@@ -121,7 +126,7 @@ export default function Body({
   const handleAdminDelete = () => {
     const handleOnClick = async () => {
       const userStatistics = firestore
-        .collection("statistics")
+        .collection('statistics')
         .doc(comment.uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
       await userStatistics.update({
@@ -131,16 +136,14 @@ export default function Body({
       await commentRef.delete();
 
       showNotification({
-        color: "red",
-        title: "ลบคอมเมนต์แล้ว",
+        color: 'red',
+        title: 'ลบคอมเมนต์แล้ว',
         icon: <X size={18} />,
         classNames: {
-          root: "bg-foreground border-red-400",
+          root: 'bg-foreground border-red-400',
         },
       });
       modals.closeModal(id);
-
-      router.reload();
     };
     const id = modals.openModal({
       title: (
@@ -149,13 +152,13 @@ export default function Body({
           <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
       children: (
         <Stack size="xs">
           <Group position="right">
@@ -185,9 +188,9 @@ export default function Body({
       <Modal
         size="xl"
         classNames={{
-          modal: "bg-foreground",
-          overlay: "bg-background",
-          title: "text-title",
+          modal: 'bg-foreground',
+          overlay: 'bg-background',
+          title: 'text-title',
         }}
         opened={opened}
         closeOnClickOutside={false}
@@ -202,7 +205,7 @@ export default function Body({
         />
       </Modal>
       <Group position="apart">
-        {comment.createdAt.seconds !== comment.updatedAt.seconds ? (
+        {comment.createdAt?.seconds !== comment.updatedAt?.seconds ? (
           <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : {date}</p>
         ) : (
           <div />
@@ -241,7 +244,7 @@ export default function Body({
         readOnly
         value={comment?.content}
         classNames={{
-          root: "bg-transparent border-none text-title z-10 mb-2 md:mt-6",
+          root: 'bg-transparent border-none text-title z-10 mb-2 md:mt-6',
         }}
       />
       <AuthCheck fallback={<div />}>
@@ -258,12 +261,12 @@ export default function Body({
           <Group position="right">
             <div
               className={`flex flex-row gap-1 items-end hover:underline cursor-pointer ${
-                likeState ? "text-content" : "text-title"
+                likeState ? 'text-content' : 'text-title'
               }`}
               onClick={() => handleLike()}
             >
               <ThumbUp size={14} />
-              {likes}{" "}
+              {likes}{' '}
               {!likeState ? (
                 <p>ถูกใจ</p>
               ) : (

@@ -1,8 +1,7 @@
-// Components
-import { Divider, Group, Text } from "@mantine/core";
-import Themes from "./Theme";
-// Icons
-import { Settings } from "tabler-icons-react";
+import { Divider, Group, Text } from '@mantine/core';
+import React from 'react';
+import { Settings } from 'tabler-icons-react';
+import Themes from './Theme';
 
 export default function SettingComponents(props) {
   return (

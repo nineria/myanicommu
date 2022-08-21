@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "@mantine/hooks";
-import { Divider, Stack, LoadingOverlay, Modal } from "@mantine/core";
-import { getUserWithUsername } from "lib/firebase";
-import AuthCheck from "hooks/AuthCheck";
-import { showNotification } from "@mantine/notifications";
-import { Check } from "tabler-icons-react";
-import { useRouter } from "next/router";
-import AvatarAndBanner from "./AvatarAndBanner";
-import VerifyUser from "./VerifyUser";
-import ChangePassword from "./ChangePassword";
-import DeleteAccount from "./DeleteAccount";
-import ButtonControl from "./ButtonControl";
-import DeleteAccountForm from "./DeleteAccount/DeleteAccountForm";
+import { Divider, LoadingOverlay, Modal, Stack } from '@mantine/core';
+import { useForm } from '@mantine/hooks';
+import { showNotification } from '@mantine/notifications';
+import AuthCheck from 'hooks/AuthCheck';
+import { getUserWithUsername } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { Check } from 'tabler-icons-react';
+import AvatarAndBanner from './AvatarAndBanner';
+import ButtonControl from './ButtonControl';
+import ChangePassword from './ChangePassword';
+import DeleteAccount from './DeleteAccount';
+import DeleteAccountForm from './DeleteAccount/DeleteAccountForm';
+import VerifyUser from './VerifyUser';
 
 export default function EditProfile({ user, setOpened }) {
   const [userRef, setUserRef] = useState();
@@ -44,7 +44,6 @@ function ProfileForm({ user, userRef, setOpened }) {
 
   const [loading, setLoading] = useState(false);
 
-  const [editOpened, setEditOpened] = useState(false);
   const [openedConfirm, setOpenedConfirm] = useState(false);
 
   const HandleChange = async (values) => {
@@ -59,11 +58,11 @@ function ProfileForm({ user, userRef, setOpened }) {
     });
 
     showNotification({
-      color: "teal",
-      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+      color: 'teal',
+      title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
       icon: <Check size={18} />,
       classNames: {
-        root: "bg-foreground border-teal-400",
+        root: 'bg-foreground border-teal-400',
       },
     });
 
@@ -80,7 +79,7 @@ function ProfileForm({ user, userRef, setOpened }) {
       lastName: user.lastName,
       avatar: user.avatar,
       email: user.email,
-      phoneNumber: user?.phoneNumber || "",
+      phoneNumber: user?.phoneNumber || '',
       password: user.password,
     },
   });
@@ -96,9 +95,9 @@ function ProfileForm({ user, userRef, setOpened }) {
         closeOnClickOutside={false}
         centered
         classNames={{
-          modal: "bg-foreground",
-          overlay: "bg-background",
-          title: "text-title",
+          modal: 'bg-foreground',
+          overlay: 'bg-background',
+          title: 'text-title',
         }}
       >
         {openedConfirm && (
@@ -115,13 +114,13 @@ function ProfileForm({ user, userRef, setOpened }) {
         />
         <Divider label="ยืนยันตัวตน" labelPosition="center" />
         <VerifyUser
-          firstName={form.getInputProps("firstName")}
-          lastName={form.getInputProps("lastName")}
-          email={form.getInputProps("email")}
-          phoneNumber={form.getInputProps("phoneNumber")}
+          firstName={form.getInputProps('firstName')}
+          lastName={form.getInputProps('lastName')}
+          email={form.getInputProps('email')}
+          phoneNumber={form.getInputProps('phoneNumber')}
         />
         <Divider label="เปลี่ยนรหัสผ่าน" labelPosition="center" />
-        <ChangePassword password={form.getInputProps("password")} />
+        <ChangePassword password={form.getInputProps('password')} />
         <Divider label="ลบบัญชีส่วนบุคคล" labelPosition="center" />
         <DeleteAccount setOpenedConfirm={setOpenedConfirm} />
         <ButtonControl setOpened={setOpened} />

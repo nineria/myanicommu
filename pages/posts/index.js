@@ -1,31 +1,31 @@
-import Navbar from "@components/Navbar";
-import React, { useEffect, useState } from "react";
-import PostsMenuController from "@components/PostComponents/MenuController";
-import PostLayout from "@components/Card/CardLayout";
+import Announcement from '@components/Announcement';
+import PostLayout from '@components/Card/CardLayout';
+import { Footer } from '@components/Footer';
+import Metatags from '@components/Metatags';
+import Navbar from '@components/Navbar';
+import PostsMenuController from '@components/PostComponents/MenuController';
 import {
   Anchor,
   Breadcrumbs,
   Container,
   Pagination,
   Stack,
-} from "@mantine/core";
-import { Footer } from "@components/Footer";
-import { firestore, postToJSON } from "lib/firebase";
-import Metatags from "@components/Metatags";
-import Announcement from "@components/Announcement";
-import { useRouter } from "next/router";
+} from '@mantine/core';
+import { firestore, postToJSON } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 export async function getServerSideProps() {
   const postsQuery = firestore
-    .collectionGroup("posts")
-    .orderBy("createdAt", "desc");
+    .collectionGroup('posts')
+    .orderBy('createdAt', 'desc');
 
   const posts = (await postsQuery.get()).docs.map(postToJSON);
 
   const announcementsQuery = firestore
-    .collectionGroup("announcements")
-    .orderBy("createdAt", "desc")
-    .where("published", "==", true)
+    .collectionGroup('announcements')
+    .orderBy('createdAt', 'desc')
+    .where('published', '==', true)
     .limit(3);
 
   const announcements = (await announcementsQuery.get()).docs.map(postToJSON);
@@ -36,7 +36,7 @@ export async function getServerSideProps() {
 }
 
 export default function PostsPage(props) {
-  const [layout, setLayout] = useState("grid");
+  const [layout, setLayout] = useState('grid');
   const router = useRouter();
 
   const [posts, setPosts] = useState(props.posts);
@@ -44,22 +44,22 @@ export default function PostsPage(props) {
   const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
   const [postsPerPage] = useState(12);
 
-  useEffect(() => {
-    if (router.query.page) {
-      setCurrentPage(parseInt(router.query.page));
-    }
-    const fetchPosts = async () => {
-      setLoading(true);
-      const postsQuery = firestore
-        .collectionGroup("posts")
-        .orderBy("createdAt", "desc");
-      const posts = (await postsQuery.get()).docs.map(postToJSON);
-      setPosts(posts);
-      setLoading(false);
-    };
+  // useEffect(() => {
+  //   if (router.query.page) {
+  //     setCurrentPage(parseInt(router.query.page));
+  //   }
+  //   const fetchPosts = async () => {
+  //     setLoading(true);
+  //     const postsQuery = firestore
+  //       .collectionGroup("posts")
+  //       .orderBy("createdAt", "desc");
+  //     const posts = (await postsQuery.get()).docs.map(postToJSON);
+  //     setPosts(posts);
+  //     setLoading(false);
+  //   };
 
-    fetchPosts();
-  }, [router.query.page]);
+  //   fetchPosts();
+  // }, [router.query.page]);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -68,9 +68,9 @@ export default function PostsPage(props) {
   const totalPosts = Math.ceil(posts.length / postsPerPage);
 
   const items = [
-    { title: "หน้าหลัก", href: "/" },
-    { title: "โพสต์ทั้งหมด", href: "/posts" },
-    { title: "โพสต์ใหม่", href: "#" },
+    { title: 'หน้าหลัก', href: '/' },
+    { title: 'โพสต์ทั้งหมด', href: '/posts' },
+    { title: 'โพสต์ใหม่', href: '#' },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}
@@ -100,8 +100,8 @@ export default function PostsPage(props) {
                 }}
                 total={totalPosts}
                 classNames={{
-                  active: "bg-content",
-                  item: "bg-foreground",
+                  active: 'bg-content',
+                  item: 'bg-foreground',
                 }}
                 size="sm"
               />
@@ -123,8 +123,8 @@ export default function PostsPage(props) {
                 }}
                 total={totalPosts}
                 classNames={{
-                  active: "bg-content",
-                  item: "bg-foreground",
+                  active: 'bg-content',
+                  item: 'bg-foreground',
                 }}
                 size="sm"
               />
