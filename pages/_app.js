@@ -1,19 +1,19 @@
-import "../styles/globals.css";
-import { UserContext } from "../lib/context";
-import { useUserData } from "../lib/hooks";
-import ThemeProvider, { useThemeContext } from "@lib/useTheme";
-import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
-import { useCallback, useEffect, useState } from "react";
-import { ModalsProvider } from "@mantine/modals";
-import { NotificationsProvider } from "@mantine/notifications";
+import ThemeProvider, { useThemeContext } from '@lib/useTheme';
+import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { NotificationsProvider } from '@mantine/notifications';
+import React, { useCallback, useEffect, useState } from 'react';
+import { UserContext } from '../lib/context';
+import { useUserData } from '../lib/hooks';
+import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
-  const [colorScheme, setColorScheme] = useState("dark");
+  const [colorScheme, setColorScheme] = useState('dark');
 
   const toggleColorScheme = useCallback(
     (value) => {
-      setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+      setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
     },
     [colorScheme]
   );
@@ -22,17 +22,17 @@ function MyApp({ Component, pageProps }) {
 
   const handleToggleColorScheme = useCallback(
     (localData) => {
-      if (localData === "red-light") toggleColorScheme("light");
-      else toggleColorScheme("dark");
+      if (localData === 'red-light') toggleColorScheme('light');
+      else toggleColorScheme('dark');
     },
     [toggleColorScheme]
   );
 
   useEffect(() => {
-    const localData = localStorage.getItem("themes");
+    const localData = localStorage.getItem('themes');
     if (localData == null) {
-      localStorage.setItem("themes", "red-light");
-      setTheme("red-light");
+      localStorage.setItem('themes', 'red-light');
+      setTheme('red-light');
     }
     handleToggleColorScheme(localData);
     setTheme(localData);

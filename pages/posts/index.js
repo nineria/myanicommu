@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { firestore, postToJSON } from 'lib/firebase';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 export async function getServerSideProps() {
   const postsQuery = firestore
@@ -39,8 +39,8 @@ export default function PostsPage(props) {
   const [layout, setLayout] = useState('grid');
   const router = useRouter();
 
-  const [posts, setPosts] = useState(props.posts);
-  const [loading, setLoading] = useState(false);
+  const [posts] = useState(props.posts);
+  const [loading] = useState(false);
   const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
   const [postsPerPage] = useState(12);
 
