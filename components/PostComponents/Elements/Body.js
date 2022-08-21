@@ -263,7 +263,6 @@ export default function Body({
             รายงานโพสต์
           </div>
           <Group position="right">
-            {/* <Like postRef={postRef} /> */}
             <div
               className={`flex flex-row gap-1 items-end hover:underline cursor-pointer ${
                 likeState ? 'text-content' : 'text-title'

@@ -1,37 +1,37 @@
-import Announcement from "@components/Announcement";
-import Navbar from "@components/Navbar";
-import React, { useEffect, useState } from "react";
-import PostsMenuController from "@components/PostComponents/MenuController";
-import PostLayout from "@components/Card/CardLayout";
+import Announcement from '@components/Announcement';
+import PostLayout from '@components/Card/CardLayout';
+import { Footer } from '@components/Footer';
+import Metatags from '@components/Metatags';
+import Navbar from '@components/Navbar';
+import PostsMenuController from '@components/PostComponents/MenuController';
+import { firestore, postToJSON } from '@lib/firebase';
 import {
   Anchor,
   Breadcrumbs,
   Container,
   Pagination,
   Stack,
-} from "@mantine/core";
-import { Footer } from "@components/Footer";
-import { firestore, postToJSON } from "@lib/firebase";
-import Metatags from "@components/Metatags";
-import { useRouter } from "next/router";
+} from '@mantine/core';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 
 export async function getServerSideProps() {
   const postsQuery = firestore
-    .collectionGroup("posts")
-    .orderBy("createdAt", "desc");
+    .collectionGroup('posts')
+    .orderBy('createdAt', 'desc');
 
   const rawPosts = (await postsQuery.get()).docs.map(postToJSON);
 
   const posts = rawPosts
     .filter((post) => {
-      return post.tag[0].label === "คำถาม" ? true : false;
+      return post.tag[0].label === 'คำถาม' ? true : false;
     })
     .map((filtered) => filtered);
 
   const announcementsQuery = firestore
-    .collectionGroup("announcements")
-    .orderBy("createdAt", "desc")
-    .where("published", "==", true)
+    .collectionGroup('announcements')
+    .orderBy('createdAt', 'desc')
+    .where('published', '==', true)
     .limit(3);
 
   const announcements = (await announcementsQuery.get()).docs.map(postToJSON);
@@ -42,49 +42,23 @@ export async function getServerSideProps() {
 }
 
 export default function QAndAsPage(props) {
-  const [layout, setLayout] = useState("grid");
+  const [layout, setLayout] = useState('grid');
   const router = useRouter();
 
-  const [posts, setPosts] = useState(props.posts);
-  const [loading, setLoading] = useState(false);
+  const [posts] = useState(props.posts);
+  const [loading] = useState(false);
   const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
   const [postsPerPage] = useState(12);
 
-  useEffect(() => {
-    if (router.query.page) {
-      setCurrentPage(parseInt(router.query.page));
-    }
-    const fetchPosts = async () => {
-      setLoading(true);
-      const postsQuery = firestore
-        .collectionGroup("posts")
-        .orderBy("createdAt", "desc");
-
-      const rawPosts = (await postsQuery.get()).docs.map(postToJSON);
-
-      const posts = rawPosts
-        .filter((post) => {
-          return post.tag[0].label === "คำถาม" ? true : false;
-        })
-        .map((filtered) => filtered);
-
-      setPosts(posts);
-      setLoading(false);
-    };
-
-    fetchPosts();
-  }, [router.query.page]);
-
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  // const indexOfLastPost = currentPage * postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPosts = Math.ceil(posts.length / postsPerPage);
 
   const items = [
-    { title: "หน้าหลัก", href: "/" },
-    { title: "โพสต์ทั้งหมด", href: "/posts" },
-    { title: "คำถาม", href: "#" },
+    { title: 'หน้าหลัก', href: '/' },
+    { title: 'โพสต์ทั้งหมด', href: '/posts' },
+    { title: 'คำถาม', href: '#' },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}
@@ -108,25 +82,24 @@ export default function QAndAsPage(props) {
             {totalPosts > 1 && (
               <Pagination
                 page={currentPage}
-                onChange={(pageNumber) => {
-                  setCurrentPage(pageNumber);
-                  router.push(`qandas/?page=${pageNumber}`);
-                }}
+                // onChange={(pageNumber) => handlePageChange(pageNumber)}
                 total={totalPosts}
                 classNames={{
-                  active: "bg-content",
-                  item: "bg-foreground",
+                  active: 'bg-content',
+                  item: 'bg-foreground',
                 }}
                 size="sm"
               />
             )}
             <PostLayout
-              posts={currentPosts}
+              // posts={currentPosts}
+              posts={posts}
               layout={layout}
               loading={loading}
             />
+
             {posts.length < 1 && (
-              <div className="flex justify-center">ยังไม่มีโพสต์ 😭</div>
+              <div className="flex justify-center">ยังไม่มีโพสต์</div>
             )}
             {totalPosts > 1 && (
               <Pagination
@@ -137,8 +110,8 @@ export default function QAndAsPage(props) {
                 }}
                 total={totalPosts}
                 classNames={{
-                  active: "bg-content",
-                  item: "bg-foreground",
+                  active: 'bg-content',
+                  item: 'bg-foreground',
                 }}
                 size="sm"
               />

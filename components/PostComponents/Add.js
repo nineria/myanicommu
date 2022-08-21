@@ -1,27 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 // Hooks
-import { useForm, zodResolver } from "@mantine/form";
+import { useForm, zodResolver } from '@mantine/form';
 // Components
-import { LoadingOverlay, Stack } from "@mantine/core";
-import TagHeader from "./Form/TagHeader";
-import TagGenre from "./Form/TagGenre";
-import { PostHeader, RefCredit } from "./Form";
-import PostImage from "./Form/PostImage";
-import PostContent from "./Form/PostContent";
-import { ButtonControl } from "./Form/ButtonControl";
-import { UserContext } from "lib/context";
-import { auth, firestore, serverTimestamp } from "lib/firebase";
-import { useRouter } from "next/router";
-import WebsiteRule from "components/WebsiteRule";
-import { z } from "zod";
-import { showNotification } from "@mantine/notifications";
-import { Check, X } from "tabler-icons-react";
+import { LoadingOverlay, Stack } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
+import WebsiteRule from 'components/WebsiteRule';
+import { UserContext } from 'lib/context';
+import { auth, firestore, serverTimestamp } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import { Check, X } from 'tabler-icons-react';
+import { z } from 'zod';
+import { PostHeader, RefCredit } from './Form';
+import { ButtonControl } from './Form/ButtonControl';
+import PostContent from './Form/PostContent';
+import PostImage from './Form/PostImage';
+import TagGenre from './Form/TagGenre';
+import TagHeader from './Form/TagHeader';
 
 const schema = z.object({
   title: z
     .string()
-    .min(10, { message: "หัวข้อโพสต์ต้องมีอย่างน้อย 10 ตัวอักษร" })
-    .max(120, { message: "หัวข้อโพสต์ต้องไม่เกิน 120 ตัวอักษร" }),
+    .min(10, { message: 'หัวข้อโพสต์ต้องมีอย่างน้อย 10 ตัวอักษร' })
+    .max(120, { message: 'หัวข้อโพสต์ต้องไม่เกิน 120 ตัวอักษร' }),
 });
 
 export default function Add({ setOpened }) {
@@ -36,16 +36,16 @@ export default function Add({ setOpened }) {
   const [image, setImage] = useState();
 
   const HandleChange = async (values) => {
-    setLoading(true);
     const uid = auth.currentUser.uid;
-    const ref = firestore
-      .collection("users")
+    const ref = await firestore
+      .collection('users')
       .doc(uid)
-      .collection("posts")
+      .collection('posts')
       .doc();
 
     try {
-      const userStatistics = firestore.collection("statistics").doc(uid);
+      setLoading(true);
+      const userStatistics = firestore.collection('statistics').doc(uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
       await userStatistics.update({
         posts: userStatisticsPosts.posts + 1,
@@ -70,34 +70,35 @@ export default function Add({ setOpened }) {
       await ref.set(data);
 
       showNotification({
-        color: "teal",
-        title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+        color: 'teal',
+        title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
         icon: <Check size={18} />,
         classNames: {
-          root: "bg-foreground border-teal-400",
+          root: 'bg-foreground border-teal-400',
         },
       });
 
       router.replace(`posts/${username}/${ref.id}`);
       setLoading(false);
     } catch (error) {
+      setLoading(true);
       if (image === undefined || image === null) {
         showNotification({
-          color: "red",
-          title: "กรุณาใส่รูปภาพประจำโพสต์!",
+          color: 'red',
+          title: 'กรุณาใส่รูปภาพประจำโพสต์!',
           icon: <X size={18} />,
           classNames: {
-            root: "bg-foreground border-teal-400",
+            root: 'bg-foreground border-teal-400',
           },
         });
         setLoading(false);
       } else {
         showNotification({
-          color: "red",
-          title: "มีข้อผิดพลาดเกิดขึ้น! โปรดลองอีกครั้ง",
+          color: 'red',
+          title: 'มีข้อผิดพลาดเกิดขึ้น! โปรดลองอีกครั้ง',
           icon: <X size={18} />,
           classNames: {
-            root: "bg-foreground border-teal-400",
+            root: 'bg-foreground border-teal-400',
           },
         });
         setLoading(false);
@@ -108,18 +109,18 @@ export default function Add({ setOpened }) {
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
-      slug: "",
+      slug: '',
       tag: [],
       genre: [],
-      title: "",
-      content: "",
-      credit: "",
-      username: "",
-      updatedAt: "",
-      createdAt: "",
+      title: '',
+      content: '',
+      credit: '',
+      username: '',
+      updatedAt: '',
+      createdAt: '',
       stars: 0,
       likes: 0,
-      uid: "",
+      uid: '',
     },
   });
 
@@ -129,10 +130,10 @@ export default function Add({ setOpened }) {
       <Stack spacing="sm">
         <TagHeader data={tags} setData={setTags} />
         <TagGenre data={genres} setData={setGenres} />
-        <PostHeader {...form.getInputProps("title")} />
+        <PostHeader {...form.getInputProps('title')} />
         <PostImage image={image} setImage={setImage} />
-        <PostContent {...form.getInputProps("content")} />
-        <RefCredit {...form.getInputProps("credit")} />
+        <PostContent {...form.getInputProps('content')} />
+        <RefCredit {...form.getInputProps('credit')} />
         <WebsiteRule />
         <ButtonControl setOpened={setOpened} type="add" />
       </Stack>

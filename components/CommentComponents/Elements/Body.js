@@ -18,7 +18,7 @@ import RichTextEditor from 'utils/RichText';
 import Edit from '../Edit';
 
 export default function Body({
-  comment,
+  commentP,
   commentRef,
   post,
   likes,
@@ -27,6 +27,7 @@ export default function Body({
   setLikeState,
   fetchData,
 }) {
+  const [comment] = useState(commentP);
   const [opened, setOpened] = useState(false);
   const [date, setDate] = useState(false);
 
@@ -201,7 +202,7 @@ export default function Body({
         title="แก้ไขคอมเมนต์"
       >
         <Edit
-          comment={comment}
+          commentP={comment}
           commentRef={commentRef}
           setOpened={setOpened}
           post={post}

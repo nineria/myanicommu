@@ -44,9 +44,9 @@ export default function PostsPage(props) {
   const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
   const [postsPerPage] = useState(12);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  // const indexOfLastPost = currentPage * postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPosts = Math.ceil(posts.length / postsPerPage);
 
   const items = [

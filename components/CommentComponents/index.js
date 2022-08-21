@@ -5,17 +5,18 @@ import LeftMenu from './Elements/LeftMenu';
 import TopMenu from './Elements/TopMenu';
 import Layout from './Layout';
 
-export default function Comment({ post, comment, fetchData }) {
+export default function Comment(props) {
   const [commentRef, setCommentRef] = useState();
   const [likes, setLikes] = useState();
   const [likeState, setLikeState] = useState(false);
+  const [comment] = useState(props.comment);
 
   useEffect(() => {
     const getComments = async () => {
-      const userDoc = await getUserWithUsername(post.username);
+      const userDoc = await getUserWithUsername(props.post.username);
       const comments = await userDoc.ref
         .collection('posts')
-        .doc(post.slug)
+        .doc(props.post.slug)
         .collection('comments')
         .doc(comment.slug);
 
@@ -25,9 +26,9 @@ export default function Comment({ post, comment, fetchData }) {
     const getLikes = async () => {
       const userStatistics = firestore
         .collection('users')
-        .doc(post.uid)
+        .doc(props.post.uid)
         .collection('posts')
-        .doc(post.slug)
+        .doc(props.post.slug)
         .collection('comments')
         .doc(comment.slug)
         .collection('likes');
@@ -51,23 +52,23 @@ export default function Comment({ post, comment, fetchData }) {
 
     getLikes();
     getComments();
-  }, [post, comment]);
+  }, [props.post, comment]);
 
   return (
     <div className="bg-foreground rounded-sm">
       <Layout>
-        {post && <LeftMenu comment={comment} likes={likes} />}
-        {post && <TopMenu comment={comment} likes={likes} />}
-        {post && (
+        {props.post && <LeftMenu comment={comment} likes={likes} />}
+        {props.post && <TopMenu comment={comment} likes={likes} />}
+        {props.post && (
           <Body
-            comment={comment}
+            commentP={comment}
             commentRef={commentRef}
-            post={post}
+            post={props.post}
             likes={likes}
             setLikes={setLikes}
             likeState={likeState}
             setLikeState={setLikeState}
-            fetchData={fetchData}
+            fetchData={props.fetchData}
           />
         )}
       </Layout>

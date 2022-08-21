@@ -55,7 +55,7 @@ const tagsData = [
   },
 ];
 
-export default function TagHeader({ data, setData }) {
+export default function TagHeader({ data, setData, setIsTagHeaderValid }) {
   const tag =
     data &&
     data.map((item, index) => {
@@ -86,7 +86,10 @@ export default function TagHeader({ data, setData }) {
       <MultiSelect
         required
         data={tagsData}
-        onChange={(value) => setData(value)}
+        onChange={(value) => {
+          setData(value);
+          setIsTagHeaderValid(true);
+        }}
         placeholder="เลือกประเภทของโพสต์"
       />
     </InputWrapper>

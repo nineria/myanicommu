@@ -6,8 +6,7 @@ import WebsiteRule from 'components/WebsiteRule';
 import AuthCheck from 'hooks/AuthCheck';
 import { UserContext } from 'lib/context';
 import { firestore, serverTimestamp } from 'lib/firebase';
-import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Check, X } from 'tabler-icons-react';
 import RichTextEditor from 'utils/RichText';
 
@@ -28,30 +27,9 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error('Upload failed')));
   });
 
-export default function Edit({
-  comment,
-  commentRef,
-  setOpened,
-  post,
-  fetchData,
-}) {
-  return (
-    <AuthCheck>
-      {comment && (
-        <CommentForm
-          comment={comment}
-          commentRef={commentRef}
-          setOpened={setOpened}
-          post={post}
-          fetchData={fetchData}
-        />
-      )}
-    </AuthCheck>
-  );
-}
-
-function CommentForm({ comment, commentRef, setOpened, fetchData }) {
+export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
   const { userData } = useContext(UserContext);
+  const [comment] = useState(commentP);
 
   const modals = useModals();
 
@@ -160,58 +138,62 @@ function CommentForm({ comment, commentRef, setOpened, fetchData }) {
   };
 
   return (
-    <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
-      <InputWrapper
-        label="คอมเมนต์"
-        description="แก้ไขรายระเอียดคอมเมนต์ เช่น ข้อความ รูปภาพ วิดีโอ รวมไปถึง Link ต่างๆ"
-      >
-        <RichTextEditor
-          controls={[
-            ['bold', 'italic', 'underline', 'link'],
-            ['h3', 'h4'],
-            ['image', 'video'],
-          ]}
-          sticky={true}
-          stickyOffset={-55}
-          {...form.getInputProps('content')}
-          placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
-          onImageUpload={handleImageUpload}
-          classNames={{
-            root: 'bg-black/5 text-title border-[#fff] border-opacity-20',
-            toolbar: 'bg-foreground text-title',
-            toolbarControl:
-              'bg-foreground border-title border-opacity-20 hover:bg-background',
-          }}
-        />
-      </InputWrapper>
-
-      <WebsiteRule />
-
-      <Group mt="sm" position="apart">
-        <Button
-          size="xs"
-          className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-          onClick={handleDelete}
-        >
-          ลบ
-        </Button>
-        <Group spacing="xs" position="right">
-          <Button
-            size="xs"
-            onClick={() => handleCancel()}
-            className="bg-background text-title hover:bg-background hover:opacity-75"
+    <AuthCheck>
+      {comment && (
+        <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
+          <InputWrapper
+            label="คอมเมนต์"
+            description="แก้ไขรายระเอียดคอมเมนต์ เช่น ข้อความ รูปภาพ วิดีโอ รวมไปถึง Link ต่างๆ"
           >
-            ยกเลิก
-          </Button>
-          <Button
-            type="submit"
-            size="xs"
-            className="bg-green-500 hover:bg-green-500 hover:opacity-75"
-          >
-            ยืนยัน
-          </Button>
-        </Group>
-      </Group>
-    </form>
+            <RichTextEditor
+              controls={[
+                ['bold', 'italic', 'underline', 'link'],
+                ['h3', 'h4'],
+                ['image', 'video'],
+              ]}
+              sticky={true}
+              stickyOffset={-55}
+              {...form.getInputProps('content')}
+              placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
+              onImageUpload={handleImageUpload}
+              classNames={{
+                root: 'bg-black/5 text-title border-[#fff] border-opacity-20',
+                toolbar: 'bg-foreground text-title',
+                toolbarControl:
+                  'bg-foreground border-title border-opacity-20 hover:bg-background',
+              }}
+            />
+          </InputWrapper>
+
+          <WebsiteRule />
+
+          <Group mt="sm" position="apart">
+            <Button
+              size="xs"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              onClick={handleDelete}
+            >
+              ลบ
+            </Button>
+            <Group spacing="xs" position="right">
+              <Button
+                size="xs"
+                onClick={() => handleCancel()}
+                className="bg-background text-title hover:bg-background hover:opacity-75"
+              >
+                ยกเลิก
+              </Button>
+              <Button
+                type="submit"
+                size="xs"
+                className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+              >
+                ยืนยัน
+              </Button>
+            </Group>
+          </Group>
+        </form>
+      )}
+    </AuthCheck>
   );
 }
