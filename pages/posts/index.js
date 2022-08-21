@@ -44,24 +44,6 @@ export default function PostsPage(props) {
   const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
   const [postsPerPage] = useState(12);
 
-  // useEffect(() => {
-  //   if (router.query.page) {
-  //     setCurrentPage(parseInt(router.query.page));
-  //   }
-  //   const fetchPosts = async () => {
-  //     setLoading(true);
-  //     const postsQuery = firestore
-  //       .collectionGroup("posts")
-  //       .orderBy("createdAt", "desc");
-  //     const posts = (await postsQuery.get()).docs.map(postToJSON);
-  //     setPosts(posts);
-  //     setLoading(false);
-  //   };
-
-  //   fetchPosts();
-  // }, [router.query.page]);
-
-  // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -81,6 +63,11 @@ export default function PostsPage(props) {
     <Announcement key={index} {...item} />
   ));
 
+  // const handlePageChange = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  //   router.replace(`posts/?page=${pageNumber}`);
+  // };
+
   return (
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
@@ -94,10 +81,7 @@ export default function PostsPage(props) {
             {totalPosts > 1 && (
               <Pagination
                 page={currentPage}
-                onChange={(pageNumber) => {
-                  setCurrentPage(pageNumber);
-                  router.push(`posts/?page=${pageNumber}`);
-                }}
+                // onChange={(pageNumber) => handlePageChange(pageNumber)}
                 total={totalPosts}
                 classNames={{
                   active: 'bg-content',
@@ -107,10 +91,12 @@ export default function PostsPage(props) {
               />
             )}
             <PostLayout
-              posts={currentPosts}
+              // posts={currentPosts}
+              posts={posts}
               layout={layout}
               loading={loading}
             />
+
             {posts.length < 1 && (
               <div className="flex justify-center">ยังไม่มีโพสต์</div>
             )}

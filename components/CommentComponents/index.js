@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { auth, firestore, getUserWithUsername } from "lib/firebase";
-import Layout from "./Layout";
-import LeftMenu from "./Elements/LeftMenu";
-import TopMenu from "./Elements/TopMenu";
-import Body from "./Elements/Body";
+import { auth, firestore, getUserWithUsername } from 'lib/firebase';
+import React, { useEffect, useState } from 'react';
+import Body from './Elements/Body';
+import LeftMenu from './Elements/LeftMenu';
+import TopMenu from './Elements/TopMenu';
+import Layout from './Layout';
 
-export default function Comment({ post, comment }) {
+export default function Comment({ post, comment, fetchData }) {
   const [commentRef, setCommentRef] = useState();
   const [likes, setLikes] = useState();
   const [likeState, setLikeState] = useState(false);
@@ -14,9 +14,9 @@ export default function Comment({ post, comment }) {
     const getComments = async () => {
       const userDoc = await getUserWithUsername(post.username);
       const comments = await userDoc.ref
-        .collection("posts")
+        .collection('posts')
         .doc(post.slug)
-        .collection("comments")
+        .collection('comments')
         .doc(comment.slug);
 
       setCommentRef(comments);
@@ -24,13 +24,13 @@ export default function Comment({ post, comment }) {
 
     const getLikes = async () => {
       const userStatistics = firestore
-        .collection("users")
+        .collection('users')
         .doc(post.uid)
-        .collection("posts")
+        .collection('posts')
         .doc(post.slug)
-        .collection("comments")
+        .collection('comments')
         .doc(comment.slug)
-        .collection("likes");
+        .collection('likes');
 
       const userStatisticsPosts = await (
         await userStatistics.get()
@@ -67,6 +67,7 @@ export default function Comment({ post, comment }) {
             setLikes={setLikes}
             likeState={likeState}
             setLikeState={setLikeState}
+            fetchData={fetchData}
           />
         )}
       </Layout>

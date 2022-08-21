@@ -25,6 +25,7 @@ export default function Body({
   setLikes,
   likeState,
   setLikeState,
+  fetchData,
 }) {
   const [opened, setOpened] = useState(false);
   const [date, setDate] = useState(false);
@@ -135,6 +136,8 @@ export default function Body({
 
       await commentRef.delete();
 
+      fetchData();
+
       showNotification({
         color: 'red',
         title: 'ลบคอมเมนต์แล้ว',
@@ -202,6 +205,7 @@ export default function Body({
           commentRef={commentRef}
           setOpened={setOpened}
           post={post}
+          fetchData={fetchData}
         />
       </Modal>
       <Group position="apart">

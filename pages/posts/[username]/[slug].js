@@ -65,35 +65,31 @@ export default function PostPage(props) {
 
   const [comments, setComments] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const userDoc = await getUserWithUsername(post.username);
+  const fetchData = async () => {
+    const userDoc = await getUserWithUsername(post.username);
+    try {
+      let comments;
+      const response = await userDoc.ref
+        .collection('posts')
+        .doc(post.slug)
+        .collection('comments')
+        .get();
 
-      try {
-        let comments;
-        const response = await userDoc.ref
-          .collection('posts')
-          .doc(post.slug)
-          .collection('comments')
-          .get();
+      comments = await JSON.stringify(response.docs.map((doc) => doc.data()));
+      comments = await JSON.parse(comments);
+      setComments(comments);
 
-        comments = await JSON.stringify(response.docs.map((doc) => doc.data()));
-
-        comments = await JSON.parse(comments);
-
-        setComments(comments);
-
-        let data = { title: 'not found' };
-
-        if (response.exists) {
-          data = response.data();
-          console.log(data);
-        }
-      } catch (err) {
-        console.error(err);
+      let data = { title: 'not found' };
+      if (response.exists) {
+        data = response.data();
+        console.log(data);
       }
-    };
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -146,7 +142,12 @@ export default function PostPage(props) {
               <Stack spacing="xs">
                 {comments &&
                   comments.map((item, index) => (
-                    <Comment key={index} post={post} comment={item} />
+                    <Comment
+                      key={index}
+                      post={post}
+                      comment={item}
+                      fetchData={fetchData}
+                    />
                   ))}
               </Stack>
             </Stack>
@@ -182,7 +183,11 @@ export default function PostPage(props) {
               )
             }
           >
-            <CreateComment post={post} />
+            <CreateComment
+              post={post}
+              comments={comments}
+              setComments={setComments}
+            />
           </AuthCheck>
         </Stack>
       </Container>

@@ -28,7 +28,13 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error('Upload failed')));
   });
 
-export default function Edit({ comment, commentRef, setOpened, post }) {
+export default function Edit({
+  comment,
+  commentRef,
+  setOpened,
+  post,
+  fetchData,
+}) {
   return (
     <AuthCheck>
       {comment && (
@@ -37,14 +43,14 @@ export default function Edit({ comment, commentRef, setOpened, post }) {
           commentRef={commentRef}
           setOpened={setOpened}
           post={post}
+          fetchData={fetchData}
         />
       )}
     </AuthCheck>
   );
 }
 
-function CommentForm({ comment, commentRef, setOpened }) {
-  const router = useRouter();
+function CommentForm({ comment, commentRef, setOpened, fetchData }) {
   const { userData } = useContext(UserContext);
 
   const modals = useModals();
@@ -63,6 +69,8 @@ function CommentForm({ comment, commentRef, setOpened }) {
       updateAt: serverTimestamp(),
     });
 
+    fetchData();
+
     showNotification({
       color: 'teal',
       title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
@@ -71,8 +79,6 @@ function CommentForm({ comment, commentRef, setOpened }) {
         root: 'bg-foreground border-teal-400',
       },
     });
-
-    router.reload();
 
     setOpened(false);
   };
@@ -101,6 +107,8 @@ function CommentForm({ comment, commentRef, setOpened }) {
 
       await commentRef.delete();
 
+      fetchData();
+
       showNotification({
         color: 'red',
         title: 'ลบคอมเมนต์แล้ว',
@@ -109,10 +117,8 @@ function CommentForm({ comment, commentRef, setOpened }) {
           root: 'bg-foreground border-red-400',
         },
       });
+
       modals.closeModal(id);
-
-      router.reload();
-
       setOpened(false);
     };
     const id = modals.openModal({

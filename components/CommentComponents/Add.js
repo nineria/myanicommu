@@ -31,7 +31,7 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error('Upload failed')));
   });
 
-export default function Add({ post }) {
+export default function Add({ post, comments, setComments }) {
   const modals = useModals();
   const { userData } = useContext(UserContext);
   const [value, onChange] = useState('');
@@ -98,6 +98,8 @@ export default function Add({ post }) {
     };
 
     await ref.set(data);
+
+    setComments([...comments, data]);
 
     showNotification({
       color: 'teal',
