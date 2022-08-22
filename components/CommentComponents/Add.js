@@ -27,7 +27,7 @@ const handleImageUpload = (image) =>
       }
     )
       .then((response) => response.json())
-      .then((result) => resolve(result.data.url))
+      .then((result) => resolve(result.data.medium.url))
       .catch(() => reject(new Error('Upload failed')));
   });
 
