@@ -13,7 +13,7 @@ import { ChevronUp, Edit as EditIcon } from 'tabler-icons-react';
 export default function Body({ today, homePosts, disabled }) {
   const { user } = useContext(UserContext);
 
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   const [opened, setOpened] = useState(false);
 
