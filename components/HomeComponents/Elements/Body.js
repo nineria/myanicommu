@@ -13,15 +13,17 @@ import { ChevronUp, Edit as EditIcon } from 'tabler-icons-react';
 export default function Body({ today, homePosts, disabled }) {
   const { user } = useContext(UserContext);
 
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.setItem)
+    if (localStorage.getItem(homePosts.title) == null) {
       localStorage.setItem(homePosts?.title | 'title', JSON.stringify(toggle));
-    var getIsToggle = localStorage.getItem(homePosts.title);
-    setToggle(JSON.parse(getIsToggle));
+    } else {
+      var getIsToggle = localStorage.getItem(homePosts.title);
+      setToggle(JSON.parse(getIsToggle));
+    }
   }, [toggle]);
 
   const handleToggle = (toggle) => {
