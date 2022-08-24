@@ -55,16 +55,16 @@ const tagsData = [
   },
 ];
 
-export default function TagHeader({ data, setData, setIsTagHeaderValid }) {
+export default function TagHeader({ data, setData }) {
   const tag =
     data &&
     data.map((item, index) => {
       return (
         <Badge
           key={index}
-          variant="gradient"
+          variant='gradient'
           gradient={{ from: item.color?.from, to: item.color?.to, deg: 30 }}
-          className="text-[#fff]"
+          className='text-[#fff]'
         >
           {item.label}
         </Badge>
@@ -74,23 +74,20 @@ export default function TagHeader({ data, setData, setIsTagHeaderValid }) {
   return (
     <InputWrapper
       label={
-        <Group spacing="xs">
+        <Group spacing='xs'>
           <Tag size={14} /> ประเภทของโพสต์
         </Group>
       }
-      description="เลือกประเภทของโพสต์ มากกว่า หรืออย่างใดอย่างหนึ่ง"
+      description='เลือกประเภทของโพสต์ มากกว่า หรืออย่างใดอย่างหนึ่ง'
     >
-      <Group spacing="xs" mb="xs">
+      <Group spacing='xs' mb='xs'>
         {tag}
       </Group>
       <MultiSelect
         required
         data={tagsData}
-        onChange={(value) => {
-          setData(value);
-          setIsTagHeaderValid(true);
-        }}
-        placeholder="เลือกประเภทของโพสต์"
+        onChange={(value) => setData(value)}
+        placeholder='เลือกประเภทของโพสต์'
       />
     </InputWrapper>
   );
