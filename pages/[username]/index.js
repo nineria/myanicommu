@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Animate } from "react-simple-animate";
-import { UserContext } from "lib/context";
-import Navbar from "@components/Navbar";
-import { Container } from "@mantine/core";
-import { Footer } from "@components/Footer";
-import AuthCheck from "hooks/AuthCheck";
-import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
-import { useThemeContext } from "@lib/useTheme";
-import { useRouter } from "next/router";
-import Metatags from "@components/Metatags";
-import ProfileComponents from "@components/ProfileComponents";
+import { Footer } from '@components/Footer';
+import Metatags from '@components/Metatags';
+import Navbar from '@components/Navbar';
+import ProfileComponents from '@components/ProfileComponents';
+import { firestore, getUserWithUsername, postToJSON } from '@lib/firebase';
+import { useThemeContext } from '@lib/useTheme';
+import { Container } from '@mantine/core';
+import AuthCheck from 'hooks/AuthCheck';
+import { UserContext } from 'lib/context';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useState } from 'react';
+import { Animate } from 'react-simple-animate';
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -24,17 +24,17 @@ export async function getServerSideProps({ query }) {
 
   if (userDoc) {
     user = postToJSON(userDoc);
-    const postsQuery = userDoc.ref.collection("posts");
+    const postsQuery = userDoc.ref.collection('posts');
     posts = (await postsQuery.get()).docs.map(postToJSON);
 
-    const usersRef = firestore.collection("users");
+    const usersRef = firestore.collection('users');
 
     users = (await usersRef.get()).docs.map(postToJSON);
 
-    const userStatistics = firestore.collection("statistics").doc(userDoc.id);
+    const userStatistics = firestore.collection('statistics').doc(userDoc.id);
     statistics = (await userStatistics.get()).data();
 
-    const usersStatistics = firestore.collection("statistics");
+    const usersStatistics = firestore.collection('statistics');
     statisticsAdmin = (await usersStatistics.get()).docs.map((doc) =>
       doc.data()
     );
@@ -61,11 +61,11 @@ export default function UserProfilePage({
   const [userRef, setUserRef] = useState();
 
   useEffect(() => {
-    if (!user || !posts) router.push("/");
-    const localData = localStorage.getItem("themes");
+    if (!user || !posts) router.push('/');
+    const localData = localStorage.getItem('themes');
     if (localData == null) {
-      localStorage.setItem("themes", "red-light");
-      setTheme("red-light");
+      localStorage.setItem('themes', 'red-light');
+      setTheme('red-light');
     }
 
     const getUserRef = async () => {
@@ -102,18 +102,18 @@ export default function UserProfilePage({
 
   return (
     <AuthCheck>
-      <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
-        <Navbar page="/profile" isBusy />
+      <div className='bg-background text-accent min-h-[1024px] mb-[235px] pb-10'>
+        <Navbar page='/profile' isBusy />
         <Metatags />
-        <Container size="lg">
+        <Container size='lg'>
           {username && user && posts && (
             <Animate
               play
               start={{
-                transform: "translateY(1%)",
-                opacity: "0",
+                transform: 'translateY(1%)',
+                opacity: '0',
               }}
-              end={{ transform: "translateY(0%)", opacity: "1" }}
+              end={{ transform: 'translateY(0%)', opacity: '1' }}
             >
               <ProfileComponents
                 user={user}

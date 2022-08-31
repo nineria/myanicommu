@@ -1,5 +1,3 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { firestore, serverTimestamp } from "lib/firebase";
 import {
   Button,
   Checkbox,
@@ -7,15 +5,17 @@ import {
   PasswordInput,
   Stack,
   TextInput,
-} from "@mantine/core";
-import { Mail } from "tabler-icons-react";
-import { UserContext } from "lib/context";
-import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
-import AgreeWebsiteRule from "../WebsiteRule/AgreeWebsiteRule";
-import PrivacyPolicy from "../PrivacyPolicy";
-import debounce from "lodash.debounce";
-import { UsernameMessage } from ".";
+} from '@mantine/core';
+import { useForm, zodResolver } from '@mantine/form';
+import { UserContext } from 'lib/context';
+import { firestore, serverTimestamp } from 'lib/firebase';
+import debounce from 'lodash.debounce';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { Mail } from 'tabler-icons-react';
+import { z } from 'zod';
+import { UsernameMessage } from '.';
+import PrivacyPolicy from '../PrivacyPolicy';
+import AgreeWebsiteRule from '../WebsiteRule/AgreeWebsiteRule';
 
 const REGEX = {
   length: /.{8,}/,
@@ -27,55 +27,55 @@ const REGEX = {
 
 const schema = z
   .object({
-    firstName: z.string().min(1, { message: "กรุณากรอกชื่อจริง" }),
-    lastName: z.string().min(1, { message: "กรุณากรอกนามสกุล" }),
-    username: z.string().min(1, { message: "กรุณากรอกชื่อผู้ใช้" }),
-    email: z.string().email({ message: "อีเมลไม่ถูกต้อง" }),
+    firstName: z.string().min(1, { message: 'กรุณากรอกชื่อจริง' }),
+    lastName: z.string().min(1, { message: 'กรุณากรอกนามสกุล' }),
+    username: z.string().min(1, { message: 'กรุณากรอกชื่อผู้ใช้' }),
+    email: z.string().email({ message: 'อีเมลไม่ถูกต้อง' }),
     password: z
       .string()
       .regex(REGEX.length, {
-        message: "ความยาวของรหัสผ่านต้องมากกว่าหรือเท่ากับ 8 ตัวอักษร",
+        message: 'ความยาวของรหัสผ่านต้องมากกว่าหรือเท่ากับ 8 ตัวอักษร',
       })
       .regex(REGEX.uppercase, {
-        message: "รหัสผ่านต้องมีตัวพิมพ์ใหญ่อย่างน้อยหนึ่งตัว",
+        message: 'รหัสผ่านต้องมีตัวพิมพ์ใหญ่อย่างน้อยหนึ่งตัว',
       })
       .regex(REGEX.lowercase, {
-        message: "รหัสผ่านต้องมีตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว",
+        message: 'รหัสผ่านต้องมีตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว',
       })
       .regex(REGEX.numeric, {
-        message: "รหัสผ่านต้องมีตัวเลขอย่างน้อยหนึ่งตัว",
+        message: 'รหัสผ่านต้องมีตัวเลขอย่างน้อยหนึ่งตัว',
       })
       .regex(REGEX.special, {
-        message: "รหัสผ่านต้องมีอักขระพิเศษอย่างน้อยหนึ่งตัว",
+        message: 'รหัสผ่านต้องมีอักขระพิเศษอย่างน้อยหนึ่งตัว',
       }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "รหัสผ่านไม่ตรงกัน",
-    path: ["confirmPassword"],
+    message: 'รหัสผ่านไม่ตรงกัน',
+    path: ['confirmPassword'],
   });
 
 export function RegisterForm() {
   const { user } = useContext(UserContext);
 
-  const [formValue, setFormValue] = useState("");
+  const [formValue, setFormValue] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const setDefaultRank = async (uid) => {
     const ref = firestore
-      .collection("users")
+      .collection('users')
       .doc(`${uid}`)
-      .collection("ranks")
+      .collection('ranks')
       .doc();
 
     const setRank = {
       slug: ref.id,
       color: {
-        form: "#36D1DC",
-        to: "#5B86E5",
+        form: '#36D1DC',
+        to: '#5B86E5',
       },
-      label: "สมาชิกใหม่",
+      label: 'สมาชิกใหม่',
     };
 
     await ref.set(setRank);
@@ -87,7 +87,7 @@ export function RegisterForm() {
 
     const usernameDoc = firestore.doc(`usernames/${formValue}`);
 
-    const userStatistics = firestore.collection("statistics").doc(user.uid);
+    const userStatistics = firestore.collection('statistics').doc(user.uid);
 
     // Commit both docs together as a batch write.
     const batch = firestore.batch();
@@ -96,7 +96,7 @@ export function RegisterForm() {
       firstName: displayName[0],
       lastName: displayName[1],
       username: formValue,
-      email: values.email || "",
+      email: values.email || '',
       avatar: user?.photoURL,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -146,44 +146,44 @@ export function RegisterForm() {
     []
   );
 
-  const displayName = user?.displayName.split(" ") || "";
+  const displayName = user?.displayName.split(' ') || '';
 
   const form = useForm({
     schema: !user && zodResolver(schema),
     initialValues: {
-      firstName: "",
-      lastName: "",
-      username: "",
-      avatar: "",
-      image: "",
-      email: user?.email || user?.providerData[0].email || "",
-      password: "",
-      confirmPassword: "",
+      firstName: '',
+      lastName: '',
+      username: '',
+      avatar: '',
+      image: '',
+      email: user?.email || user?.providerData[0].email || '',
+      password: '',
+      confirmPassword: '',
       websiteRule: false,
       privacyPolicy: false,
-      rule: "สมาชิก",
+      rule: 'สมาชิก',
     },
   });
 
   return (
     <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-      <Stack spacing="md">
+      <Stack spacing='md'>
         {!user && (
           <Group grow>
             <TextInput
-              label="ชื่อจริง"
-              {...form.getInputProps("firstName")}
-              placeholder="ชื่อจริงของคุณ"
+              label='ชื่อจริง'
+              {...form.getInputProps('firstName')}
+              placeholder='ชื่อจริงของคุณ'
               classNames={{
-                input: "bg-accent bg-opacity-50",
+                input: 'bg-accent bg-opacity-50',
               }}
             />
             <TextInput
-              label="นามสกุล"
-              {...form.getInputProps("lastName")}
-              placeholder="นามสกุลของคุณ"
+              label='นามสกุล'
+              {...form.getInputProps('lastName')}
+              placeholder='นามสกุลของคุณ'
               classNames={{
-                input: "bg-accent bg-opacity-50",
+                input: 'bg-accent bg-opacity-50',
               }}
             />
           </Group>
@@ -191,11 +191,11 @@ export function RegisterForm() {
 
         <TextInput
           required
-          label="ชื่อผู้ใช้"
+          label='ชื่อผู้ใช้'
           // {...form.getInputProps("username")}
-          placeholder="ชื่อผู้ใช้ของคุณ"
+          placeholder='ชื่อผู้ใช้ของคุณ'
           classNames={{
-            input: "bg-accent bg-opacity-50",
+            input: 'bg-accent bg-opacity-50',
           }}
           value={formValue}
           onChange={onChange}
@@ -210,51 +210,51 @@ export function RegisterForm() {
         {!user && (
           <>
             <TextInput
-              label="อีเมล (Email)"
+              label='อีเมล (Email)'
               icon={<Mail size={20} />}
-              {...form.getInputProps("email")}
-              placeholder="อีเมลของคุณ"
+              {...form.getInputProps('email')}
+              placeholder='อีเมลของคุณ'
               classNames={{
-                input: "bg-accent bg-opacity-50",
+                input: 'bg-accent bg-opacity-50',
               }}
             />
             <PasswordInput
-              label="รหัสผ่าน"
-              placeholder="รหัสผ่านของคุณ"
-              {...form.getInputProps("password")}
+              label='รหัสผ่าน'
+              placeholder='รหัสผ่านของคุณ'
+              {...form.getInputProps('password')}
               classNames={{
-                input: "bg-accent bg-opacity-50",
+                input: 'bg-accent bg-opacity-50',
               }}
             />
             <PasswordInput
-              label="ยืนยันรหัสผ่าน"
-              placeholder="ยืนยันรหัสผ่านของคุณ"
-              {...form.getInputProps("confirmPassword")}
+              label='ยืนยันรหัสผ่าน'
+              placeholder='ยืนยันรหัสผ่านของคุณ'
+              {...form.getInputProps('confirmPassword')}
               classNames={{
-                input: "bg-accent bg-opacity-50",
+                input: 'bg-accent bg-opacity-50',
               }}
             />
           </>
         )}
-        <Stack my="md">
+        <Stack my='md'>
           <Checkbox
             required
-            size="xs"
-            {...form.getInputProps("websiteRule")}
+            size='xs'
+            {...form.getInputProps('websiteRule')}
             label={<AgreeWebsiteRule />}
           />
           <Checkbox
             required
-            size="xs"
-            {...form.getInputProps("privacyPolicy")}
+            size='xs'
+            {...form.getInputProps('privacyPolicy')}
             label={<PrivacyPolicy />}
           />
         </Stack>
         <Button
-          size="sm"
-          type="submit"
+          size='sm'
+          type='submit'
           fullWidth
-          className="bg-content hover:bg-content hover:opacity-75"
+          className='bg-content hover:bg-content hover:opacity-75'
         >
           ลงทะเบียน
         </Button>
