@@ -98,7 +98,7 @@ export default function PostPage(props) {
     { title: 'โพสต์ทั้งหมด', href: '/posts' },
     { title: post.slug, href: '#' },
   ].map((item, index) => (
-    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+    <Anchor size='sm' color='dimmed' href={item.href} key={index}>
       {item.title}
     </Anchor>
   ));
@@ -107,23 +107,24 @@ export default function PostPage(props) {
   const description = post.content.replace(regex, '');
 
   return (
-    <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
+    <div className='bg-background min-h-[1024px] mb-[235px] pb-10'>
       <Metatags
         title={post.title}
         image={post.image}
         description={description}
       />
       <Navbar />
-      <Container size="lg">
-        <Stack spacing="xs">
-          <Breadcrumbs separator="→" className="truncate">
+      <Container size='lg'>
+        <Stack spacing='xs'>
+          <Breadcrumbs separator='→' className='truncate'>
             {items}
           </Breadcrumbs>
           <Top data={post} />
-          <Group position="apart">
+          <Group position='apart'>
             <Pagination
               total={2}
-              size="sm"
+              my={2}
+              size='sm'
               page={activePage}
               onChange={setPage}
               classNames={{
@@ -137,9 +138,9 @@ export default function PostPage(props) {
             </AuthCheck> */}
           </Group>
           {activePage === 1 ? (
-            <Stack spacing="xs">
+            <Stack spacing='xs'>
               <PostComponents post={post} postRef={postRef} />
-              <Stack spacing="xs">
+              <Stack spacing='xs'>
                 {comments &&
                   comments.map((item, index) => (
                     <Comment
@@ -152,11 +153,12 @@ export default function PostPage(props) {
               </Stack>
             </Stack>
           ) : (
-            <Stack spacing="xs"></Stack>
+            <Stack spacing='xs'></Stack>
           )}
           <Pagination
             total={2}
-            size="sm"
+            size='sm'
+            my={6}
             page={activePage}
             onChange={setPage}
             classNames={{
@@ -170,11 +172,11 @@ export default function PostPage(props) {
               username ? (
                 <Loading />
               ) : (
-                <div className="flex flex-col justify-center bg-foreground rounded-sm py-10">
-                  <Text className="text-title text-center">
+                <div className='flex flex-col justify-center bg-foreground rounded-sm py-10'>
+                  <Text className='text-title text-center'>
                     เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ
                   </Text>
-                  <Text className="text-title text-center mb-5">
+                  <Text className='text-title text-center mb-5'>
                     <Logo />
                     และอื่น ๆ อีกมากมาย!
                   </Text>

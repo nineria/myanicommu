@@ -24,30 +24,35 @@ export default function Comment(props) {
     };
 
     const getLikes = async () => {
-      const userStatistics = firestore
-        .collection('users')
-        .doc(props.post.uid)
-        .collection('posts')
-        .doc(props.post.slug)
-        .collection('comments')
-        .doc(comment.slug)
-        .collection('likes');
+      try {
+        const userStatistics = firestore
+          .collection('users')
+          .doc(props.post.uid)
+          .collection('posts')
+          .doc(props.post.slug)
+          .collection('comments')
+          .doc(comment.slug)
+          .collection('likes');
 
-      const userStatisticsPosts = await (
-        await userStatistics.get()
-      ).docs.map((data) => data.data());
+        const userStatisticsPosts = await (
+          await userStatistics.get()
+        ).docs.map((data) => data.data());
 
-      const uid = auth.currentUser.uid;
+        const uid = auth.currentUser.uid;
 
-      userStatisticsPosts.map((like) => {
-        if (like.uid === uid) {
-          setLikeState(true);
-          return;
-        }
-      });
+        userStatisticsPosts.map((like) => {
+          if (like.uid === uid) {
+            setLikeState(true);
+            return;
+          }
+        });
 
-      if (userStatisticsPosts.length === 0) setLikes(0);
-      else setLikes(userStatisticsPosts.length);
+        if (userStatisticsPosts.length === 0) setLikes(0);
+        else setLikes(userStatisticsPosts.length);
+      } catch (err) {
+        console.log('error: ', err);
+        return;
+      }
     };
 
     getLikes();
@@ -55,7 +60,7 @@ export default function Comment(props) {
   }, [props.post, comment]);
 
   return (
-    <div className="bg-foreground rounded-sm">
+    <div className='bg-foreground rounded-sm'>
       <Layout>
         {props.post && <LeftMenu comment={comment} likes={likes} />}
         {props.post && <TopMenu comment={comment} likes={likes} />}

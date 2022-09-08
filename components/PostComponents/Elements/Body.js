@@ -139,8 +139,8 @@ export default function Body({
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">คุณต้องการลบโพสต์นี้หรือไม่?</Text>
-          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+          <Text size='sm'>คุณต้องการลบโพสต์นี้หรือไม่?</Text>
+          <Text size='xs'>การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
       zIndex: '999',
@@ -151,19 +151,19 @@ export default function Body({
       },
       size: 'sm',
       children: (
-        <Stack size="xs">
-          <Group position="right">
+        <Stack size='xs'>
+          <Group position='right'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              size="xs"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
+              size='xs'
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
             </Button>
             <Button
-              type="submit"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              size="xs"
+              type='submit'
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+              size='xs'
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -175,15 +175,15 @@ export default function Body({
   };
 
   return (
-    <div className="relative p-2 text-title text-opacity-90 w-full ">
-      <Group position="apart">
+    <div className='relative p-2 text-title text-opacity-90 w-full'>
+      <Group position='apart'>
         {post.createdAt?.seconds !== post.updatedAt?.seconds ? (
-          <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : {date}</p>
+          <p className='text-xs opacity-80 mb-2'>แก้ไขล่าสุด : {date}</p>
         ) : (
           <div />
         )}
         <Modal
-          size="xl"
+          size='xl'
           classNames={{
             modal: 'bg-foreground',
             overlay: 'bg-background',
@@ -192,19 +192,19 @@ export default function Body({
           closeOnClickOutside={false}
           opened={opened}
           onClose={() => setOpened(false)}
-          title="แก้ไขโพสต์"
+          title='แก้ไขโพสต์'
         >
           <Edit post={post} postRef={postRef} setOpened={setOpened} />
         </Modal>
-        <Group spacing="xs" className="z-20">
+        <Group spacing='xs' className='z-20'>
           <AuthorCheck username={post.username}>
             <Button
               onClick={() => setOpened(true)}
               leftIcon={<EditIcon size={14} />}
               compact
-              className="bg-foreground text-title hover:bg-content hover:text-[#fff]"
-              variant="default"
-              size="xs"
+              className='bg-foreground text-title hover:bg-content hover:text-[#fff]'
+              variant='default'
+              size='xs'
             >
               แก้ไข
             </Button>
@@ -215,9 +215,9 @@ export default function Body({
                 onClick={() => handleAdminDelete()}
                 leftIcon={<Trash size={14} />}
                 compact
-                className="bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
-                variant="default"
-                size="xs"
+                className='bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75'
+                variant='default'
+                size='xs'
               >
                 ลบเนื้อหา
               </Button>
@@ -225,7 +225,7 @@ export default function Body({
           )}
         </Group>
       </Group>
-      <Image src={post.image} alt={post.image} my="xs" radius="sm" />
+      <Image src={post.image} alt={post.image} my='xs' radius='sm' />
       <RichTextEditor
         readOnly
         value={post.content}
@@ -234,8 +234,8 @@ export default function Body({
         }}
       />
 
-      <Space h="50px" />
-      <p className="absolute select-none bottom-20 right-6 font-bold leading-none uppercase opacity-[0.03] text-[120px] md:text-[150px] text-right tracking-tighter">
+      <Space h='50px' />
+      <p className='absolute select-none bottom-20 right-6 font-bold leading-none uppercase opacity-[0.03] text-[120px] md:text-[150px] text-right tracking-tighter'>
         {post.tag[0]?.label === 'คำถาม'
           ? 'QUESTION'
           : post.tag[0]?.label === 'รีวิว'
@@ -246,7 +246,7 @@ export default function Body({
           ? 'NEWS'
           : 'OTHER'}
       </p>
-      <span className="text-title text-sm">
+      <span className='text-title text-sm'>
         ที่มา: {post.credit === '<p><br></p>' && 'Original'}
       </span>
       <RichTextEditor
@@ -257,12 +257,12 @@ export default function Body({
         }}
       />
       <AuthCheck fallback={<div />}>
-        <Group position="apart" className="text-xs px-2" my="xs">
-          <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+        <Group position='apart' className='text-xs px-2' my='xs'>
+          <div className='flex flex-row gap-1 items-end hover:underline cursor-pointer '>
             <AlertTriangle size={14} />
             รายงานโพสต์
           </div>
-          <Group position="right">
+          <Group position='right'>
             <div
               className={`flex flex-row gap-1 items-end hover:underline cursor-pointer ${
                 likeState ? 'text-content' : 'text-title'
@@ -274,7 +274,7 @@ export default function Body({
               {!likeState ? (
                 <p>ถูกใจ</p>
               ) : (
-                <p className="text-content">เลิกถูกใจ</p>
+                <p className='text-content'>เลิกถูกใจ</p>
               )}
             </div>
           </Group>

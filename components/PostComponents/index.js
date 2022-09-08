@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { auth, firestore, getUserWithUsername } from "lib/firebase";
+import { auth, firestore, getUserWithUsername } from 'lib/firebase';
 
-import LeftMenu from "./Elements/LeftMenu";
-import Layout from "./Layout";
-import TopMenu from "./Elements/TopMenu";
-import Body from "./Elements/Body";
+import Body from './Elements/Body';
+import LeftMenu from './Elements/LeftMenu';
+import TopMenu from './Elements/TopMenu';
+import Layout from './Layout';
 
 export default function PostComponents({ post, postRef }) {
   const [userRanks, setUserRanks] = useState(null);
@@ -19,7 +19,7 @@ export default function PostComponents({ post, postRef }) {
 
       let ranks = null;
 
-      const ranksRef = await userDoc.ref.collection("ranks").get();
+      const ranksRef = await userDoc.ref.collection('ranks').get();
       ranks = await JSON.stringify(ranksRef.docs.map((doc) => doc.data()));
 
       ranks = JSON.parse(ranks);
@@ -31,11 +31,11 @@ export default function PostComponents({ post, postRef }) {
 
     const getStars = async () => {
       const userStatistics = firestore
-        .collection("users")
+        .collection('users')
         .doc(post.uid)
-        .collection("posts")
+        .collection('posts')
         .doc(post.slug)
-        .collection("stars");
+        .collection('stars');
 
       const userStatisticsPosts = await (
         await userStatistics.get()
@@ -49,11 +49,11 @@ export default function PostComponents({ post, postRef }) {
 
     const getLikes = async () => {
       const userStatistics = firestore
-        .collection("users")
+        .collection('users')
         .doc(post.uid)
-        .collection("posts")
+        .collection('posts')
         .doc(post.slug)
-        .collection("likes");
+        .collection('likes');
 
       const userStatisticsPosts = await (
         await userStatistics.get()
@@ -78,7 +78,7 @@ export default function PostComponents({ post, postRef }) {
   }, [post]);
 
   return (
-    <div className="bg-foreground rounded-sm">
+    <div className='bg-foreground rounded-sm my-2 sm:my-0'>
       <Layout>
         {post && (
           <LeftMenu

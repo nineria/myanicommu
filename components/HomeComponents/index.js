@@ -33,8 +33,8 @@ export default function HomeComponents({ homePosts }) {
   }, []);
 
   return (
-    <Container size="lg">
-      <div className={` mt-2 text-white w-full`}>
+    <Container size='lg'>
+      <div className={`mt-2 text-white w-full`}>
         <Animate
           play
           start={{
@@ -43,17 +43,17 @@ export default function HomeComponents({ homePosts }) {
           }}
           end={{ transform: 'translateY(0%)', opacity: '1' }}
         >
-          <div className="flex flex-col gap-2">
+          <div className='flex flex-col gap-2'>
             {/* Add home post */}
             {user && (
               <AdminCheck>
-                <div className="flex flex-row justify-between w-full ">
+                <div className='flex flex-row justify-between w-full '>
                   <Modal
-                    size="lg"
+                    size='lg'
                     opened={opened}
                     onClose={() => setOpened(false)}
                     closeOnClickOutside={false}
-                    title="สร้างโพสต์ - หน้าหลัก"
+                    title='สร้างโพสต์ - หน้าหลัก'
                     centered
                     classNames={{
                       modal: 'bg-foreground',
@@ -65,9 +65,9 @@ export default function HomeComponents({ homePosts }) {
                   </Modal>
                   <Button
                     onClick={() => setOpened(true)}
-                    className="bg-content text-[#fff] hover:bg-content hover:opacity-75 "
-                    variant="default"
-                    size="xs"
+                    className='bg-content text-[#fff] hover:bg-content hover:opacity-75 '
+                    variant='default'
+                    size='xs'
                   >
                     สร้างโพสต์ +
                   </Button>
@@ -78,7 +78,7 @@ export default function HomeComponents({ homePosts }) {
             {newPostToday && <Post today homePosts={newPostToday} />}
 
             {/* Display home post */}
-            <div className="flex flex-col gap-2">
+            <div className='block space-y-2 mt-2 sm:mt-0'>
               {homePosts &&
                 homePosts.map((post, index) => (
                   <Post key={index} homePosts={post} />
