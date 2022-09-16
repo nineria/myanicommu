@@ -100,6 +100,7 @@ export default function PostsPage(props) {
             {posts.length < 1 && (
               <div className='flex justify-center'>ยังไม่มีโพสต์</div>
             )}
+
             {totalPosts > 1 && (
               <Pagination
                 page={currentPage}
