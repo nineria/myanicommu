@@ -36,9 +36,9 @@ export default function UserRanks({ user, userRanks }) {
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">
-            คุณต้องการถอดแรงค์ <span className="text-content">{label}</span> ของ{' '}
-            <span className="text-content">{user.username}</span> ออกหรือไม่?
+          <Text size='sm'>
+            คุณต้องการถอดแรงค์ <span className='text-content'>{label}</span> ของ{' '}
+            <span className='text-content'>{user.username}</span> ออกหรือไม่?
           </Text>
         </Stack>
       ),
@@ -51,19 +51,19 @@ export default function UserRanks({ user, userRanks }) {
       },
       size: 'sm',
       children: (
-        <Stack size="xs">
-          <Group position="right">
+        <Stack size='xs'>
+          <Group position='right'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              size="xs"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
+              size='xs'
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
             </Button>
             <Button
-              type="submit"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              size="xs"
+              type='submit'
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+              size='xs'
               onClick={() => handleOnClick()}
             >
               ถอดแรงค์
@@ -75,21 +75,22 @@ export default function UserRanks({ user, userRanks }) {
   };
 
   return (
-    <div className="flex flex-row flex-wrap justify-center items-center gap-2">
+    <div className='flex flex-row flex-wrap justify-center items-center gap-2'>
       {userRanks &&
         userRanks.map((rank, index) => (
           <AdminCheck
             key={index}
             fallback={
               <Badge
-                variant="gradient"
+                variant='gradient'
                 gradient={{
                   from: rank.color.from,
                   to: rank.color.to,
                   deg: 35,
                 }}
-                className="shadow-md"
-                size="lg"
+                className='shadow-md'
+                size='lg'
+                radius='sm'
               >
                 {rank.label}
               </Badge>
@@ -100,18 +101,18 @@ export default function UserRanks({ user, userRanks }) {
               rightSection={
                 <X
                   size={16}
-                  className="cursor-pointer"
+                  className='cursor-pointer '
                   onClick={() => removeUserRank(rank.slug, rank.label)}
                 />
               }
-              variant="gradient"
+              variant='gradient'
               gradient={{
                 from: rank.color.from,
                 to: rank.color.to,
                 deg: 35,
               }}
-              className="shadow-md"
-              size="lg"
+              className='shadow-md'
+              size='lg'
             >
               {rank.label}
             </Badge>

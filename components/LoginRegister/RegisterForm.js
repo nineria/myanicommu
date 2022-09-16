@@ -71,11 +71,11 @@ export function RegisterForm() {
 
     const setRank = {
       slug: ref.id,
-      color: {
-        form: '#36D1DC',
-        to: '#5B86E5',
-      },
       label: 'สมาชิกใหม่',
+      color: {
+        from: '#5C3D2E',
+        to: '#5C3D2E',
+      },
     };
 
     await ref.set(setRank);

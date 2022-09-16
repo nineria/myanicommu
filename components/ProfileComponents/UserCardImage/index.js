@@ -1,6 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 // Components
-import { Avatar, Button, Card, Group, Modal, Stack, Text } from '@mantine/core';
+import {
+  Avatar,
+  Button,
+  Card,
+  Modal,
+  Space,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
 // Components
 import Report from 'components/Report';
 import { UserContext } from 'lib/context';
@@ -50,24 +59,33 @@ export default function UserCardImage({ user, posts, statistics }) {
         </div>
       )}
 
-      <div className='flex md:flex-row flex-col md:justify-between justify-center py-4'>
-        <Group spacing='xl'>
+      <div className='flex md:flex-row flex-col md:justify-around justify-center py-4'>
+        <Stack spacing='xl' align='center'>
           <Avatar
             src={user.avatar}
-            size={130}
-            radius={130}
-            mt={-80}
+            size={150}
+            radius={150}
+            mt={-100}
             className='border-2 border-[#fff]'
           />
           <div className='block'>
-            <Text align='left' size='xl' weight={500}>
+            <Title order={2} align='center' weight={500}>
               {user.username}
-            </Text>
-            <Text align='left' size='md' className='opacity-50'>
+            </Title>
+            <Text align='center' size='md' className='opacity-50'>
               {user.firstName} {user.lastName}
             </Text>
           </div>
-        </Group>
+        </Stack>
+      </div>
+
+      <Stack spacing='sm'>
+        <UserRanks user={user} userRanks={userRanks} />
+
+        {statistics && <Statistics statistics={statistics} />}
+
+        <Space h='md' />
+
         {username === user.username && (
           <Button
             className='border-title md:my-0 my-10 text-title hover:opacity-75'
@@ -79,12 +97,6 @@ export default function UserCardImage({ user, posts, statistics }) {
             แก้ไขรายละเอียด
           </Button>
         )}
-      </div>
-
-      <Stack spacing='sm'>
-        <UserRanks user={user} userRanks={userRanks} />
-
-        {statistics && <Statistics statistics={statistics} />}
 
         <Modal
           size='xl'

@@ -1,4 +1,3 @@
-import { firestore, getUserWithUsername } from "lib/firebase";
 import {
   Badge,
   Button,
@@ -8,59 +7,60 @@ import {
   Modal,
   MultiSelect,
   Stack,
-} from "@mantine/core";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { Plus } from "tabler-icons-react";
+} from '@mantine/core';
+import { firestore, getUserWithUsername } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { Plus } from 'tabler-icons-react';
 
 const ranksData = [
   {
-    label: "ผู้กล้า",
+    label: 'ผู้กล้า',
     value: {
-      label: "ผู้กล้า",
+      label: 'ผู้กล้า',
       color: {
-        from: "#FF416C",
-        to: "#FF4B2B",
+        from: '#393E46',
+        to: '#393E46',
       },
     },
   },
   {
-    label: "นายทุน",
+    label: 'นายทุน',
     value: {
-      label: "นายทุน",
+      label: 'นายทุน',
       color: {
-        from: "#FDFC47",
-        to: "#24FE41",
+        from: '#E1D89F',
+        to: '#D89216',
       },
     },
   },
   {
-    label: "สมาชิกใหม่",
+    label: 'สมาชิกใหม่',
     value: {
-      label: "สมาชิกใหม่",
+      label: 'สมาชิกใหม่',
       color: {
-        from: "#36D1DC",
-        to: "#5B86E5",
+        from: '#5C3D2E',
+        to: '#5C3D2E',
       },
     },
   },
   {
-    label: "ผู้ดูแลระบบ",
+    label: 'ผู้ดูแลระบบ',
     value: {
-      label: "ผู้ดูแลระบบ",
+      label: 'ผู้ดูแลระบบ',
       color: {
-        from: "#CAC531",
-        to: "#F3F9A7",
+        from: '#FF004D',
+        to: '#9D0B28',
       },
     },
   },
   {
-    label: "นักเขียนรีวิวมือหนึ่ง",
+    label: 'นักเขียนรีวิวมือหนึ่ง',
     value: {
-      label: "นักเขียนรีวิวมือหนึ่ง",
+      label: 'นักเขียนรีวิวมือหนึ่ง',
       color: {
-        from: "#093028",
-        to: "#237A57",
+        from: '#237A57',
+        to: '#093028',
       },
     },
   },
@@ -82,9 +82,9 @@ export default function GiveUserRanks({ user, userRanks }) {
 
     const setRanks = async (item) => {
       const ref = firestore
-        .collection("users")
+        .collection('users')
         .doc(`${uid.id}`)
-        .collection("ranks")
+        .collection('ranks')
         .doc();
 
       const data = {
@@ -113,10 +113,10 @@ export default function GiveUserRanks({ user, userRanks }) {
     userRanks.map((rank) => (
       <Badge
         key={rank.label}
-        variant="gradient"
+        variant='gradient'
         gradient={{ from: rank.color.from, to: rank.color.to, deg: 35 }}
-        className="shadow-md"
-        size="lg"
+        className='shadow-md'
+        size='lg'
       >
         {rank.label}
       </Badge>
@@ -130,41 +130,41 @@ export default function GiveUserRanks({ user, userRanks }) {
         onClose={() => setOpened(false)}
         title={`เพิ่มแรงค์ของ ${user.username}!`}
         classNames={{
-          modal: "bg-foreground",
-          overlay: "bg-background",
-          title: "text-title",
+          modal: 'bg-foreground',
+          overlay: 'bg-background',
+          title: 'text-title',
         }}
       >
         <Stack>
           <LoadingOverlay visible={loading} />
           <InputWrapper
             label={`แรงค์ของ ${user.username}`}
-            description="แรงค์ทั้งหมดจะแสดงที่นี่"
+            description='แรงค์ทั้งหมดจะแสดงที่นี่'
           >
-            <Group spacing="xs">{ranks}</Group>
+            <Group spacing='xs'>{ranks}</Group>
           </InputWrapper>
           <InputWrapper>
             <MultiSelect
               required
               data={ranksData}
               onChange={(value) => setRank(value)}
-              label="แรงค์ทั้งหมดที่สามารถเพิ่มได้"
-              placeholder="เลือกแรงค์ที่นี่"
+              label='แรงค์ทั้งหมดที่สามารถเพิ่มได้'
+              placeholder='เลือกแรงค์ที่นี่'
             />
           </InputWrapper>
-          <Group mt="md" position="right">
-            <Group spacing="xs" position="right">
+          <Group mt='md' position='right'>
+            <Group spacing='xs' position='right'>
               <Button
-                size="xs"
+                size='xs'
                 onClick={() => setOpened(false)}
-                className="bg-background text-title hover:bg-background hover:opacity-75"
+                className='bg-background text-title hover:bg-background hover:opacity-75'
               >
                 ยกเลิก
               </Button>
               <Button
-                type="submit"
-                size="xs"
-                className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+                type='submit'
+                size='xs'
+                className='bg-green-500 hover:bg-green-500 hover:opacity-75'
                 onClick={() => handleChangeRank()}
               >
                 ยืนยัน
@@ -175,10 +175,10 @@ export default function GiveUserRanks({ user, userRanks }) {
       </Modal>
 
       <Badge
-        variant="outline"
-        size="lg"
+        variant='outline'
+        size='lg'
         radius={100}
-        className="cursor-pointer active:translate-y-[1px] select-none border-title text-title"
+        className='cursor-pointer active:translate-y-[1px] select-none border-title text-title'
         leftSection={<Plus size={14} />}
         onClick={() => setOpened(true)}
       >
