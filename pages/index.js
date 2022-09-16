@@ -7,7 +7,7 @@ import Navbar from '@components/Navbar';
 import { firestore, postToJSON } from '@lib/firebase';
 import { useThemeContext } from '@lib/useTheme';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 // Max post to query per page
 const LIMIT = 10;
@@ -20,14 +20,24 @@ export async function getServerSideProps() {
 
   const homePosts = (await postsQuery.get()).docs.map(postToJSON);
 
+  const postsReviewQuery = firestore
+    .collectionGroup('posts')
+    .orderBy('createdAt', 'desc');
+
+  const rawPosts = (await postsReviewQuery.get()).docs.map(postToJSON);
+
+  const reviewPosts = rawPosts
+    .filter((post) => {
+      return post.tag[0].label === 'รีวิว' ? true : false;
+    })
+    .map((filtered) => filtered);
+
   return {
-    props: { homePosts }, // will be passed to the page component as props
+    props: { homePosts, reviewPosts }, // will be passed to the page component as props
   };
 }
 
 export default function HomePage(props) {
-  const [posts] = useState(props.homePosts);
-
   const { setTheme } = useThemeContext();
 
   useEffect(() => {
@@ -41,10 +51,13 @@ export default function HomePage(props) {
 
   return (
     <>
-      <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
+      <div className='bg-background min-h-[1024px] mb-[235px] pb-10'>
         <Navbar />
         <Metatags />
-        <HomeComponents homePosts={posts} />
+        <HomeComponents
+          homePosts={props.homePosts}
+          reviewPosts={props.reviewPosts}
+        />
       </div>
       <Footer />
     </>
