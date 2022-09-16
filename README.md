@@ -28,6 +28,14 @@ $PROJECT_ROOT
 ├── lib
 │   # Static files for images, video, 3d model etc.
 └── public
+│   # User identifier
+└── hooks
+│   # Constants data
+└── constants
+│   # Firebase and Context stuff
+└── lib
+│   # Tools
+└── utils
 ```
 
 ## License
