@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 // Components
-import Add from "components/PostComponents/Add";
 import {
   Box,
   Button,
@@ -10,15 +9,16 @@ import {
   Modal,
   SegmentedControl,
   Tooltip,
-} from "@mantine/core";
+} from '@mantine/core';
+import Add from 'components/PostComponents/Add';
 // Icons
-import { Edit, LayoutGrid, ListDetails } from "tabler-icons-react";
-import AuthCheck from "hooks/AuthCheck";
-import { UserContext } from "lib/context";
-import AdminCheck from "hooks/AdminCheck";
-import AddAnnouncement from "components/Announcement/Add";
-import Link from "next/link";
-import Verify from "components/Verify";
+import AddAnnouncement from 'components/Announcement/Add';
+import Verify from 'components/Verify';
+import AdminCheck from 'hooks/AdminCheck';
+import AuthCheck from 'hooks/AuthCheck';
+import { UserContext } from 'lib/context';
+import Link from 'next/link';
+import { Edit, LayoutGrid, ListDetails } from 'tabler-icons-react';
 
 export default function PostsMenuController({ layout, setLayout }) {
   const { user, userData, username } = useContext(UserContext);
@@ -26,31 +26,31 @@ export default function PostsMenuController({ layout, setLayout }) {
   const [opened, setOpened] = useState(false);
 
   return (
-    <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
+    <div className='flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md'>
       <Modal
-        size="xl"
+        size='xl'
         classNames={{
-          modal: "bg-foreground",
-          overlay: "bg-background",
-          title: "text-title",
+          modal: 'bg-foreground',
+          overlay: 'bg-background',
+          title: 'text-title',
         }}
         opened={opened}
         closeOnClickOutside={false}
         onClose={() => setOpened(false)}
-        title="สร้างโพสต์"
+        title='สร้างโพสต์'
       >
         <Add setOpened={setOpened} />
       </Modal>
-      <Group spacing="xs">
+      <Group spacing='xs'>
         <AuthCheck fallback={<></>}>
-          {userData && userData.email === "" ? (
+          {userData && userData.email === '' ? (
             <Verify>สร้างโพสต์ +</Verify>
           ) : (
             <Button
               onClick={() => setOpened(true)}
-              className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-              variant="default"
-              size="xs"
+              className='bg-content text-[#fff] hover:bg-content hover:opacity-75'
+              variant='default'
+              size='xs'
             >
               สร้างโพสต์ +
             </Button>
@@ -59,29 +59,29 @@ export default function PostsMenuController({ layout, setLayout }) {
           {/* Create New Announcement */}
           {user && (
             <AdminCheck>
-              <Divider orientation="vertical" mx="none" />
+              <Divider orientation='vertical' mx='none' />
               <AddAnnouncement />
               <Link href={`/${username}#announcementControl`}>
                 <Button
                   leftIcon={<Edit size={14} />}
-                  className="md:block hidden z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
-                  variant="default"
-                  size="xs"
+                  className='md:block hidden z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75'
+                  variant='default'
+                  size='xs'
                 >
                   จัดการประกาศ
                 </Button>
               </Link>
               <Tooltip
-                className="md:hidden block "
-                label="จัดการประกาศ"
-                placement="start"
+                className='md:hidden block '
+                label='จัดการประกาศ'
+                placement='start'
                 withArrow
               >
                 <Link href={`/${username}#announcementControl`}>
                   <Button
-                    className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
-                    variant="default"
-                    size="xs"
+                    className='z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75'
+                    variant='default'
+                    size='xs'
                   >
                     <Edit size={14} />
                   </Button>
@@ -91,34 +91,34 @@ export default function PostsMenuController({ layout, setLayout }) {
           )}
         </AuthCheck>
       </Group>
-      <Group position="center">
+      <Group position='center'>
         <SegmentedControl
-          size="xs"
+          size='xs'
           value={layout}
           onChange={(e) => setLayout(e)}
           classNames={{
-            root: "bg-background",
-            label: "text-title",
-            active: "bg-foreground",
+            root: 'bg-background',
+            label: 'text-title',
+            active: 'bg-foreground',
           }}
           data={[
             {
-              value: "grid",
+              value: 'grid',
               label: (
                 <Center>
                   <LayoutGrid size={16} />
-                  <Box ml={5} className="md:block hidden">
+                  <Box ml={5} className='md:block hidden'>
                     GRID
                   </Box>
                 </Center>
               ),
             },
             {
-              value: "list",
+              value: 'list',
               label: (
                 <Center>
                   <ListDetails size={16} />
-                  <Box ml={5} className="md:block hidden">
+                  <Box ml={5} className='md:block hidden'>
                     LIST
                   </Box>
                 </Center>

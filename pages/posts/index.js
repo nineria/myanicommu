@@ -54,7 +54,7 @@ export default function PostsPage(props) {
     { title: 'โพสต์ทั้งหมด', href: '/posts' },
     { title: 'โพสต์ใหม่', href: '#' },
   ].map((item, index) => (
-    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+    <Anchor size='sm' color='dimmed' href={item.href} key={index}>
       {item.title}
     </Anchor>
   ));
@@ -70,12 +70,12 @@ export default function PostsPage(props) {
 
   return (
     <>
-      <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
+      <div className='bg-background text-white min-h-[1024px] mb-[235px] pb-10'>
         <Metatags />
-        <Navbar page="/posts" />
-        <Container size="lg">
-          <Stack spacing="xs">
-            <Breadcrumbs separator="→">{items}</Breadcrumbs>
+        <Navbar page='/posts' />
+        <Container size='lg'>
+          <Stack spacing='xs'>
+            <Breadcrumbs separator='→'>{items}</Breadcrumbs>
             {announcements}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {totalPosts > 1 && (
@@ -87,7 +87,7 @@ export default function PostsPage(props) {
                   active: 'bg-content',
                   item: 'bg-foreground',
                 }}
-                size="sm"
+                size='sm'
               />
             )}
             <PostLayout
@@ -98,7 +98,7 @@ export default function PostsPage(props) {
             />
 
             {posts.length < 1 && (
-              <div className="flex justify-center">ยังไม่มีโพสต์</div>
+              <div className='flex justify-center'>ยังไม่มีโพสต์</div>
             )}
             {totalPosts > 1 && (
               <Pagination
@@ -112,7 +112,7 @@ export default function PostsPage(props) {
                   active: 'bg-content',
                   item: 'bg-foreground',
                 }}
-                size="sm"
+                size='sm'
               />
             )}
           </Stack>
