@@ -32,7 +32,7 @@ export function Footer() {
           link: '/reviews',
         },
         {
-          label: 'Q&A ถามตอบ',
+          label: 'Q&A',
           link: '/qandas',
         },
       ],
@@ -62,11 +62,11 @@ export function Footer() {
       title: 'ข้อมูลเว็บไซต์',
       links: [
         {
-          label: 'จำนวนโพสต์ : ' + '145K',
+          label: 'จำนวนโพสต์ : ' + '15',
           link: '#',
         },
         {
-          label: 'จำนวนสมาชิก : ' + '1M',
+          label: 'จำนวนสมาชิก : ' + '6',
           link: '#',
         },
         {
@@ -90,13 +90,13 @@ export function Footer() {
         onClick={(event) => event.preventDefault()}
       >
         <Link href={link.link}>
-          <a className="hover:underline">{link.label}</a>
+          <a className='hover:underline'>{link.label}</a>
         </Link>
       </Text>
     ));
 
     return (
-      <div className="lg:w-[200px] w-[150px]" key={group.title}>
+      <div className='lg:w-[200px] w-[150px]' key={group.title}>
         <Text
           className={`text-base font-bold text-title opacity-80 text-right`}
         >
@@ -108,14 +108,14 @@ export function Footer() {
   });
 
   return (
-    <footer className="fixed bottom-0 pt-4 md:pt-8 bg-foreground mt-10 h-[235px] -z-10 w-full border-t-2 border-content">
-      <Container size="lg" className="flex md:justify-between justify-center">
-        <div className="w-[250px] md:text-left text-center">
-          <div className="text-3xl font-bold">
-            <MyAniLogo link="/" />
+    <footer className='fixed bottom-0 pt-4 md:pt-8 bg-foreground mt-10 h-[235px] -z-10 w-full border-t-2 border-content'>
+      <Container size='lg' className='flex md:justify-between justify-center'>
+        <div className='w-[250px] md:text-left text-center'>
+          <div className='text-3xl font-bold'>
+            <MyAniLogo link='/' />
           </div>
           <Text
-            size="sm"
+            size='sm'
             className={`my-2 md:text-left text-center text-title opacity-80`}
           >
             ศูนย์กลางในการพูดคุย รีวิว และโพสต์ถามตอบคำถามต่างๆ
@@ -123,50 +123,51 @@ export function Footer() {
             และแนะนำเนื้อหาของอนิเมะเพื่อส่งเสริมให้ผู้คนดูอนิเมะมากขึ้น
           </Text>
         </div>
-        <div className="md:flex hidden">{groups}</div>
+        <div className='md:flex hidden'>{groups}</div>
       </Container>
-      <Container size="lg">
-        <Divider my="xs" color="dark" />
+      <Container size='lg'>
+        <Divider my='xs' color='dark' />
       </Container>
       <Container
-        size="lg"
-        className="flex flex-col md:flex-row md:justify-between items-center"
+        size='lg'
+        className='flex flex-col md:flex-row md:justify-between items-center'
       >
-        <Text className="text-title opacity-80" size="sm">
-          © 2022 MyAnimeCommunity. All rights reserved.
+        <Text className='text-title opacity-80' size='sm'>
+          &copy; {new Date().getFullYear()} MyAnimeCommunity. All rights
+          reserved.
         </Text>
 
-        <Group spacing={0} className="" position="right" noWrap>
+        <Group spacing={0} className='' position='right' noWrap>
           <a
-            href="https://twitter.com/nineria_nananai"
-            target="_blank"
-            rel="noreferrer"
+            href='https://twitter.com/nineria_nananai'
+            target='_blank'
+            rel='noreferrer'
           >
-            <ActionIcon size="lg">
-              <BrandTwitter size={18} className="text-title" />
+            <ActionIcon size='lg'>
+              <BrandTwitter size={18} className='text-title' />
             </ActionIcon>
           </a>
           <a
-            href="https://www.facebook.com/NineriaNananai"
-            target="_blank"
-            rel="noreferrer"
+            href='https://www.facebook.com/NineriaNananai'
+            target='_blank'
+            rel='noreferrer'
           >
-            <ActionIcon size="lg">
-              <BrandFacebook size={18} className="text-title" />
+            <ActionIcon size='lg'>
+              <BrandFacebook size={18} className='text-title' />
             </ActionIcon>
           </a>
           <a
-            href="https://www.instagram.com/ninerianananai"
-            target="_blank"
-            rel="noreferrer"
+            href='https://www.instagram.com/ninerianananai'
+            target='_blank'
+            rel='noreferrer'
           >
-            <ActionIcon size="lg">
-              <BrandInstagram size={18} className="text-title" />
+            <ActionIcon size='lg'>
+              <BrandInstagram size={18} className='text-title' />
             </ActionIcon>
           </a>
-          <a href="https://github.com/nineria" target="_blank" rel="noreferrer">
-            <ActionIcon size="lg">
-              <BrandGithub size={18} className="text-title" />
+          <a href='https://github.com/nineria' target='_blank' rel='noreferrer'>
+            <ActionIcon size='lg'>
+              <BrandGithub size={18} className='text-title' />
             </ActionIcon>
           </a>
         </Group>
