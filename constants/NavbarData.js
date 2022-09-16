@@ -23,7 +23,7 @@ export const accessMenuProperty = [
     icon: <MoodSuprised size={14} />,
   },
   {
-    name: 'Q&A ถามตอบ',
+    name: 'Q&A',
     link: '/qandas',
     icon: <MoodConfuzed size={14} />,
   },
@@ -43,7 +43,7 @@ export const navbarProperty = [
     path: '/reviews',
   },
   {
-    name: 'Q&A ถามตอบ',
+    name: 'Q&A',
     path: '/qandas',
   },
 ];
