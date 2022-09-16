@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 // Context
 import { UserContext } from 'lib/context';
 // Components
-import { Button, Container, Modal } from '@mantine/core';
+import { Button, Center, Container, Modal } from '@mantine/core';
 import Add from 'components/HomeComponents/Add';
 import Post from './Elements/Body';
 // Icons
@@ -10,10 +10,12 @@ import AdminCheck from 'hooks/AdminCheck';
 import { firestore } from 'lib/firebase';
 import React from 'react';
 import { Animate } from 'react-simple-animate';
+import Advertisement from './Advertisement';
+import HeroSection from './HeroSection';
 
 export const admin = 'ผู้ดูแลระบบ';
 
-export default function HomeComponents({ homePosts }) {
+export default function HomeComponents({ homePosts, reviewPosts }) {
   const { user } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
@@ -25,7 +27,7 @@ export default function HomeComponents({ homePosts }) {
       const query = firestore
         .collectionGroup('posts')
         .orderBy('createdAt', 'desc')
-        .limit(3);
+        .limit(4);
       const newPosts = (await query.get()).docs.map((doc) => doc.data());
       setNewPostToDay(newPosts);
     };
@@ -44,10 +46,24 @@ export default function HomeComponents({ homePosts }) {
           end={{ transform: 'translateY(0%)', opacity: '1' }}
         >
           <div className='flex flex-col gap-2'>
+            {newPostToday && <HeroSection props={newPostToday} />}
+
+            {reviewPosts && <Post today homePosts={reviewPosts} />}
+
+            <Advertisement />
+
+            {/* Display home post */}
+            <div className='block space-y-2 mt-2 sm:mt-0'>
+              {homePosts &&
+                homePosts.map((post, index) => (
+                  <Post key={index} homePosts={post} />
+                ))}
+            </div>
+
             {/* Add home post */}
             {user && (
               <AdminCheck>
-                <div className='flex flex-row justify-between w-full '>
+                <Center>
                   <Modal
                     size='lg'
                     opened={opened}
@@ -67,23 +83,12 @@ export default function HomeComponents({ homePosts }) {
                     onClick={() => setOpened(true)}
                     className='bg-content text-[#fff] hover:bg-content hover:opacity-75 '
                     variant='default'
-                    size='xs'
                   >
                     สร้างโพสต์ +
                   </Button>
-                </div>
+                </Center>
               </AdminCheck>
             )}
-
-            {newPostToday && <Post today homePosts={newPostToday} />}
-
-            {/* Display home post */}
-            <div className='block space-y-2 mt-2 sm:mt-0'>
-              {homePosts &&
-                homePosts.map((post, index) => (
-                  <Post key={index} homePosts={post} />
-                ))}
-            </div>
           </div>
         </Animate>
       </div>
