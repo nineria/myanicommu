@@ -105,7 +105,7 @@ export default function UserProfilePage({
       <div className='bg-background text-accent min-h-[1024px] mb-[235px] pb-10'>
         <Navbar page='/profile' isBusy />
         <Metatags />
-        <Container size='lg'>
+        <Container size='md'>
           {username && user && posts && (
             <Animate
               play
