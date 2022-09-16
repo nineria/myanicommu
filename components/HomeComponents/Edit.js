@@ -74,12 +74,12 @@ export default function Edit(props) {
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
-      <Stack spacing="sm">
+      <Stack spacing='sm'>
         <Title
           titleLink={form.getInputProps('titleLink')}
           title={form.getInputProps('title')}
         />
-        <Divider label="หัวข้อย่อย และเนื้อหา" labelPosition="center" />
+        <Divider label='หัวข้อย่อย และเนื้อหา' labelPosition='center' />
         <Header
           headerLink={form.getInputProps('headerLink')}
           header={form.getInputProps('header')}
