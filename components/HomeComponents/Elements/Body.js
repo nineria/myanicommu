@@ -83,14 +83,14 @@ export default function Body({ today, homePosts, disabled }) {
   return (
     <div className='rounded-sm shadow-md'>
       <div
-        className={`bg-content flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-[#fff] ${
-          toggle === true ? 'rounded-t-sm' : 'rounded-sm'
+        className={`bg-foreground  border-background flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title ${
+          toggle === true ? 'rounded-t-sm border-b-2' : 'rounded-sm border-b-0'
         }`}
       >
         {/* Title */}
         <Link href={homePosts?.titleLink || '/'}>
-          <a className='truncate text-[#fff] max-w-[600px] cursor-pointer hover:underline'>
-            {today ? 'โพสต์ใหม่วันนี้' : homePosts?.title || 'หัวข้อหลัก'}
+          <a className='truncate text-title max-w-[600px] cursor-pointer hover:underline'>
+            {today ? 'TOP รีวิว' : homePosts?.title || 'หัวข้อหลัก'}
           </a>
         </Link>
         {/* Edit button */}
