@@ -14,10 +14,47 @@ import {
 import Report from 'components/Report';
 import { UserContext } from 'lib/context';
 import { getUserWithUsername } from 'lib/firebase';
+import { BiLinkExternal } from 'react-icons/bi';
+import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { Edit } from 'tabler-icons-react';
+import CustomWebsite from '../CustomWebsite';
 import EditProfile from '../EditProfile';
+import Social from '../Social';
 import Statistics from './Statistics';
 import UserRanks from './UserRanks';
+
+const DUMMY_SOCIAL = [
+  {
+    label: 'FACEBOOK',
+    icon: <BsFacebook size={24} />,
+    text: 'changlovemom@gmail.com',
+    link: 'https://www.facebook.com/NineriaNananai',
+  },
+  {
+    label: 'INSTAGRAM',
+    icon: <BsInstagram size={24} />,
+    text: 'ninerianananai',
+    link: 'https://www.instagram.com/ninerianananai/',
+  },
+  {
+    label: 'TWITTER',
+    icon: <BsTwitter size={24} />,
+    text: 'nineria_nananai',
+    link: 'https://twitter.com/nineria_nananai',
+  },
+  {
+    label: 'GITHUB',
+    icon: <BsGithub size={24} />,
+    text: 'nineria',
+    link: 'https://github.com/nineria',
+  },
+];
+
+const DUMMY_CUSTOM_WEBSITE = {
+  text: 'nineria.vercel.app',
+  link: 'https://nineria.vercel.app/',
+  icon: <BiLinkExternal />,
+};
 
 export default function UserCardImage({ user, posts, statistics }) {
   const { username } = useContext(UserContext);
@@ -84,7 +121,15 @@ export default function UserCardImage({ user, posts, statistics }) {
 
         {statistics && <Statistics statistics={statistics} />}
 
-        <Space h='md' />
+        <Space h='sm' />
+
+        {DUMMY_SOCIAL && <Social data={DUMMY_SOCIAL} />}
+
+        <Space h='sm' />
+
+        {DUMMY_CUSTOM_WEBSITE && <CustomWebsite data={DUMMY_CUSTOM_WEBSITE} />}
+
+        <Space h='sm' />
 
         {username === user.username && (
           <Button
