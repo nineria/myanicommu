@@ -48,7 +48,7 @@ export default function ReviewsPage(props) {
       <div className='bg-background text-white min-h-[1024px] mb-[235px] pb-10'>
         <Metatags />
         <Navbar page='/reviews' />
-        <Container size='lg'>
+        <Container size='md'>
           <Stack spacing='xs'>
             {announcements}
             <PostsMenuController layout={layout} setLayout={setLayout} />
