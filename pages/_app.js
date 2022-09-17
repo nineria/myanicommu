@@ -1,4 +1,4 @@
-import ThemeProvider, { useThemeContext } from '@lib/useTheme';
+import ThemeProvider from '@lib/useTheme';
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { NotificationsProvider } from '@mantine/notifications';
