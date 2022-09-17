@@ -7,15 +7,12 @@ import { UserContext } from '@lib/context';
 import {
   Anchor,
   Breadcrumbs,
-  // Button,
   Container,
   Group,
   Pagination,
   Stack,
   Text,
 } from '@mantine/core';
-// import { useModals } from '@mantine/modals';
-// import { showNotification } from '@mantine/notifications';
 import { Footer } from 'components/Footer';
 import Logo from 'components/Logo';
 import Metatags from 'components/Metatags';
@@ -23,8 +20,7 @@ import Navbar from 'components/Navbar';
 import PostComponents from 'components/PostComponents';
 import AuthCheck from 'hooks/AuthCheck';
 import { firestore, getUserWithUsername, postToJSON } from 'lib/firebase';
-import React, { useContext, useEffect, useState } from 'react';
-// import { Check, Refresh, Star, X } from 'tabler-icons-react';
+import React, { useContext, useState } from 'react';
 
 export async function getServerSideProps({ query }) {
   try {
@@ -34,16 +30,28 @@ export async function getServerSideProps({ query }) {
 
     let post;
     let path;
+    let comments;
 
     if (userDoc) {
       const postRef = userDoc.ref.collection('posts').doc(slug);
       post = postToJSON(await postRef.get());
-
       path = postRef.path;
+
+      const commentRef = await userDoc.ref
+        .collection('posts')
+        .doc(slug)
+        .collection('comments')
+        .get();
+
+      const commentData = await JSON.stringify(
+        commentRef.docs.map((doc) => doc.data())
+      );
+
+      comments = await JSON.parse(commentData);
     }
 
     return {
-      props: { post, path },
+      props: { post, path, comments },
     };
   } catch (error) {
     return {
@@ -57,41 +65,11 @@ export default function PostPage(props) {
 
   const { username } = useContext(UserContext);
 
-  // const [realtimePost] = useDocumentData(postRef);
-
   const post = props.post;
 
   const [activePage, setPage] = useState(1);
 
-  const [comments, setComments] = useState();
-
-  const fetchData = async () => {
-    const userDoc = await getUserWithUsername(post.username);
-    try {
-      let comments;
-      const response = await userDoc.ref
-        .collection('posts')
-        .doc(post.slug)
-        .collection('comments')
-        .get();
-
-      comments = await JSON.stringify(response.docs.map((doc) => doc.data()));
-      comments = await JSON.parse(comments);
-      setComments(comments);
-
-      let data = { title: 'not found' };
-      if (response.exists) {
-        data = response.data();
-        console.log(data);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [comments, setComments] = useState(props.comments);
 
   const items = [
     { title: 'หน้าหลัก', href: '/' },
@@ -143,12 +121,7 @@ export default function PostPage(props) {
               <Stack spacing='xs'>
                 {comments &&
                   comments.map((item, index) => (
-                    <Comment
-                      key={index}
-                      post={post}
-                      comment={item}
-                      fetchData={fetchData}
-                    />
+                    <Comment key={index} post={post} comment={item} />
                   ))}
               </Stack>
             </Stack>
