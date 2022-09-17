@@ -24,7 +24,7 @@ export default function Body({ today, homePosts, disabled }) {
       var getIsToggle = localStorage.getItem(homePosts.title);
       setToggle(JSON.parse(getIsToggle));
     }
-  }, [toggle]);
+  }, [homePosts.title, toggle]);
 
   const handleToggle = (toggle) => {
     localStorage.setItem(homePosts.title, JSON.stringify(toggle));
@@ -83,13 +83,13 @@ export default function Body({ today, homePosts, disabled }) {
   return (
     <div className='rounded-sm shadow-md'>
       <div
-        className={`bg-foreground  border-background flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title ${
+        className={`bg-foreground  border-content border-opacity-30 flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title ${
           toggle === true ? 'rounded-t-sm border-b-2' : 'rounded-sm border-b-0'
         }`}
       >
         {/* Title */}
         <Link href={homePosts?.titleLink || '/'}>
-          <a className='truncate text-title max-w-[600px] cursor-pointer hover:underline'>
+          <a className='truncate text-title  max-w-[600px] cursor-pointer hover:underline'>
             {today ? 'TOP รีวิว' : homePosts?.title || 'หัวข้อหลัก'}
           </a>
         </Link>

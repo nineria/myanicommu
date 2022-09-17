@@ -6,6 +6,7 @@ import AuthCheck from 'hooks/AuthCheck';
 import AuthorCheck from 'hooks/AuthorCheck';
 import { UserContext } from 'lib/context';
 import { auth, firestore } from 'lib/firebase';
+import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   AlertTriangle,
@@ -25,7 +26,6 @@ export default function Body({
   setLikes,
   likeState,
   setLikeState,
-  fetchData,
 }) {
   const [comment] = useState(commentP);
   const [opened, setOpened] = useState(false);
@@ -34,6 +34,8 @@ export default function Body({
   const { user } = useContext(UserContext);
 
   const modals = useModals();
+
+  const router = useRouter();
 
   useEffect(() => {
     const timestamp = new Date(comment.updatedAt.seconds * 1000);
@@ -137,8 +139,6 @@ export default function Body({
 
       await commentRef.delete();
 
-      fetchData();
-
       showNotification({
         color: 'red',
         title: 'ลบคอมเมนต์แล้ว',
@@ -148,12 +148,13 @@ export default function Body({
         },
       });
       modals.closeModal(id);
+      router.reload();
     };
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">คุณต้องการลบคอมเมนต์นี้หรือไม่?</Text>
-          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+          <Text size='sm'>คุณต้องการลบคอมเมนต์นี้หรือไม่?</Text>
+          <Text size='xs'>การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
       zIndex: '999',
@@ -164,19 +165,19 @@ export default function Body({
       },
       size: 'sm',
       children: (
-        <Stack size="xs">
-          <Group position="right">
+        <Stack size='xs'>
+          <Group position='right'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              size="xs"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
+              size='xs'
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
             </Button>
             <Button
-              type="submit"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              size="xs"
+              type='submit'
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+              size='xs'
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -188,9 +189,9 @@ export default function Body({
   };
 
   return (
-    <div className="relative mt-11 md:mt-0 text-title text-opacity-90 w-full min-h-[100px]">
+    <div className='relative mt-11 md:mt-0 text-title text-opacity-90 w-full min-h-[100px]'>
       <Modal
-        size="xl"
+        size='xl'
         classNames={{
           modal: 'bg-foreground',
           overlay: 'bg-background',
@@ -199,31 +200,30 @@ export default function Body({
         opened={opened}
         closeOnClickOutside={false}
         onClose={() => setOpened(false)}
-        title="แก้ไขคอมเมนต์"
+        title='แก้ไขคอมเมนต์'
       >
         <Edit
           commentP={comment}
           commentRef={commentRef}
           setOpened={setOpened}
           post={post}
-          fetchData={fetchData}
         />
       </Modal>
-      <Group position="apart">
+      <Group position='apart'>
         {comment.createdAt?.seconds !== comment.updatedAt?.seconds ? (
-          <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : {date}</p>
+          <p className='text-xs opacity-80 mb-2'>แกไขล่าสุด : {date}</p>
         ) : (
           <div />
         )}
-        <Group spacing="xs" className="absolute md:top-2 -top-9 right-2 z-20">
+        <Group spacing='xs' className='absolute md:top-2 -top-9 right-2 z-20'>
           <AuthorCheck username={comment.username}>
             <Button
               onClick={() => setOpened(true)}
               compact
               leftIcon={<EditIcon size={14} />}
-              className="bg-foreground z-10 text-title hover:bg-content hover:text-[#fff]"
-              variant="default"
-              size="xs"
+              className='bg-foreground z-10 text-title hover:bg-content hover:text-[#fff]'
+              variant='default'
+              size='xs'
             >
               แก้ไข
             </Button>
@@ -234,9 +234,9 @@ export default function Body({
                 onClick={() => handleAdminDelete()}
                 leftIcon={<Trash size={14} />}
                 compact
-                className="z-10 bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
-                variant="default"
-                size="xs"
+                className='z-10 bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75'
+                variant='default'
+                size='xs'
               >
                 ลบเนื้อหา
               </Button>
@@ -254,16 +254,16 @@ export default function Body({
       />
       <AuthCheck fallback={<div />}>
         <Group
-          position="apart"
-          className="absolute bottom-0 right-0 left-0 text-xs z-10 "
-          my="xs"
-          mx="md"
+          position='apart'
+          className='absolute bottom-0 right-0 left-0 text-xs z-10 '
+          my='xs'
+          mx='md'
         >
-          <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+          <div className='flex flex-row gap-1 items-end hover:underline cursor-pointer '>
             <AlertTriangle size={14} />
             รายงานโพสต์
           </div>
-          <Group position="right">
+          <Group position='right'>
             <div
               className={`flex flex-row gap-1 items-end hover:underline cursor-pointer ${
                 likeState ? 'text-content' : 'text-title'
@@ -275,13 +275,13 @@ export default function Body({
               {!likeState ? (
                 <p>ถูกใจ</p>
               ) : (
-                <p className="text-content">เลิกถูกใจ</p>
+                <p className='text-content'>เลิกถูกใจ</p>
               )}
             </div>
           </Group>
         </Group>
       </AuthCheck>
-      <p className="absolute bottom-4 select-none right-6 leading-none font-bold uppercase opacity-[0.03] text-[120px] md:text-[150px] text-right tracking-tighter">
+      <p className='absolute bottom-4 select-none right-6 leading-none font-bold uppercase opacity-[0.03] text-[120px] md:text-[150px] text-right tracking-tighter'>
         REPLY
       </p>
     </div>

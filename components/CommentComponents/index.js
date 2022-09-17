@@ -73,7 +73,6 @@ export default function Comment(props) {
             setLikes={setLikes}
             likeState={likeState}
             setLikeState={setLikeState}
-            fetchData={props.fetchData}
           />
         )}
       </Layout>

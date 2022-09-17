@@ -1,12 +1,9 @@
-import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
-// Context
-import { auth } from '@lib/firebase';
-import { UserContext } from 'lib/context';
-// Components
 import { navbarProperty } from '@constants/NavbarData';
+import { auth } from '@lib/firebase';
 import { Container } from '@mantine/core';
-import React from 'react';
+import { UserContext } from 'lib/context';
+import { useRouter } from 'next/router';
+import React, { useContext, useState } from 'react';
 import Login from '../LoginRegister';
 import UserMenu from './DropdownMenu';
 import LoginRegisterSmallScreen from './LoginRegisterSmallScreen';
@@ -26,31 +23,31 @@ export default function Navbar({ page, isBusy = false }) {
   };
 
   return (
-    <div className="bg-foreground py-2 sticky top-0 z-50 bg-opacity-95 mb-2 shadow-md">
-      <Container size="lg">
-        <div className="flex items-end justify-between w-full text-md">
-          <div className="text-4xl font-bold">
+    <div className='bg-foreground py-2 sticky top-0 z-50 bg-opacity-95 mb-2 shadow-md'>
+      <Container size='lg'>
+        <div className='flex items-end justify-between w-full text-md'>
+          <div className='text-4xl font-bold'>
             {/* Website Logo */}
-            <MyAniLogo link="/" />
+            <MyAniLogo link='/' />
           </div>
-          <div className="lg:flex hidden justify-start pl-10 w-full">
+          <div className='lg:flex hidden justify-start pl-10 w-full'>
             {/* Navbar menu */}
             {/* user is signed-in and has username */}
             {username && <NavbarMenu page={page} menu={navbarProperty} />}
             {/* Login or Register */}
             {/* user is not signed OR has not created username */}
-            {!username && <Login login="/login" register="/register" />}
+            {!username && <Login login='/login' register='/register' />}
           </div>
-          <div className="lg:hidden flex justify-end pl-10 w-full">
+          <div className='lg:hidden flex justify-end pl-10 w-full'>
             {/* {!username && <Login login="/enter" register="/register" />} */}
             {!username && (
               <div
-                className="justify-end gap-2 text-white"
+                className='justify-end gap-2 text-white'
                 onClick={() => setToggle(!toggle)}
               >
                 <LoginRegisterSmallScreen
-                  login="/enter"
-                  register="/register"
+                  login='/enter'
+                  register='/register'
                   toggle={toggle}
                 />
               </div>
@@ -59,7 +56,7 @@ export default function Navbar({ page, isBusy = false }) {
           {/* User Information (Image, Name, Email etc.) */}
           {username && (
             <div
-              className="justify-end gap-2 text-white"
+              className='justify-end gap-2 text-white'
               onClick={() => setToggle(!toggle)}
             >
               <UserMenu

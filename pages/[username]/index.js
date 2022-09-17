@@ -3,7 +3,6 @@ import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import ProfileComponents from '@components/ProfileComponents';
 import { firestore, getUserWithUsername, postToJSON } from '@lib/firebase';
-import { useThemeContext } from '@lib/useTheme';
 import { Container } from '@mantine/core';
 import AuthCheck from 'hooks/AuthCheck';
 import { UserContext } from 'lib/context';
@@ -52,8 +51,6 @@ export default function UserProfilePage({
   statisticsAdmin,
   posts,
 }) {
-  const { setTheme } = useThemeContext();
-
   const router = useRouter();
 
   const { username } = useContext(UserContext);
@@ -62,20 +59,14 @@ export default function UserProfilePage({
 
   useEffect(() => {
     if (!user || !posts) router.push('/');
-    const localData = localStorage.getItem('themes');
-    if (localData == null) {
-      localStorage.setItem('themes', 'red-light');
-      setTheme('red-light');
-    }
 
     const getUserRef = async () => {
       const userDoc = await getUserWithUsername(username);
       setUserRef(userDoc);
     };
 
-    setTheme(localData);
     getUserRef();
-  }, [setTheme, posts, router, user, username]);
+  }, [posts, router, user, username]);
 
   // Multiple Percentage Calculator
   // p = ( x / y ) * 100

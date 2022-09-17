@@ -3,8 +3,7 @@ import HomeComponents from '@components/HomeComponents';
 import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import { firestore, postToJSON } from '@lib/firebase';
-import { useThemeContext } from '@lib/useTheme';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Max post to query per page
 const LIMIT = 10;
@@ -45,17 +44,6 @@ export async function getServerSideProps() {
 }
 
 export default function HomePage(props) {
-  const { setTheme } = useThemeContext();
-
-  useEffect(() => {
-    const localData = localStorage.getItem('themes');
-    if (localData == null) {
-      localStorage.setItem('themes', 'red-light');
-      setTheme('red-light');
-    }
-    setTheme(localData);
-  }, [setTheme]);
-
   return (
     <>
       <div className='bg-background min-h-[1024px] mb-[235px] pb-10'>

@@ -1,45 +1,32 @@
-import React, { useEffect } from "react";
-// Components
-import { useThemeContext } from "lib/useTheme";
-import { Button, Card, Group, List, Stack, Title } from "@mantine/core";
-import { useModals } from "@mantine/modals";
+import { Button, Card, Group, List, Stack, Title } from '@mantine/core';
+import { useModals } from '@mantine/modals';
+import React from 'react';
 
 export default function PrivacyPolicy() {
-  const { setTheme } = useThemeContext();
-
   const modals = useModals();
-
-  useEffect(() => {
-    const localData = localStorage.getItem("themes");
-    if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
-    }
-    setTheme(localData);
-  }, [setTheme]);
 
   const openModals = () => {
     const id = modals.openModal({
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       withCloseButton: false,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "1000px",
+      size: '1000px',
       children: (
-        <Stack size="xs">
-          <Card className="bg-foreground text-title">
-            <Stack spacing="xs">
-              <Title order={2} mb="xs" align="center">
+        <Stack size='xs'>
+          <Card className='bg-foreground text-title'>
+            <Stack spacing='xs'>
+              <Title order={2} mb='xs' align='center'>
                 นโยบายเกี่ยวกับข้อมูลส่วนบุคคล
               </Title>
               <List
-                type="ordered"
+                type='ordered'
                 withPadding
-                className="list-decimal list-outside"
-                spacing="lg"
+                className='list-decimal list-outside'
+                spacing='lg'
               >
                 <List.Item>
                   MyAnimeCommunity
@@ -72,12 +59,12 @@ export default function PrivacyPolicy() {
                   ข้อมูลส่วนบุคคลที่ MyAnimeCommunity จัดเก็บมีดังนี้
                 </List.Item>
                 <List
-                  type="ordered"
+                  type='ordered'
                   withPadding
-                  className="list-decimal list-outside"
-                  spacing="lg"
+                  className='list-decimal list-outside'
+                  spacing='lg'
                 >
-                  <List.Item mt="sm">
+                  <List.Item mt='sm'>
                     ข้อมูลเกี่ยวกับการใช้บริการทั่วไป เช่น cookies,
                     ข้อมูลจราจรทางคอมพิวเตอร์
                     ซึ่งจัดเก็บเพื่อวิเคราะห์พฤติกรรมการใช้งาน
@@ -132,9 +119,9 @@ export default function PrivacyPolicy() {
               </List>
             </Stack>
           </Card>
-          <Group position="center">
+          <Group position='center'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
               onClick={() => modals.closeModal(id)}
             >
               เข้าใจแล้ว
@@ -147,13 +134,13 @@ export default function PrivacyPolicy() {
 
   return (
     <div>
-      ยอมรับ{" "}
+      ยอมรับ{' '}
       <span
         onClick={openModals}
-        className="text-content cursor-pointer hover:underline"
+        className='text-content cursor-pointer hover:underline'
       >
         นโยบายเกี่ยวกับข้อมูลส่วนบุคคล
-      </span>{" "}
+      </span>{' '}
       ของ MyAnimeCommunity
     </div>
   );

@@ -1,4 +1,4 @@
-import { Button, Group, Stack, Text, useMantineTheme } from '@mantine/core';
+import { Button, Group, Stack, Text } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { useModals } from '@mantine/modals';
 import React, { useState } from 'react';
@@ -35,17 +35,17 @@ function ImageUploadIcon({ status, size }) {
 
 const dropzoneChildren = (status) => (
   <Group
-    position="center"
-    spacing="xl"
+    position='center'
+    spacing='xl'
     style={{ minHeight: 220, pointerEvents: 'none' }}
   >
     <ImageUploadIcon status={status} size={50} />
 
     <div>
-      <Text size="xl" inline>
+      <Text size='xl' inline>
         ลากรูปภาพมาที่นี่ หรือคลิกเพื่อเลือกไฟล์
       </Text>
-      <Text size="sm" inline mt={7}>
+      <Text size='sm' inline mt={7}>
         ประเภทไฟล์ที่รองรับ PNG, JPEG, WEBP และ SVG ขนาดไฟล์ไม่ควรเกิน 5MB
       </Text>
     </div>
@@ -53,8 +53,6 @@ const dropzoneChildren = (status) => (
 );
 
 export function DropzoneImage({ setImage }) {
-  const theme = useMantineTheme();
-
   const modals = useModals();
 
   const [loading, setLoading] = useState(false);
@@ -66,14 +64,14 @@ export function DropzoneImage({ setImage }) {
       centered: true,
       children: (
         <Stack>
-          <Text size="sm">
+          <Text size='sm'>
             ขนาดความกว้างของไฟล์จะต้องไม่เกิน 1024px
             และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG, WEBP หรือ SVG เท่านั้น
           </Text>
           <Button
-            type="submit"
-            className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-            size="xs"
+            type='submit'
+            className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+            size='xs'
             onClick={() => modals.closeModal(id)}
           >
             ลองใหม่อีกครั้ง
@@ -115,9 +113,9 @@ export function DropzoneImage({ setImage }) {
         MIME_TYPES.svg,
         MIME_TYPES.webp,
       ]}
-      className="absolute top-2 right-2 bottom-2 left-2 text-[#fff] bg-transparent hover:bg-black/30"
+      className='absolute top-2 right-2 bottom-2 left-2 text-[#fff] bg-transparent hover:bg-black/30'
     >
-      {(status) => dropzoneChildren(status, theme)}
+      {(status) => dropzoneChildren(status)}
     </Dropzone>
   );
 }

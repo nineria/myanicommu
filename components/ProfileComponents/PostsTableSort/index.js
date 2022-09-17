@@ -28,12 +28,12 @@ function Th({ children, reversed, sorted, onSort }) {
   const Icon = sorted ? (reversed ? ChevronUp : ChevronDown) : Selector;
   return (
     <th className={classes.th}>
-      <UnstyledButton onClick={onSort} className="w-full p-2 hover:bg-black/10">
-        <Group position="apart">
-          <Text weight={500} size="sm" className="text-title">
+      <UnstyledButton onClick={onSort} className='w-full p-2 hover:bg-black/10'>
+        <Group position='apart'>
+          <Text weight={500} size='sm' className='text-title'>
             {children}
           </Text>
-          <Center className="w-[21px] h-[21px]">
+          <Center className='w-[21px] h-[21px]'>
             <Icon size={14} />
           </Center>
         </Group>
@@ -131,9 +131,9 @@ export function TableSort({ user, posts, statistics }) {
     return (
       <tr key={row.title}>
         <td>
-          <Anchor size="sm">
+          <Anchor size='sm'>
             <Link href={`/posts/${row.username}/${row.slug}`}>
-              <a target="_blank" rel="noreferrer">
+              <a target='_blank' rel='noreferrer'>
                 {row.title}
               </a>
             </Link>
@@ -141,61 +141,26 @@ export function TableSort({ user, posts, statistics }) {
         </td>
         <td>{createdAt}</td>
         <td>{updatedAt}</td>
-        {/* <td>
-          <Group position="apart">
-            <Text size="xs" color="teal" weight={700}>
-              {statistics.likes === 0 || statistics.stars === 0
-                ? 0
-                : positiveReviews.toFixed(0)}
-              %
-            </Text>
-            <Text size="xs" color="red" weight={700}>
-              {statistics.likes === 0 || statistics.stars === 0
-                ? 0
-                : negativeReviews.toFixed(0)}
-              %
-            </Text>
-          </Group>
-          <Progress
-            classNames={{ bar: classes.progressBar }}
-            sections={[
-              {
-                value: positiveReviews,
-                color:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.teal[8]
-                    : theme.colors.teal[6],
-              },
-              {
-                value: negativeReviews,
-                color:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.red[8]
-                    : theme.colors.red[6],
-              },
-            ]}
-          />
-        </td> */}
       </tr>
     );
   });
 
   return (
-    <Card p="md" radius="sm" className="bg-foreground">
+    <Card p='md' radius='sm' className='bg-foreground'>
       <ScrollArea>
         {username === user.username ? (
-          <Text size="xl" weight={700} mb="sm">
+          <Text size='xl' weight={700} mb='sm'>
             การจัดการโพสต์
           </Text>
         ) : (
-          <Text size="xl" weight={700} mb="sm">
+          <Text size='xl' weight={700} mb='sm'>
             โพสต์ทั้งหมดของ {user.username}
           </Text>
         )}
 
         <TextInput
-          placeholder="ค้นหา"
-          mb="md"
+          placeholder='ค้นหา'
+          mb='md'
           icon={<Search size={14} />}
           value={search}
           classNames={{
@@ -205,8 +170,8 @@ export function TableSort({ user, posts, statistics }) {
         />
         <Table
           highlightOnHover
-          horizontalSpacing="md"
-          verticalSpacing="xs"
+          horizontalSpacing='md'
+          verticalSpacing='xs'
           sx={{ minWidth: 800 }}
         >
           <thead>
@@ -259,7 +224,7 @@ export function TableSort({ user, posts, statistics }) {
             ) : (
               <tr>
                 <td colSpan={Object.keys(posts[0]).length}>
-                  <Text weight={500} align="center" size="sm">
+                  <Text weight={500} align='center' size='sm'>
                     ไม่พบรายการที่ค้นหา
                   </Text>
                 </td>

@@ -6,6 +6,7 @@ import WebsiteRule from 'components/WebsiteRule';
 import AuthCheck from 'hooks/AuthCheck';
 import { UserContext } from 'lib/context';
 import { firestore, serverTimestamp } from 'lib/firebase';
+import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import { Check, X } from 'tabler-icons-react';
 import RichTextEditor from 'utils/RichText';
@@ -27,11 +28,13 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error('Upload failed')));
   });
 
-export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
+export default function Edit({ commentP, commentRef, setOpened }) {
   const { userData } = useContext(UserContext);
   const [comment] = useState(commentP);
 
   const modals = useModals();
+
+  const router = useRouter();
 
   const form = useForm({
     initialValues: {
@@ -46,8 +49,6 @@ export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
       avatar: userData.avatar,
       updateAt: serverTimestamp(),
     });
-
-    fetchData();
 
     showNotification({
       color: 'teal',
@@ -79,13 +80,12 @@ export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
         .collection('statistics')
         .doc(comment.uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
+
       await userStatistics.update({
         comments: userStatisticsPosts.comments - 1,
       });
 
       await commentRef.delete();
-
-      fetchData();
 
       showNotification({
         color: 'red',
@@ -97,13 +97,14 @@ export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
       });
 
       modals.closeModal(id);
+      router.reload();
       setOpened(false);
     };
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">คุณต้องการลบคอมเมนต์นี้หรือไม่?</Text>
-          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+          <Text size='sm'>คุณต้องการลบคอมเมนต์นี้หรือไม่?</Text>
+          <Text size='xs'>การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
       zIndex: '999',
@@ -114,19 +115,19 @@ export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
       },
       size: 'sm',
       children: (
-        <Stack size="xs">
-          <Group position="right">
+        <Stack size='xs'>
+          <Group position='right'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              size="xs"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
+              size='xs'
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
             </Button>
             <Button
-              type="submit"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              size="xs"
+              type='submit'
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+              size='xs'
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -142,8 +143,8 @@ export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
       {comment && (
         <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
           <InputWrapper
-            label="คอมเมนต์"
-            description="แก้ไขรายระเอียดคอมเมนต์ เช่น ข้อความ รูปภาพ วิดีโอ รวมไปถึง Link ต่างๆ"
+            label='คอมเมนต์'
+            description='แก้ไขรายระเอียดคอมเมนต์ เช่น ข้อความ รูปภาพ วิดีโอ รวมไปถึง Link ต่างๆ'
           >
             <RichTextEditor
               controls={[
@@ -154,7 +155,7 @@ export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
               sticky={true}
               stickyOffset={-55}
               {...form.getInputProps('content')}
-              placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
+              placeholder='รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ'
               onImageUpload={handleImageUpload}
               classNames={{
                 root: 'bg-black/5 text-title border-[#fff] border-opacity-20',
@@ -167,26 +168,26 @@ export default function Edit({ commentP, commentRef, setOpened, fetchData }) {
 
           <WebsiteRule />
 
-          <Group mt="sm" position="apart">
+          <Group mt='sm' position='apart'>
             <Button
-              size="xs"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size='xs'
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
               onClick={handleDelete}
             >
               ลบ
             </Button>
-            <Group spacing="xs" position="right">
+            <Group spacing='xs' position='right'>
               <Button
-                size="xs"
+                size='xs'
                 onClick={() => handleCancel()}
-                className="bg-background text-title hover:bg-background hover:opacity-75"
+                className='bg-background text-title hover:bg-background hover:opacity-75'
               >
                 ยกเลิก
               </Button>
               <Button
-                type="submit"
-                size="xs"
-                className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+                type='submit'
+                size='xs'
+                className='bg-green-500 hover:bg-green-500 hover:opacity-75'
               >
                 ยืนยัน
               </Button>

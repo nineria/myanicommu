@@ -1,52 +1,40 @@
-import React, { useEffect } from "react";
+import React from 'react';
 // Components
-import { useThemeContext } from "lib/useTheme";
-import { Button, Card, Group, List, Stack, Title } from "@mantine/core";
-import { useModals } from "@mantine/modals";
+import { Button, Card, Group, List, Stack, Title } from '@mantine/core';
+import { useModals } from '@mantine/modals';
 
 export default function WebsiteRule() {
-  const { setTheme } = useThemeContext();
-
   const modals = useModals();
-
-  useEffect(() => {
-    const localData = localStorage.getItem("themes");
-    if (localData == null) {
-      localStorage.setItem("themes", "red-light");
-      setTheme("red-light");
-    }
-    setTheme(localData);
-  }, [setTheme]);
 
   const openModals = () => {
     const id = modals.openModal({
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       withCloseButton: false,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "1000px",
+      size: '1000px',
       children: (
-        <Stack size="xs">
-          <Card className="bg-foreground text-title">
-            <Stack spacing="lg">
-              <Title order={2} mb="xs" align="center">
+        <Stack size='xs'>
+          <Card className='bg-foreground text-title'>
+            <Stack spacing='lg'>
+              <Title order={2} mb='xs' align='center'>
                 กฎ กติกา และมารยาท
               </Title>
 
-              <Stack spacing="xs">
-                <Title order={4} mb="xs">
+              <Stack spacing='xs'>
+                <Title order={4} mb='xs'>
                   การร่วมกิจกรรมแสดงความเห็นในเว็บไซต์
                   ผู้เข้าร่วมพึงต้องปฏิบัติดังต่อไปนี้
                 </Title>
 
                 <List
-                  type="ordered"
+                  type='ordered'
                   withPadding
-                  className="list-decimal list-outside"
-                  spacing="xs"
+                  className='list-decimal list-outside'
+                  spacing='xs'
                 >
                   <List.Item>
                     ห้ามเสนอข้อความหรือเนื้อหาที่ส่อไปในทางหยาบคาย ก้าวร้าว
@@ -95,15 +83,15 @@ export default function WebsiteRule() {
                   </List.Item>
                 </List>
               </Stack>
-              <Stack spacing="xs">
-                <Title order={4} mb="xs">
+              <Stack spacing='xs'>
+                <Title order={4} mb='xs'>
                   เว็บไซต์ MyAnimeCommunity ขอสงวนสิทธิดังต่อไปนี้
                 </Title>
                 <List
-                  type="ordered"
+                  type='ordered'
                   withPadding
-                  className="list-decimal list-outside"
-                  spacing="xs"
+                  className='list-decimal list-outside'
+                  spacing='xs'
                 >
                   <List.Item>
                     ขอสงวนสิทธิยกเลิกการให้บริการแก่สมาชิกซึ่งไม่ให้ความร่วมมือในการรักษากฎ
@@ -118,9 +106,9 @@ export default function WebsiteRule() {
               </Stack>
             </Stack>
           </Card>
-          <Group position="center">
+          <Group position='center'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
               onClick={() => modals.closeModal(id)}
             >
               เข้าใจแล้ว
@@ -132,15 +120,15 @@ export default function WebsiteRule() {
   };
 
   return (
-    <div className="flex flex-row items-center gap-2 text-xs my-2">
-      <span className="w-full">
-        โปรดปฏิบัติตาม{" "}
+    <div className='flex flex-row items-center gap-2 text-xs my-2'>
+      <span className='w-full'>
+        โปรดปฏิบัติตาม{' '}
         <span
-          className="text-content underline cursor-pointer"
+          className='text-content underline cursor-pointer'
           onClick={openModals}
         >
           กฎ กติกา และ มารยาท
-        </span>{" "}
+        </span>{' '}
         ของเว็บไซต์ MyAnimeCommunity
         <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
       </span>

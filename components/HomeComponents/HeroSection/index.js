@@ -1,5 +1,5 @@
 import Card from '@components/Card';
-import { Box, Grid, Group, Space } from '@mantine/core';
+import { Box, Grid, Group } from '@mantine/core';
 import Link from 'next/link';
 import React from 'react';
 
@@ -7,7 +7,7 @@ export default function HeroSection({ props }) {
   return (
     <Box>
       <div
-        className={`bg-foreground  flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title drop-shadow`}
+        className={`bg-foreground flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title drop-shadow`}
       >
         <Group style={{ gap: 2 }}>
           <Link href='/posts'>
@@ -20,8 +20,7 @@ export default function HeroSection({ props }) {
           </span>
         </Group>
       </div>
-      <Space h='xs' />
-      <Grid gutter='xs' columns={3}>
+      <Grid gutter='xs' columns={3} style={{ marginTop: '2px' }}>
         {props.map((data, index) => (
           <Grid.Col key={index} xs={3} sm={1}>
             <Card layout='grid' posts={data} />
