@@ -1,8 +1,10 @@
+import ADSide from '@components/ADSide';
 import { Footer } from '@components/Footer';
 import HomeComponents from '@components/HomeComponents';
 import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import { firestore, postToJSON } from '@lib/firebase';
+import { Container } from '@mantine/core';
 import React from 'react';
 
 // Max post to query per page
@@ -46,14 +48,17 @@ export async function getServerSideProps() {
 export default function HomePage(props) {
   return (
     <>
-      <div className='bg-background min-h-[1024px] mb-[235px] pb-10'>
+      <div className='bg-background min-h-[1024px] mb-[235px] pb-10 '>
         <Navbar />
         <Metatags />
-        <HomeComponents
-          homePosts={props.homePosts}
-          reviewPosts={props.reviewPosts}
-          todayPosts={props.todayPosts}
-        />
+        <ADSide />
+        <Container size='md'>
+          <HomeComponents
+            homePosts={props.homePosts}
+            reviewPosts={props.reviewPosts}
+            todayPosts={props.todayPosts}
+          />
+        </Container>
       </div>
       <Footer />
     </>
