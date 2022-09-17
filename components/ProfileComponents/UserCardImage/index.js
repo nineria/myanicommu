@@ -96,40 +96,36 @@ export default function UserCardImage({ user, posts, statistics }) {
         </div>
       )}
 
-      <div className='flex md:flex-row flex-col md:justify-around justify-center py-4'>
-        <Stack spacing='xl' align='center'>
-          <Avatar
-            src={user.avatar}
-            size={150}
-            radius={150}
-            mt={-100}
-            className='border-2 border-[#fff]'
-          />
-          <div className='block'>
-            <Title order={2} align='center' weight={500}>
-              {user.username}
-            </Title>
-            <Text align='center' size='md' className='opacity-50'>
-              {user.firstName} {user.lastName}
-            </Text>
-          </div>
-        </Stack>
-      </div>
+      {/* Avatar and Username */}
+      <Stack spacing='sm' align='center'>
+        <Avatar
+          src={user.avatar}
+          size={150}
+          radius={150}
+          mt={-120}
+          className='border-2 border-[#fff]'
+        />
+        <div className='block'>
+          <Title order={2} align='center' weight={500}>
+            {user.username}
+          </Title>
+          <Text align='center' size='md' className='opacity-70'>
+            ({user?.firstName} {user?.lastName})
+          </Text>
+        </div>
 
-      <Stack spacing='sm'>
+        {DUMMY_CUSTOM_WEBSITE && <CustomWebsite data={DUMMY_CUSTOM_WEBSITE} />}
+      </Stack>
+
+      <Space h='lg' />
+
+      {/* User Information */}
+      <Stack spacing='lg'>
         <UserRanks user={user} userRanks={userRanks} />
 
         {statistics && <Statistics statistics={statistics} />}
 
-        <Space h='sm' />
-
         {DUMMY_SOCIAL && <Social data={DUMMY_SOCIAL} />}
-
-        <Space h='sm' />
-
-        {DUMMY_CUSTOM_WEBSITE && <CustomWebsite data={DUMMY_CUSTOM_WEBSITE} />}
-
-        <Space h='sm' />
 
         {username === user.username && (
           <Button
