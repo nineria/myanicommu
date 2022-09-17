@@ -73,6 +73,7 @@ export default function PostsPage(props) {
       <div className='bg-background text-white min-h-[1024px] mb-[235px] pb-10'>
         <Metatags />
         <Navbar page='/posts' />
+
         <Container size='lg'>
           <Stack spacing='xs'>
             <Breadcrumbs separator='→'>{items}</Breadcrumbs>
