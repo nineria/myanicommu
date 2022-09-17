@@ -1,3 +1,4 @@
+import ADSide from '@components/ADSide';
 import Announcement from '@components/Announcement';
 import PostLayout from '@components/Card/CardLayout';
 import { Footer } from '@components/Footer';
@@ -5,14 +6,14 @@ import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import PostsMenuController from '@components/PostComponents/MenuController';
 import {
-  Anchor,
-  Breadcrumbs,
+  // Anchor,
+  // Breadcrumbs,
   Container,
-  Pagination,
+  // Pagination,
   Stack,
 } from '@mantine/core';
 import { firestore, postToJSON } from 'lib/firebase';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 export async function getServerSideProps() {
@@ -37,27 +38,17 @@ export async function getServerSideProps() {
 
 export default function PostsPage(props) {
   const [layout, setLayout] = useState('grid');
-  const router = useRouter();
+  // const router = useRouter();
 
   const [posts] = useState(props.posts);
   const [loading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
-  const [postsPerPage] = useState(12);
+  // const [currentPage, setCurrentPage] = useState(router.query?.page || 1);
+  // const [postsPerPage] = useState(12);
 
   // const indexOfLastPost = currentPage * postsPerPage;
   // const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-  const totalPosts = Math.ceil(posts.length / postsPerPage);
-
-  const items = [
-    { title: 'หน้าหลัก', href: '/' },
-    { title: 'โพสต์ทั้งหมด', href: '/posts' },
-    { title: 'โพสต์ใหม่', href: '#' },
-  ].map((item, index) => (
-    <Anchor size='sm' color='dimmed' href={item.href} key={index}>
-      {item.title}
-    </Anchor>
-  ));
+  // const totalPosts = Math.ceil(posts.length / postsPerPage);
 
   const announcements = props.announcements.map((item, index) => (
     <Announcement key={index} {...item} />
@@ -73,13 +64,12 @@ export default function PostsPage(props) {
       <div className='bg-background text-white min-h-[1024px] mb-[235px] pb-10'>
         <Metatags />
         <Navbar page='/posts' />
-
-        <Container size='lg'>
+        <ADSide />
+        <Container size='md'>
           <Stack spacing='xs'>
-            <Breadcrumbs separator='→'>{items}</Breadcrumbs>
             {announcements}
             <PostsMenuController layout={layout} setLayout={setLayout} />
-            {totalPosts > 1 && (
+            {/* {totalPosts > 1 && (
               <Pagination
                 page={currentPage}
                 // onChange={(pageNumber) => handlePageChange(pageNumber)}
@@ -90,7 +80,7 @@ export default function PostsPage(props) {
                 }}
                 size='sm'
               />
-            )}
+            )} */}
             <PostLayout
               // posts={currentPosts}
               posts={posts}
@@ -102,7 +92,7 @@ export default function PostsPage(props) {
               <div className='flex justify-center'>ยังไม่มีโพสต์</div>
             )}
 
-            {totalPosts > 1 && (
+            {/* {totalPosts > 1 && (
               <Pagination
                 page={currentPage}
                 onChange={(pageNumber) => {
@@ -116,7 +106,7 @@ export default function PostsPage(props) {
                 }}
                 size='sm'
               />
-            )}
+            )} */}
           </Stack>
         </Container>
       </div>
