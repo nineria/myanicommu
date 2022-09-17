@@ -2,7 +2,6 @@ import { Group, Tooltip } from '@mantine/core';
 import React from 'react';
 
 export default function CustomWebsite({ data }) {
-  console.log(data);
   return (
     <Group position='center'>
       <Tooltip label={data.link} withArrow position='bottom'>

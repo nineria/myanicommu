@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }) {
     const localThemeJSON = localStorage.getItem('themes');
 
     try {
-      console.log('TRY');
       const localTheme = JSON.parse(localThemeJSON);
       setTheme(localTheme.label);
       toggleColorScheme(localTheme.mode);
@@ -31,7 +30,6 @@ function MyApp({ Component, pageProps }) {
         'transition-colors ease-in-out duration-200';
       document.body.classList.add(`theme-${localTheme.label}`);
     } catch {
-      console.log('ERR');
       const defaultTheme = {
         label: 'red-light',
         mode: 'light',

@@ -46,8 +46,6 @@ function filterData(data, search) {
   const keys = Object.keys(data[0]);
   const query = search.toLocaleLowerCase().trim();
 
-  console.log(data[0]);
-
   return data.filter((item) =>
     keys.some((key) =>
       item[key]?.toString()?.toLocaleLowerCase()?.includes(query)
