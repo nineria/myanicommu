@@ -129,7 +129,7 @@ export function RegisterForm() {
 
   useEffect(() => {
     checkUsername(formValue);
-  }, [formValue]);
+  }, [formValue, checkUsername]);
 
   // Hit the database for username match after each debounced change
   // useCallback is required for debounce to work

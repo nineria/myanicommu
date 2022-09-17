@@ -47,7 +47,7 @@ export default function Body({
     });
 
     setDate(date);
-  }, []);
+  }, [comment.updatedAt.seconds]);
 
   // console.log(comment?.updatedAt);
 
