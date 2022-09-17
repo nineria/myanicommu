@@ -1,4 +1,5 @@
 import { Footer } from '@components/Footer';
+import Loading from '@components/Loading';
 import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import ProfileComponents from '@components/ProfileComponents';
@@ -92,20 +93,20 @@ export default function UserProfilePage({
   // ];
 
   return (
-    <AuthCheck>
-      <div className='bg-background text-accent min-h-[1024px] mb-[235px] pb-10'>
-        <Navbar page='/profile' isBusy />
-        <Metatags />
-        <Container size='md'>
-          {username && user && posts && (
-            <Animate
-              play
-              start={{
-                transform: 'translateY(1%)',
-                opacity: '0',
-              }}
-              end={{ transform: 'translateY(0%)', opacity: '1' }}
-            >
+    <div className='bg-background text-accent min-h-[1024px] mb-[235px] pb-10'>
+      <Navbar page='/profile' isBusy />
+      <Metatags />
+      <Container size='md'>
+        {username && user && posts && (
+          <Animate
+            play
+            start={{
+              transform: 'translateY(1%)',
+              opacity: '0',
+            }}
+            end={{ transform: 'translateY(0%)', opacity: '1' }}
+          >
+            <AuthCheck fallback={<Loading />}>
               <ProfileComponents
                 user={user}
                 userRef={userRef}
@@ -114,11 +115,11 @@ export default function UserProfilePage({
                 statisticsAdmin={statisticsAdmin}
                 posts={posts}
               />
-            </Animate>
-          )}
-        </Container>
-        <Footer />
-      </div>
-    </AuthCheck>
+            </AuthCheck>
+          </Animate>
+        )}
+      </Container>
+      <Footer />
+    </div>
   );
 }
