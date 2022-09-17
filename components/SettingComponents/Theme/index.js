@@ -67,8 +67,6 @@ export default function Themes(props) {
 
   const currentTheme = useMemo(() => getCurrentTheme(theme), [theme]);
 
-  useMemo(() => {}, []);
-
   const { toggleColorScheme } = useMantineColorScheme();
 
   const handleChangeTheme = (value, mode) => {
@@ -79,6 +77,7 @@ export default function Themes(props) {
   };
 
   const handleSubmit = () => {
+    if (!newTheme) return;
     if (newTheme.mode === 'light') toggleColorScheme('light');
     else toggleColorScheme('dark');
 
