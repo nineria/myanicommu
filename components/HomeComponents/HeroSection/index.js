@@ -12,7 +12,7 @@ export default function HeroSection({ props }) {
         <Group style={{ gap: 2 }}>
           <Link href='/posts'>
             <a className='truncate max-w-[600px] cursor-pointer hover:underline'>
-              โพสต์ใหม่วันนี้
+              โพสต์ใหม่ที่น่าสนใจ
             </a>
           </Link>
           <span className='ml-2 px-1 bg-content rounded-sm text-white text-xs'>
