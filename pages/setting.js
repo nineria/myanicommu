@@ -29,7 +29,7 @@ export default function SettingPage({ posts }) {
         <Navbar page='/setting' isBusy />
         <Metatags />
         {/* Check user and Setting*/}
-        <Container size='lg'>
+        <Container size='md'>
           <AuthCheck fallback={<Loading />}>
             <Animate
               play
