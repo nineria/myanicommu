@@ -21,9 +21,9 @@ export default function HeroSection({ props }) {
         </Group>
       </div>
       <Space h='xs' />
-      <Grid gutter='xs'>
+      <Grid gutter='xs' columns={3}>
         {props.map((data, index) => (
-          <Grid.Col key={index} xs={6} md={3}>
+          <Grid.Col key={index} xs={3} sm={1}>
             <Card layout='grid' posts={data} />
           </Grid.Col>
         ))}

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 // Context
 import { UserContext } from 'lib/context';
 // Components
@@ -7,7 +7,6 @@ import Add from 'components/HomeComponents/Add';
 import Post from './Elements/Body';
 // Icons
 import AdminCheck from 'hooks/AdminCheck';
-import { firestore } from 'lib/firebase';
 import React from 'react';
 import { Animate } from 'react-simple-animate';
 import Advertisement from './Advertisement';
@@ -15,28 +14,14 @@ import HeroSection from './HeroSection';
 
 export const admin = 'ผู้ดูแลระบบ';
 
-export default function HomeComponents({ homePosts, reviewPosts }) {
+export default function HomeComponents({ homePosts, reviewPosts, todayPosts }) {
   const { user } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
 
-  const [newPostToday, setNewPostToDay] = useState();
-
-  useEffect(() => {
-    const getToDayPost = async () => {
-      const query = firestore
-        .collectionGroup('posts')
-        .orderBy('createdAt', 'desc')
-        .limit(4);
-      const newPosts = (await query.get()).docs.map((doc) => doc.data());
-      setNewPostToDay(newPosts);
-    };
-    getToDayPost();
-  }, []);
-
   return (
     <Container size='lg'>
-      <div className={`mt-2 text-white w-full`}>
+      <div className={` text-white w-full`}>
         <Animate
           play
           start={{
@@ -46,7 +31,7 @@ export default function HomeComponents({ homePosts, reviewPosts }) {
           end={{ transform: 'translateY(0%)', opacity: '1' }}
         >
           <div className='flex flex-col gap-2'>
-            {newPostToday && <HeroSection props={newPostToday} />}
+            {todayPosts && <HeroSection props={todayPosts} />}
 
             {reviewPosts && <Post today homePosts={reviewPosts} />}
 

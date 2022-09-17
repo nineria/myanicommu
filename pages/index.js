@@ -1,18 +1,16 @@
 import { Footer } from '@components/Footer';
-import React from 'react';
-
 import HomeComponents from '@components/HomeComponents';
 import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import { firestore, postToJSON } from '@lib/firebase';
 import { useThemeContext } from '@lib/useTheme';
-
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 // Max post to query per page
 const LIMIT = 10;
 
 export async function getServerSideProps() {
+  // Home posts
   const postsQuery = firestore
     .collectionGroup('homePosts')
     .orderBy('createdAt', 'asc')
@@ -20,6 +18,7 @@ export async function getServerSideProps() {
 
   const homePosts = (await postsQuery.get()).docs.map(postToJSON);
 
+  // Review posts
   const postsReviewQuery = firestore
     .collectionGroup('posts')
     .orderBy('createdAt', 'desc');
@@ -32,8 +31,16 @@ export async function getServerSideProps() {
     })
     .map((filtered) => filtered);
 
+  // Today posts
+
+  const todayQuery = firestore
+    .collectionGroup('posts')
+    .orderBy('createdAt', 'desc')
+    .limit(3);
+  const todayPosts = (await todayQuery.get()).docs.map(postToJSON);
+
   return {
-    props: { homePosts, reviewPosts }, // will be passed to the page component as props
+    props: { homePosts, reviewPosts, todayPosts }, // will be passed to the page component as props
   };
 }
 
@@ -57,6 +64,7 @@ export default function HomePage(props) {
         <HomeComponents
           homePosts={props.homePosts}
           reviewPosts={props.reviewPosts}
+          todayPosts={props.todayPosts}
         />
       </div>
       <Footer />
