@@ -32,15 +32,15 @@ export default function HomeComponents({ homePosts, reviewPosts, todayPosts }) {
         <div className='flex flex-col gap-2'>
           {todayPosts && <HeroSection props={todayPosts} />}
 
-          <Space h='sm' />
+          <Space h='xs' />
 
           {reviewPosts && <Post today homePosts={reviewPosts} />}
 
-          <Space h='sm' />
+          <Space h='xs' />
 
           <Advertisement />
 
-          <Space h='sm' />
+          <Space h='xs' />
 
           {/* Display home post */}
           <div className='block  space-y-2 mt-2 sm:mt-0'>

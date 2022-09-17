@@ -109,7 +109,7 @@ export function Footer() {
 
   return (
     <footer className='fixed bottom-0 pt-4 md:pt-8 bg-foreground mt-10 h-[235px] -z-10 w-full border-t-2 border-content'>
-      <Container size='lg' className='flex md:justify-between justify-center'>
+      <Container size='md' className='flex md:justify-between justify-center'>
         <div className='w-[250px] md:text-left text-center'>
           <div className='text-3xl font-bold'>
             <MyAniLogo link='/' />
@@ -125,11 +125,11 @@ export function Footer() {
         </div>
         <div className='md:flex hidden'>{groups}</div>
       </Container>
-      <Container size='lg'>
+      <Container size='md'>
         <Divider my='xs' color='dark' />
       </Container>
       <Container
-        size='lg'
+        size='md'
         className='flex flex-col md:flex-row md:justify-between items-center'
       >
         <Text className='text-title opacity-80' size='sm'>
