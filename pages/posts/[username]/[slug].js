@@ -9,8 +9,8 @@ import {
   Anchor,
   Breadcrumbs,
   Container,
-  Group,
-  Pagination,
+  // Group,
+  // Pagination,
   Stack,
   Text,
 } from '@mantine/core';
@@ -67,7 +67,7 @@ export default function PostPage(props) {
 
   const post = props.post;
 
-  const [activePage, setPage] = useState(1);
+  // const [activePage, setPage] = useState(1);
 
   const [comments, setComments] = useState(props.comments);
 
