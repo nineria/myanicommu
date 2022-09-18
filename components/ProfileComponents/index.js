@@ -2,7 +2,7 @@ import { Stack, Title } from '@mantine/core';
 import AdminCheck from 'hooks/AdminCheck';
 import { UserContext } from 'lib/context';
 import React, { useContext } from 'react';
-import ReportFormUser from './Admin/ReportFormUser';
+// import ReportFormUser from './Admin/ReportFormUser';
 import StatsSegmentsAdmin from './Admin/StatsSegmentsAdmin';
 import UserManagement from './Admin/UserManagement';
 import AnnouncementControl from './AnnouncementControl';
@@ -46,7 +46,7 @@ export default function ProfileComponents({
           <div id='announcementControl'>
             <AnnouncementControl />
           </div>
-          <ReportFormUser />
+          {/* <ReportFormUser /> */}
         </AdminCheck>
       )}
     </Stack>
