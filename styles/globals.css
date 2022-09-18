@@ -16,62 +16,76 @@ body {
 
 @layer base {
   :root {
-    --accent: 24 26 29;
-    --title: 255 255 255;
+    --accent: 50 50 50;
+    --title: 244 244 244;
     --content: 236 85 85;
     --background: 24 26 29;
     --foreground: 36 38 41;
   }
 }
 /* Dark theme */
-.theme-tiger {
-  --accent: 35 32 32;
+/* .theme-chocolate {
+  --accent: 50 50 50;
   --title: 244 244 244;
-  --content: 255 115 21;
-  --background: 35 32 32;
-  --foreground: 58 53 53;
-}
-.theme-navy {
-  --accent: 27 38 44;
-  --title: 249 247 247;
-  --content: 51 130 184;
-  --background: 27 38 44;
-  --foreground: 50 71 82;
+  --content: 184 92 56;
+  --background: 45 36 36;
+  --foreground: 92 61 46;
+} */
+.theme-ocean {
+  --accent: 50 50 50;
+  --title: 244 244 244;
+  --content: 95 133 219;
+  --background: 24 26 29;
+  --foreground: 36 38 41;
 }
 .theme-pinky {
   --accent: 50 50 50;
-  --title: 253 239 244;
-  --content: 255 93 141;
-  --background: 50 50 50;
-  --foreground: 82 74 78;
+  --title: 244 244 244;
+  --content: 255 92 141;
+  --background: 24 26 29;
+  --foreground: 36 38 41;
 }
-.theme-punk {
-  --accent: 34 40 49;
-  --title: 238 238 238;
+.theme-neon {
+  --accent: 50 50 50;
+  --title: 244 244 244;
   --content: 0 173 181;
-  --background: 34 40 49;
-  --foreground: 57 62 70;
+  --background: 24 26 29;
+  --foreground: 36 38 41;
 }
 
 /* LIGHT THEME */
 .theme-red-light {
-  --accent: 255 255 255;
-  --title: 69 71 73;
+  --accent: 244 244 244;
+  --title: 50 50 50;
   --content: 236 85 85;
   --background: 211 211 211;
   --foreground: 255 255 255;
 }
-.theme-tiger-light {
-  --accent: 44 44 44;
-  --title: 244 244 244;
+/* .theme-tiger-light {
+  --accent: 244 244 244;
+  --title: 50 50 50;
   --content: 255 115 21;
   --background: 211 211 211;
   --foreground: 255 255 255;
-}
-.theme-navy-light {
-  --accent: 44 44 44;
-  --title: 249 247 247;
+} */
+.theme-ocean-light {
+  --accent: 244 244 244;
+  --title: 50 50 50;
   --content: 51 130 184;
+  --background: 211 211 211;
+  --foreground: 255 255 255;
+}
+.theme-pinky-light {
+  --accent: 244 244 244;
+  --title: 50 50 50;
+  --content: 255 93 141;
+  --background: 211 211 211;
+  --foreground: 255 255 255;
+}
+.theme-neon-light {
+  --accent: 244 244 244;
+  --title: 50 50 50;
+  --content: 0 173 181;
   --background: 211 211 211;
   --foreground: 255 255 255;
 }

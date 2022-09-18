@@ -1,124 +1,97 @@
 import Post from '@components/HomeComponents/Elements/Body';
+import { LOCAL_THEME } from '@constants/Themes';
 import {
+  Box,
   Button,
+  Center,
   Group,
+  SegmentedControl,
   Select,
+  Stack,
   Text,
   useMantineColorScheme,
 } from '@mantine/core';
 import { useThemeContext } from 'lib/useTheme';
 import { useRouter } from 'next/router';
 import React, { forwardRef, useMemo, useState } from 'react';
-
-const localTheme = [
-  {
-    color: ['bg-[#ec5555]', 'bg-[#181a1d]'],
-    label: 'ROSE',
-    value: 'red',
-    description: 'Dark theme',
-    mode: 'dark',
-  },
-  {
-    color: ['bg-[#ff7315]', 'bg-[#232020]'],
-    label: 'TIGER',
-    value: 'tiger',
-    description: 'Dark theme',
-    mode: 'dark',
-  },
-  {
-    color: ['bg-[#3382b8]', 'bg-[#1b262c]'],
-    label: 'NAVY BLUE',
-    value: 'navy',
-    description: 'Dark theme',
-    mode: 'dark',
-  },
-  {
-    color: ['bg-[#ff5d8d]', 'bg-[#323232]'],
-    label: 'PINKY SWEAR',
-    value: 'pinky',
-    description: 'Dark theme',
-    mode: 'dark',
-  },
-  {
-    color: ['bg-[#00adb5]', 'bg-[#222831]'],
-    label: 'Cyberpunk',
-    value: 'punk',
-    description: 'Dark theme',
-    mode: 'dark',
-  },
-  {
-    color: ['bg-[#ec5555]', 'bg-[#eeeeee]'],
-    label: 'MOON ROSE',
-    value: 'red-light',
-    description: 'Light theme',
-    mode: 'light',
-  },
-];
+import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 
 const getCurrentTheme = (theme) => {
-  const result = localTheme.filter((item) => item.value == theme);
+  const result = LOCAL_THEME.filter((item) => {
+    let _tmp = theme.split('-');
+    if (item.value == _tmp[0]) return true;
+    else return false;
+  });
   return result[0];
+};
+
+const getSplitTheme = (theme) => {
+  let _tmp = theme.split('-');
+  return _tmp[0];
 };
 
 export default function ThemeSetting(props) {
   const { theme } = useThemeContext();
-  const [newTheme, setNewTheme] = useState(null);
-  const router = useRouter();
+  const { toggleColorScheme, colorScheme } = useMantineColorScheme();
 
   const currentTheme = useMemo(() => getCurrentTheme(theme), [theme]);
+  const splitTheme = useMemo(() => getSplitTheme(theme), [theme]);
 
-  const { toggleColorScheme } = useMantineColorScheme();
+  const [mode, setMode] = useState(colorScheme);
+  const [value, setValue] = useState(theme);
+  const [defaultValue, setDefaultValue] = useState('');
 
-  const handleChangeTheme = (value, mode) => {
-    setNewTheme({
-      label: value,
-      mode: mode,
-    });
+  const router = useRouter();
+
+  const handleChangeTheme = (value) => {
+    setValue(mode === 'light' ? `${value}-${mode}` : value);
+    setDefaultValue(value);
+  };
+
+  const handleChangeMode = (mode) => {
+    setMode(mode);
+    const _tmp = value.split('-');
+    setValue(mode === 'light' ? `${value}-${mode}` : _tmp[0]);
+    setDefaultValue(_tmp[0]);
   };
 
   const handleSubmit = () => {
-    if (!newTheme) return;
-    if (newTheme.mode === 'light') toggleColorScheme('light');
+    const setLocalTheme = {
+      label: value,
+      mode: mode,
+    };
+
+    if (value === 'light') toggleColorScheme('light');
     else toggleColorScheme('dark');
 
-    localStorage.setItem('themes', JSON.stringify(newTheme));
+    localStorage.setItem('themes', JSON.stringify(setLocalTheme));
 
     router.reload();
   };
 
-  // const filtered = localTheme.filter((item) => {
-  //   return item.value === theme;
-  // });
-
-  const SelectItem = forwardRef(
-    ({ label, description, color, value, mode }, ref) => (
-      <div
-        ref={ref}
-        className='hover:bg-content text-title hover:text-[#fff] px-2 cursor-pointer'
-        onClick={() => handleChangeTheme(value, mode)}
-      >
+  const SelectItem = forwardRef(({ label, color, value }, ref) => (
+    <div
+      ref={ref}
+      className='hover:bg-content text-title hover:text-[#fff] px-2 cursor-pointer'
+      onClick={() => handleChangeTheme(value)}
+    >
+      <Group noWrap p={4}>
         <Group noWrap>
-          <div className='flex flex-col rotate-45 rounded-full border-2 border-white'>
+          <div className='flex flex-col rotate-45 rounded-full border-2 border-title '>
             <div
-              className={`h-2 w-4 ${color[0]} 
-            rounded-tl-full rounded-tr-full`}
+              style={{ backgroundColor: color }}
+              className='h-2 w-4 rounded-tl-full rounded-tr-full'
             />
             <div
-              className={`h-2 w-4 ${color[1]} 
-            rounded-bl-full rounded-br-full`}
+              style={{ backgroundColor: mode === 'light' ? '#fff' : '#222' }}
+              className='h-2 w-4 rounded-bl-full rounded-br-full'
             />
-          </div>
-          <div>
-            <Text size='sm'>{label}</Text>
-            <Text size='xs' color='dimmed'>
-              {description}
-            </Text>
           </div>
         </Group>
-      </div>
-    )
-  );
-
+        <Text size='sm'>{label}</Text>
+      </Group>
+    </div>
+  ));
   SelectItem.displayName = 'SelectItem';
 
   const ResultSample = ({ posts }) => (
@@ -136,51 +109,70 @@ export default function ThemeSetting(props) {
 
   return (
     <div className='bg-foreground my-2 w-full rounded-sm shadow-md'>
-      {/* Header */}
-
-      {/* Theme */}
       <div className='px-4 py-2 flex flex-col md:flex-row justify-between items-center'>
-        <div className='w-full text-title'>
+        <div className='text-title'>
           <Text className='font-bold '>การตั้งค่า</Text>
           <Text size='xs' className='font-bold opacity-50'>
-            ธีมปัจจุบัน : {currentTheme.label}
+            ธีมปัจจุบัน : {currentTheme?.label}
           </Text>
         </div>
 
-        <Group className='w-full mt-6 md:mt-0' spacing='xs' position='right'>
+        <Stack className='w-[50%] mt-6 md:mt-0'>
           {/* Select Theme */}
-          <div className='w-[50%]'>
-            <Select
-              placeholder='เลือกธีม'
-              itemComponent={SelectItem}
-              data={localTheme}
-              searchable
-              value={newTheme?.label || theme}
-              maxDropdownHeight={400}
-              nothingFound='ไม่พบธีมที่ต้องการ'
-              filter={(value, item) =>
-                item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
-                item.description
-                  .toLowerCase()
-                  .includes(value.toLowerCase().trim())
-              }
-              classNames={{
-                dropdown: 'bg-foreground',
-                nothingFound: 'bg-foreground text-title',
-                wrapper: 'your-wrapper-class',
-                invalid: 'your-invalid-class',
-                input: 'bg-background text-title',
-              }}
-            />
-          </div>
+          <SegmentedControl
+            value={mode}
+            onChange={(value) => handleChangeMode(value)}
+            data={[
+              {
+                value: 'light',
+                label: (
+                  <Center>
+                    <BsFillSunFill size={16} />
+                    <Box ml={10}>Light</Box>
+                  </Center>
+                ),
+              },
+              {
+                value: 'dark',
+                label: (
+                  <Center>
+                    <BsFillMoonStarsFill size={16} />
+                    <Box ml={10}>Dark</Box>
+                  </Center>
+                ),
+              },
+            ]}
+          />
+          <Select
+            placeholder='เลือกธีม'
+            itemComponent={SelectItem}
+            data={LOCAL_THEME}
+            searchable
+            value={defaultValue === '' ? splitTheme : defaultValue}
+            maxDropdownHeight={400}
+            nothingFound='ไม่พบธีมที่ต้องการ'
+            filter={(value, item) => {
+              if (item.label == value) return true;
+              else return false;
+            }}
+            classNames={{
+              dropdown: 'bg-foreground',
+              nothingFound: 'bg-foreground text-title',
+              wrapper: 'your-wrapper-class',
+              invalid: 'your-invalid-class',
+              input: 'bg-background text-title',
+            }}
+          />
+
           {/* Submit Button */}
           <Button
-            className='bg-content text-[#fff] ml-2 hover:bg-content hover:opacity-75'
+            fullWidth
+            className='bg-content text-[#fff]  hover:bg-content hover:opacity-75'
             onClick={() => handleSubmit()}
           >
             เปลี่ยนธีม
           </Button>
-        </Group>
+        </Stack>
       </div>
       {/* Option menu result changed example */}
       <ResultSample posts={props.posts} />
