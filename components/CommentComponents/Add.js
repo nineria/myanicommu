@@ -12,7 +12,7 @@ import { auth, firestore, serverTimestamp } from 'lib/firebase';
 import React, { useContext, useState } from 'react';
 import { Check } from 'tabler-icons-react';
 import RichTextEditor from 'utils/RichText';
-import LeftMenuAdd from './Elements/LeftMenuAdd';
+import LeftMenuAdd from './LeftMenuAdd';
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -43,8 +43,8 @@ export default function Add({ post, comments, setComments }) {
       const id = modals.openModal({
         title: (
           <Stack>
-            <Text size="sm">ข้อความของคุณว่างเปล่า?</Text>
-            <Text size="xs">กรุณาใส่ข้อความที่ต้องการตอบกลับ</Text>
+            <Text size='sm'>ข้อความของคุณว่างเปล่า?</Text>
+            <Text size='xs'>กรุณาใส่ข้อความที่ต้องการตอบกลับ</Text>
           </Stack>
         ),
         zIndex: '999',
@@ -58,9 +58,9 @@ export default function Add({ post, comments, setComments }) {
         children: (
           <Button
             fullWidth
-            size="xs"
-            type="submit"
-            className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+            size='xs'
+            type='submit'
+            className='bg-green-500 hover:bg-green-500 hover:opacity-75'
             onClick={() => modals.closeModal(id)}
           >
             เข้าใจแล้ว
@@ -113,12 +113,12 @@ export default function Add({ post, comments, setComments }) {
   };
 
   return (
-    <div className="bg-foreground rounded-sm">
-      <div className="flex md:flex-row flex-col">
+    <div className='bg-foreground rounded-sm'>
+      <div className='flex md:flex-row flex-col'>
         <LeftMenuAdd data={userData} />
-        <div className="md:block hidden px-[0.5px] bg-white opacity-50"></div>
-        <div className="p-2 text-title w-full">
-          <div className="border-[1px] border-white border-opacity-10 rounded-sm p-2">
+        <div className='md:block hidden px-[0.5px] bg-white opacity-50'></div>
+        <div className='p-2 text-title w-full'>
+          <div className='border-[1px] border-white border-opacity-10 rounded-sm p-2'>
             <RichTextEditor
               controls={[
                 ['bold', 'italic', 'underline', 'link'],
@@ -129,7 +129,7 @@ export default function Add({ post, comments, setComments }) {
               stickyOffset={55}
               value={value}
               onChange={onChange}
-              placeholder="คุณกำลังคิดอะไรอยู่"
+              placeholder='คุณกำลังคิดอะไรอยู่'
               onImageUpload={handleImageUpload}
               classNames={{
                 root: 'bg-black/10 text-title border-[#fff] border-opacity-20',
@@ -139,11 +139,11 @@ export default function Add({ post, comments, setComments }) {
               }}
             />
 
-            <div className="flex flex-row justify-between mt-2">
+            <div className='flex flex-row justify-between mt-2'>
               <Modal
-                size="1000px"
-                mx="sm"
-                overlayColor="#333"
+                size='1000px'
+                mx='sm'
+                overlayColor='#333'
                 opened={openedWebsiteRule}
                 onClose={() => setOpenedWebsiteRule(false)}
                 title={<Logo />}
@@ -160,9 +160,9 @@ export default function Add({ post, comments, setComments }) {
                 <Verify>ตอบกลับ</Verify>
               ) : (
                 <Button
-                  size="xs"
-                  className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-                  variant="default"
+                  size='xs'
+                  className='bg-content text-[#fff] hover:bg-content hover:opacity-75'
+                  variant='default'
                   onClick={() => HandleSubmit()}
                 >
                   ตอบกลับ

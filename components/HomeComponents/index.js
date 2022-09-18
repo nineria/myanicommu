@@ -1,15 +1,11 @@
-import { useContext, useState } from 'react';
-// Context
-import { UserContext } from 'lib/context';
-// Components
+import Add from '@components/HomeComponents/Add';
+import AdminCheck from '@hooks/AdminCheck';
 import { Button, Center, Modal, Space } from '@mantine/core';
-import Add from 'components/HomeComponents/Add';
-import Post from './Elements/Body';
-// Icons
-import AdminCheck from 'hooks/AdminCheck';
-import React from 'react';
+import { UserContext } from 'lib/context';
+import React, { useContext, useState } from 'react';
 import { Animate } from 'react-simple-animate';
 import Advertisement from './Advertisement';
+import Post from './Elements/Body';
 import HeroSection from './HeroSection';
 
 export const admin = 'ผู้ดูแลระบบ';

@@ -1,4 +1,4 @@
-import { Footer } from '@components/Footer/index.js';
+import { Footer } from '@components/Footer.js';
 import Loading from '@components/Loading.js';
 import Metatags from '@components/Metatags.js';
 import Navbar from '@components/Navbar';

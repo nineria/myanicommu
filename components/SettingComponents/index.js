@@ -1,7 +1,7 @@
 import { Divider, Group, Text } from '@mantine/core';
 import React from 'react';
 import { Settings } from 'tabler-icons-react';
-import Themes from './Theme';
+import ThemeSetting from './ThemeSetting';
 
 export default function SettingComponents(props) {
   return (
@@ -13,7 +13,7 @@ export default function SettingComponents(props) {
         </Text>
       </Group>
       <Divider className='opacity-50' />
-      <Themes posts={props.posts} />
+      <ThemeSetting posts={props.posts} />
     </div>
   );
 }

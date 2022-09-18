@@ -7,23 +7,23 @@ import {
   Textarea,
   TextInput,
   Tooltip,
-} from "@mantine/core";
-import React, { useContext, useState } from "react";
-import ButtonControl from "./AnnouncementComponents/ButtonControl";
-import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
-import { showNotification } from "@mantine/notifications";
-import { AlertCircle, Check, Speakerphone } from "tabler-icons-react";
-import { UserContext } from "lib/context";
-import { useRouter } from "next/router";
-import { auth, firestore, serverTimestamp } from "lib/firebase";
+} from '@mantine/core';
+import { useForm, zodResolver } from '@mantine/form';
+import { showNotification } from '@mantine/notifications';
+import { UserContext } from 'lib/context';
+import { auth, firestore, serverTimestamp } from 'lib/firebase';
+import { useRouter } from 'next/router';
+import React, { useContext, useState } from 'react';
+import { AlertCircle, Check, Speakerphone } from 'tabler-icons-react';
+import { z } from 'zod';
+import ButtonControl from './ButtonControl';
 
 const schema = z.object({
   title: z
     .string()
-    .min(1, { message: "กรุณาเขียนหัวข้อของประกาศ" })
-    .max(100, { message: "หัวข้อต้องไม่เกิน 100 ตัวอักษร" }),
-  content: z.string().min(1, { message: "กรุณาเขียนเนื้อหาของประกาศ" }),
+    .min(1, { message: 'กรุณาเขียนหัวข้อของประกาศ' })
+    .max(100, { message: 'หัวข้อต้องไม่เกิน 100 ตัวอักษร' }),
+  content: z.string().min(1, { message: 'กรุณาเขียนเนื้อหาของประกาศ' }),
 });
 
 export default function AddAnnouncement() {
@@ -36,9 +36,9 @@ export default function AddAnnouncement() {
   const HandleChange = async (values) => {
     const uid = auth.currentUser.uid;
     const ref = firestore
-      .collection("users")
+      .collection('users')
       .doc(uid)
-      .collection("announcements")
+      .collection('announcements')
       .doc();
     const data = {
       slug: ref.id,
@@ -54,11 +54,11 @@ export default function AddAnnouncement() {
     await ref.set(data);
 
     showNotification({
-      color: "teal",
-      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+      color: 'teal',
+      title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
       icon: <Check size={18} />,
       classNames: {
-        root: "bg-foreground border-teal-400",
+        root: 'bg-foreground border-teal-400',
       },
     });
 
@@ -70,9 +70,9 @@ export default function AddAnnouncement() {
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
-      type: "success",
-      title: "",
-      content: "",
+      type: 'success',
+      title: '',
+      content: '',
       published: false,
     },
   });
@@ -80,88 +80,88 @@ export default function AddAnnouncement() {
   return (
     <>
       <Modal
-        size="xl"
+        size='xl'
         classNames={{
-          modal: "bg-foreground",
-          overlay: "bg-background",
-          title: "text-title",
+          modal: 'bg-foreground',
+          overlay: 'bg-background',
+          title: 'text-title',
         }}
         opened={opened}
         closeOnClickOutside={false}
         onClose={() => setOpened(false)}
-        title="สร้างประกาศ"
+        title='สร้างประกาศ'
       >
         <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
           <Stack>
             <Select
-              label="ประเภท"
-              placeholder="เลือกประเภทของประกาศ"
+              label='ประเภท'
+              placeholder='เลือกประเภทของประกาศ'
               required
               data={[
-                { value: "danger", label: "Danger - ระดับความสำคัญสูงสุด" },
-                { value: "warning", label: "Warning - ระดับความสำคัญปานกลาง" },
-                { value: "success", label: "Success - ระดับความสำคัญทั่วไป" },
+                { value: 'danger', label: 'Danger - ระดับความสำคัญสูงสุด' },
+                { value: 'warning', label: 'Warning - ระดับความสำคัญปานกลาง' },
+                { value: 'success', label: 'Success - ระดับความสำคัญทั่วไป' },
               ]}
-              {...form.getInputProps("type")}
+              {...form.getInputProps('type')}
             />
             <div
               className={`${
-                form.getInputProps("type").value === "danger"
-                  ? "border-red-500 bg-red-500"
-                  : form.getInputProps("type").value === "warning"
-                  ? "border-orange-500 bg-orange-500"
-                  : "border-green-500 bg-green-500"
+                form.getInputProps('type').value === 'danger'
+                  ? 'border-red-500 bg-red-500'
+                  : form.getInputProps('type').value === 'warning'
+                  ? 'border-orange-500 bg-orange-500'
+                  : 'border-green-500 bg-green-500'
               } border-2 rounded-sm flex flex-row items-center`}
             >
               <div>
-                <AlertCircle size={25} className="text-white m-1" />
+                <AlertCircle size={25} className='text-white m-1' />
               </div>
-              <div className="flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm">
-                <div className="w-full">
-                  <h1 className="font-bold md:text-base text-sm ">
+              <div className='flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm'>
+                <div className='w-full'>
+                  <h1 className='font-bold md:text-base text-sm '>
                     <TextInput
-                      placeholder="หัวข้อการประกาศ"
+                      placeholder='หัวข้อการประกาศ'
                       classNames={{
-                        input: "bg-transparent bg-opacity-50  border-none",
+                        input: 'bg-transparent bg-opacity-50  border-none',
                       }}
-                      {...form.getInputProps("title")}
+                      {...form.getInputProps('title')}
                     />
                   </h1>
-                  <p className="text-xs md:text-sm ">
+                  <p className='text-xs md:text-sm '>
                     <Textarea
-                      placeholder="เนื้อหาของประกาศ"
+                      placeholder='เนื้อหาของประกาศ'
                       autosize
                       classNames={{
-                        input: "bg-transparent bg-opacity-50  border-none",
+                        input: 'bg-transparent bg-opacity-50  border-none',
                       }}
-                      {...form.getInputProps("content")}
+                      {...form.getInputProps('content')}
                     />
                   </p>
                 </div>
               </div>
             </div>
             <Checkbox
-              {...form.getInputProps("published")}
-              label="เริ่มประกาศ"
+              {...form.getInputProps('published')}
+              label='เริ่มประกาศ'
             />
           </Stack>
-          <ButtonControl setOpened={setOpened} type="add" />
+          <ButtonControl setOpened={setOpened} type='add' />
         </form>
       </Modal>
       <Button
         onClick={() => setOpened(true)}
-        className="md:block hidden z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
-        variant="default"
-        size="xs"
+        className='md:block hidden z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit'
+        variant='default'
+        size='xs'
       >
         สร้างประกาศ +
       </Button>
-      <Tooltip label="สร้างประกาศใหม่" placement="start" withArrow>
+      <Tooltip label='สร้างประกาศใหม่' placement='start' withArrow>
         <Button
           onClick={() => setOpened(true)}
-          className="md:hidden block z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
-          variant="default"
-          size="xs"
+          className='md:hidden block z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit'
+          variant='default'
+          size='xs'
         >
           <Speakerphone size={14} />
         </Button>

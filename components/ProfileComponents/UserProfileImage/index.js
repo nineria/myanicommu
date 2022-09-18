@@ -11,15 +11,15 @@ import {
   Title,
 } from '@mantine/core';
 // Components
-import Report from 'components/Report';
+import UserReport from '@components/UserReport';
 import { UserContext } from 'lib/context';
 import { getUserWithUsername } from 'lib/firebase';
 import { BiLinkExternal } from 'react-icons/bi';
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { Edit } from 'tabler-icons-react';
-import CustomWebsite from '../CustomWebsite';
 import EditProfile from '../EditProfile';
-import Social from '../Social';
+import CustomWebsite from './CustomWebsite';
+import Social from './Social';
 import Statistics from './Statistics';
 import UserRanks from './UserRanks';
 
@@ -92,7 +92,7 @@ export default function UserCardImage({ user, posts, statistics }) {
       />
       {username !== user.username && (
         <div className='fixed top-2 right-0 p-[2px] bg-foreground rounded-l-md'>
-          <Report />
+          <UserReport />
         </div>
       )}
 

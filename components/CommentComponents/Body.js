@@ -16,7 +16,7 @@ import {
   X,
 } from 'tabler-icons-react';
 import RichTextEditor from 'utils/RichText';
-import Edit from '../Edit';
+import Edit from './Edit';
 
 export default function Body({
   commentP,

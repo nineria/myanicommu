@@ -2,15 +2,13 @@ import { Stack, Title } from '@mantine/core';
 import AdminCheck from 'hooks/AdminCheck';
 import { UserContext } from 'lib/context';
 import React, { useContext } from 'react';
+import ReportFormUser from './Admin/ReportFormUser';
+import StatsSegmentsAdmin from './Admin/StatsSegmentsAdmin';
+import UserManagement from './Admin/UserManagement';
 import AnnouncementControl from './AnnouncementControl';
 import { TableSort } from './PostsTableSort';
-import ReportFormUser from './ReportFormUser';
-// import { StatsGridIcons } from './StatsGridIcons/StatsGridIcons';
-// import { StatsGridIconsAdmin } from './StatsGridIcons/StatsGridIconsAdmin';
-import StatsSegments from './StatsSegments/StatsSegments';
-import StatsSegmentsAdmin from './StatsSegments/StatsSegmentsAdmin';
-import UserCardImage from './UserCardImage';
-import UserManagement from './UserManagement';
+import StatsSegments from './StatsSegments';
+import UserProfileImage from './UserProfileImage';
 
 export default function ProfileComponents({
   user,
@@ -24,7 +22,7 @@ export default function ProfileComponents({
 
   return (
     <Stack spacing='xs'>
-      <UserCardImage
+      <UserProfileImage
         user={user}
         userRef={userRef}
         posts={posts}

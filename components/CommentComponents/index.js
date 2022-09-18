@@ -1,9 +1,9 @@
 import { auth, firestore, getUserWithUsername } from 'lib/firebase';
 import React, { useEffect, useState } from 'react';
-import Body from './Elements/Body';
-import LeftMenu from './Elements/LeftMenu';
-import TopMenu from './Elements/TopMenu';
+import Body from './Body';
 import Layout from './Layout';
+import LeftMenu from './LeftMenu';
+import TopMenu from './TopMenu';
 
 export default function Comment(props) {
   const [commentRef, setCommentRef] = useState();

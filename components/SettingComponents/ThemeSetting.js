@@ -1,3 +1,4 @@
+import Post from '@components/HomeComponents/Elements/Body';
 import {
   Button,
   Group,
@@ -8,7 +9,6 @@ import {
 import { useThemeContext } from 'lib/useTheme';
 import { useRouter } from 'next/router';
 import React, { forwardRef, useMemo, useState } from 'react';
-import ResultSample from './ResultSample';
 
 const localTheme = [
   {
@@ -60,7 +60,7 @@ const getCurrentTheme = (theme) => {
   return result[0];
 };
 
-export default function Themes(props) {
+export default function ThemeSetting(props) {
   const { theme } = useThemeContext();
   const [newTheme, setNewTheme] = useState(null);
   const router = useRouter();
@@ -120,6 +120,19 @@ export default function Themes(props) {
   );
 
   SelectItem.displayName = 'SelectItem';
+
+  const ResultSample = ({ posts }) => (
+    <div className='bg-foreground px-4 py-2'>
+      <div className='bg-background p-4 rounded-sm'>
+        <div className='flex flex-col gap-2'>
+          {posts &&
+            posts.map((item, index) => (
+              <Post homePosts={item} key={index} disabled={true} />
+            ))}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className='bg-foreground my-2 w-full rounded-sm shadow-md'>

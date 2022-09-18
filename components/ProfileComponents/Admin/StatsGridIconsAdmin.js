@@ -1,12 +1,11 @@
-import React from "react";
+import React from 'react';
 // Components
-import { Group, Paper, Text, ThemeIcon, SimpleGrid } from "@mantine/core";
+import { Group, Paper, SimpleGrid, Text, ThemeIcon } from '@mantine/core';
 // Icons
-import { ArrowUpRight, ArrowDownRight } from "tabler-icons-react";
+import { ArrowDownRight, ArrowUpRight } from 'tabler-icons-react';
 // Tools
-import { kFormatter } from "utils/Calculator";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from 'react';
+import { kFormatter } from 'utils/Calculator';
 
 export function StatsGridIconsAdmin({ statistics }) {
   const [totalLikes, setTotalLikes] = useState(0);
@@ -40,147 +39,147 @@ export function StatsGridIconsAdmin({ statistics }) {
   return (
     <SimpleGrid
       cols={4}
-      breakpoints={[{ maxWidth: "sm", cols: 2 }]}
-      spacing="xs"
+      breakpoints={[{ maxWidth: 'sm', cols: 2 }]}
+      spacing='xs'
     >
-      <Paper p="md" radius="sm" className="bg-foreground">
-        <Group position="apart">
+      <Paper p='md' radius='sm' className='bg-foreground'>
+        <Group position='apart'>
           <div>
-            <Text color="dimmed" transform="uppercase" weight={700} size="xs">
+            <Text color='dimmed' transform='uppercase' weight={700} size='xs'>
               ถูกใจทั้งหมด
             </Text>
-            <Text weight={700} size="xl">
+            <Text weight={700} size='xl'>
               {kFormatter(totalLikes)}
             </Text>
           </div>
           <ThemeIcon
-            color="gray"
-            variant="light"
+            color='gray'
+            variant='light'
             sx={(theme) => ({
               color:
                 totalLikes > 0 ? theme.colors.teal[6] : theme.colors.red[6],
             })}
             size={38}
-            radius="md"
+            radius='md'
           >
             {/* <DiffIcon size={28} /> */}
             {totalLikes > 0 ? <ArrowUpRight /> : <ArrowDownRight />}
           </ThemeIcon>
         </Group>
-        <Text color="dimmed" size="sm" mt="md">
+        <Text color='dimmed' size='sm' mt='md'>
           <Text
-            component="span"
-            color={totalLikes > 0 ? "teal" : "red"}
+            component='span'
+            color={totalLikes > 0 ? 'teal' : 'red'}
             weight={700}
           >
             {totalLikes}%
-          </Text>{" "}
-          {totalLikes > 0 ? "เพิ่มขึ้น" : "ลดลง"}
+          </Text>{' '}
+          {totalLikes > 0 ? 'เพิ่มขึ้น' : 'ลดลง'}
         </Text>
       </Paper>
-      <Paper p="md" radius="sm" className="bg-foreground">
-        <Group position="apart">
+      <Paper p='md' radius='sm' className='bg-foreground'>
+        <Group position='apart'>
           <div>
-            <Text color="dimmed" transform="uppercase" weight={700} size="xs">
+            <Text color='dimmed' transform='uppercase' weight={700} size='xs'>
               ดาวทั้งหมด
             </Text>
-            <Text weight={700} size="xl">
+            <Text weight={700} size='xl'>
               {kFormatter(totalStars)}
             </Text>
           </div>
           <ThemeIcon
-            color="gray"
-            variant="light"
+            color='gray'
+            variant='light'
             sx={(theme) => ({
               color:
                 totalStars > 0 ? theme.colors.teal[6] : theme.colors.red[6],
             })}
             size={38}
-            radius="md"
+            radius='md'
           >
             {/* <DiffIcon size={28} /> */}
             {totalStars > 0 ? <ArrowUpRight /> : <ArrowDownRight />}
           </ThemeIcon>
         </Group>
-        <Text color="dimmed" size="sm" mt="md">
+        <Text color='dimmed' size='sm' mt='md'>
           <Text
-            component="span"
-            color={totalStars > 0 ? "teal" : "red"}
+            component='span'
+            color={totalStars > 0 ? 'teal' : 'red'}
             weight={700}
           >
             {totalStars}%
-          </Text>{" "}
-          {totalStars > 0 ? "เพิ่มขึ้น" : "ลดลง"}
+          </Text>{' '}
+          {totalStars > 0 ? 'เพิ่มขึ้น' : 'ลดลง'}
         </Text>
       </Paper>
-      <Paper p="md" radius="sm" className="bg-foreground">
-        <Group position="apart">
+      <Paper p='md' radius='sm' className='bg-foreground'>
+        <Group position='apart'>
           <div>
-            <Text color="dimmed" transform="uppercase" weight={700} size="xs">
+            <Text color='dimmed' transform='uppercase' weight={700} size='xs'>
               โพสต์ทั้งหมด
             </Text>
-            <Text weight={700} size="xl">
+            <Text weight={700} size='xl'>
               {kFormatter(totalPosts)}
             </Text>
           </div>
           <ThemeIcon
-            color="gray"
-            variant="light"
+            color='gray'
+            variant='light'
             sx={(theme) => ({
               color:
                 totalPosts > 0 ? theme.colors.teal[6] : theme.colors.red[6],
             })}
             size={38}
-            radius="md"
+            radius='md'
           >
             {/* <DiffIcon size={28} /> */}
             {totalPosts > 0 ? <ArrowUpRight /> : <ArrowDownRight />}
           </ThemeIcon>
         </Group>
-        <Text color="dimmed" size="sm" mt="md">
+        <Text color='dimmed' size='sm' mt='md'>
           <Text
-            component="span"
-            color={totalPosts > 0 ? "teal" : "red"}
+            component='span'
+            color={totalPosts > 0 ? 'teal' : 'red'}
             weight={700}
           >
             {totalPosts}%
-          </Text>{" "}
-          {totalPosts > 0 ? "เพิ่มขึ้น" : "ลดลง"}
+          </Text>{' '}
+          {totalPosts > 0 ? 'เพิ่มขึ้น' : 'ลดลง'}
         </Text>
       </Paper>
-      <Paper p="md" radius="sm" className="bg-foreground">
-        <Group position="apart">
+      <Paper p='md' radius='sm' className='bg-foreground'>
+        <Group position='apart'>
           <div>
-            <Text color="dimmed" transform="uppercase" weight={700} size="xs">
+            <Text color='dimmed' transform='uppercase' weight={700} size='xs'>
               คอมเมนต์ทั้งหมด
             </Text>
-            <Text weight={700} size="xl">
+            <Text weight={700} size='xl'>
               {kFormatter(totalComments)}
             </Text>
           </div>
           <ThemeIcon
-            color="gray"
-            variant="light"
+            color='gray'
+            variant='light'
             sx={(theme) => ({
               color:
                 totalComments > 0 ? theme.colors.teal[6] : theme.colors.red[6],
             })}
             size={38}
-            radius="md"
+            radius='md'
           >
             {/* <DiffIcon size={28} /> */}
             {totalComments > 0 ? <ArrowUpRight /> : <ArrowDownRight />}
           </ThemeIcon>
         </Group>
-        <Text color="dimmed" size="sm" mt="md">
+        <Text color='dimmed' size='sm' mt='md'>
           <Text
-            component="span"
-            color={totalComments > 0 ? "teal" : "red"}
+            component='span'
+            color={totalComments > 0 ? 'teal' : 'red'}
             weight={700}
           >
             {totalComments}%
-          </Text>{" "}
-          {totalComments > 0 ? "เพิ่มขึ้น" : "ลดลง"}
+          </Text>{' '}
+          {totalComments > 0 ? 'เพิ่มขึ้น' : 'ลดลง'}
         </Text>
       </Paper>
     </SimpleGrid>

@@ -1,5 +1,6 @@
 import Comment from '@components/CommentComponents';
 import CreateComment from '@components/CommentComponents/Add';
+import { Footer } from '@components/Footer';
 import Loading from '@components/Loading';
 import LoginRegister from '@components/LoginRegister';
 import Top from '@components/PostComponents/Elements/Top';
@@ -13,7 +14,6 @@ import {
   Stack,
   Text,
 } from '@mantine/core';
-import { Footer } from 'components/Footer';
 import Logo from 'components/Logo';
 import Metatags from 'components/Metatags';
 import Navbar from 'components/Navbar';

@@ -88,7 +88,7 @@ function ProfileForm({ user, userRef, setOpened }) {
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <LoadingOverlay visible={loading} />
       <Modal
-        size="lg"
+        size='lg'
         opened={openedConfirm}
         onClose={() => setOpenedConfirm(false)}
         withCloseButton={false}
@@ -104,7 +104,7 @@ function ProfileForm({ user, userRef, setOpened }) {
           <DeleteAccountForm user={user} setOpenedConfirm={setOpenedConfirm} />
         )}
       </Modal>
-      <Stack spacing="sm">
+      <Stack spacing='sm'>
         <AvatarAndBanner
           avatar={avatar}
           setAvatar={setAvatar}
@@ -112,16 +112,16 @@ function ProfileForm({ user, userRef, setOpened }) {
           setImage={setImage}
           user={user}
         />
-        <Divider label="ยืนยันตัวตน" labelPosition="center" />
+        <Divider label='ยืนยันตัวตน' labelPosition='center' />
         <VerifyUser
           firstName={form.getInputProps('firstName')}
           lastName={form.getInputProps('lastName')}
           email={form.getInputProps('email')}
           phoneNumber={form.getInputProps('phoneNumber')}
         />
-        <Divider label="เปลี่ยนรหัสผ่าน" labelPosition="center" />
+        <Divider label='เปลี่ยนรหัสผ่าน' labelPosition='center' />
         <ChangePassword password={form.getInputProps('password')} />
-        <Divider label="ลบบัญชีส่วนบุคคล" labelPosition="center" />
+        <Divider label='ลบบัญชีส่วนบุคคล' labelPosition='center' />
         <DeleteAccount setOpenedConfirm={setOpenedConfirm} />
         <ButtonControl setOpened={setOpened} />
       </Stack>

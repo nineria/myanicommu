@@ -6,7 +6,7 @@ import { getUserWithUsername } from 'lib/firebase';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { X } from 'tabler-icons-react';
-import GiveUserRanks from '../GiveUserRank';
+import GiveUserRanks from '../Admin/GiveUserRank';
 
 export default function UserRanks({ user, userRanks }) {
   const modals = useModals();

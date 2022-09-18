@@ -6,7 +6,7 @@ import PostLayout from 'components/Post/PostLayout';
 // Icons
 import { Settings } from 'tabler-icons-react';
 
-export default function PostLayoutComponent({ data }) {
+export default function LayoutSetting({ data }) {
   const [layout, setLayout] = useState('grid');
 
   return (
