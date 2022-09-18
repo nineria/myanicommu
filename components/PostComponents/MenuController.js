@@ -20,7 +20,7 @@ import { UserContext } from 'lib/context';
 import Link from 'next/link';
 import { Edit, LayoutGrid, ListDetails } from 'tabler-icons-react';
 
-export default function PostsMenuController({ layout, setLayout }) {
+export default function PostsMenuController({ layout, handleToggle }) {
   const { user, userData, username } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
@@ -95,7 +95,7 @@ export default function PostsMenuController({ layout, setLayout }) {
         <SegmentedControl
           size='xs'
           value={layout}
-          onChange={(e) => setLayout(e)}
+          onChange={(value) => handleToggle(value)}
           classNames={{
             root: 'bg-background',
             label: 'text-title',
