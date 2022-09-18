@@ -1,7 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
-import { Logout, Settings, Users, ZoomQuestion } from 'tabler-icons-react';
+import {
+  Logout,
+  Search,
+  Settings,
+  Users,
+  ZoomQuestion,
+} from 'tabler-icons-react';
 // lib
 import { UserContext } from '@lib/context';
 import { auth } from '@lib/firebase';
@@ -137,6 +143,16 @@ const DropdownMenu = ({ user, isBusy, signOut }) => {
             arrow: 'bg-foreground border-background',
           }}
         >
+          <Menu.Label>ค้นหา</Menu.Label>
+          <Link href='/search'>
+            <Menu.Item
+              className='hover:bg-content hover:text-[#fff]'
+              icon={<Search size={14} />}
+            >
+              ค้นหา
+            </Menu.Item>
+          </Link>
+
           {/* Setting */}
           <Menu.Label>การตั้งค่า</Menu.Label>
           {settingMenuProperty &&
