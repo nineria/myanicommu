@@ -11,7 +11,7 @@ export default function MyAniLogo({ link }) {
           <span className='text-title opacity-80'>nimeCommunity</span>
         </div>
         <div className='md:hidden visible'>
-          <span className='ext-[#4C6EF5]'>My</span>
+          <span className='text-[#4C6EF5]'>My</span>
           <span className='text-[#ec5555]'>A</span>
           <span className='text-title opacity-80'>niCommu</span>
         </div>
