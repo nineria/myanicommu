@@ -98,7 +98,7 @@ export default function PostPage(props) {
             {items}
           </Breadcrumbs>
           <Top data={post} />
-          <Group position='apart'>
+          {/* <Group position='apart'>
             <Pagination
               total={2}
               my={2}
@@ -111,10 +111,10 @@ export default function PostPage(props) {
                 active: 'bg-content text-[#fff]',
               }}
             />
-            {/* <AuthCheck fallback={<></>}>
+            <AuthCheck fallback={<></>}>
               <GivePostStars post={post} />
-            </AuthCheck> */}
-          </Group>
+            </AuthCheck>
+          </Group> */}
           {activePage === 1 ? (
             <Stack spacing='xs'>
               <PostComponents post={post} postRef={postRef} />
@@ -128,7 +128,7 @@ export default function PostPage(props) {
           ) : (
             <Stack spacing='xs'></Stack>
           )}
-          <Pagination
+          {/* <Pagination
             total={2}
             size='sm'
             my={6}
@@ -139,7 +139,7 @@ export default function PostPage(props) {
               dots: 'text-content bg-content',
               active: 'bg-content text-[#fff]',
             }}
-          />
+          /> */}
           <AuthCheck
             fallback={
               username ? (
