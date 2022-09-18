@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import Link from "next/link";
+import Link from 'next/link';
+import React, { useContext } from 'react';
 // Context
-import { auth, facebookAuthProvider, googleAuthProvider } from "lib/firebase";
+import { auth, facebookAuthProvider, googleAuthProvider } from 'lib/firebase';
 // Components
 import {
   Button,
@@ -13,11 +13,11 @@ import {
   Stack,
   Text,
   TextInput,
-} from "@mantine/core";
+} from '@mantine/core';
 // Icons
-import { AlertTriangle, Mail } from "tabler-icons-react";
-import { useRouter } from "next/router";
-import { UserContext } from "lib/context";
+import { UserContext } from 'lib/context';
+import { useRouter } from 'next/router';
+import { AlertTriangle, Mail } from 'tabler-icons-react';
 
 export function LoginPopUp({ setOpenedRegister }) {
   const router = useRouter();
@@ -31,7 +31,7 @@ export function LoginPopUp({ setOpenedRegister }) {
       if (!username) setOpenedRegister(true);
     } catch (error) {
       console.log(error);
-      router.push("/");
+      router.push('/');
     }
   };
 
@@ -42,85 +42,85 @@ export function LoginPopUp({ setOpenedRegister }) {
       if (!username) setOpenedRegister(true);
     } catch (error) {
       console.log(error);
-      router.push("/");
+      router.push('/');
     }
   };
 
   return (
-    <Stack spacing="xl">
-      <Group grow>
+    <Stack>
+      <Group grow position='center'>
         <Button
-          size="sm"
-          radius="lg"
-          className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+          size='sm'
+          radius='lg'
+          className='bg-white w-[200px] text-black border-[1px] border-gray-300  hover:bg-white hover:opacity-75'
           onClick={signInWithGoogle}
         >
           <Image
-            src="/google-logo.png"
-            alt="google"
-            width="15px"
-            className="mr-2"
+            src='/google-logo.png'
+            alt='google'
+            width='15px'
+            className='mr-2'
           />
           Google
         </Button>
         <Button
-          size="sm"
-          radius="lg"
-          className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+          size='sm'
+          radius='lg'
+          className='bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75'
           onClick={signInWithFacebook}
         >
           <Image
-            src="/facebook-logo.png"
-            alt="facebook"
-            width="15px"
-            className="mr-2"
+            src='/facebook-logo.png'
+            alt='facebook'
+            width='15px'
+            className='mr-2'
           />
           Facebook
         </Button>
       </Group>
-      <Divider label="หรือดำเนินการต่อด้วยอีเมล" labelPosition="center" />
+      <Divider label='หรือดำเนินการต่อด้วยอีเมล' labelPosition='center' />
       <TextInput
         disabled
         required
-        label="อีเมล (Email)"
+        label='อีเมล (Email)'
         icon={<Mail size={20} />}
-        placeholder="อีเมลของคุณ"
+        placeholder='อีเมลของคุณ'
         classNames={{
-          input: "bg-accent bg-opacity-50",
+          input: 'bg-accent bg-opacity-50',
         }}
       />
       <PasswordInput
         disabled
         required
-        label="รหัสผ่าน"
-        placeholder="รหัสผ่านของคุณ"
+        label='รหัสผ่าน'
+        placeholder='รหัสผ่านของคุณ'
         classNames={{
-          input: "bg-accent bg-opacity-50",
+          input: 'bg-accent bg-opacity-50',
         }}
       />
       <Checkbox
         disabled
-        label="จดจำฉันไว้ในครั้งถัดไป"
-        className="content-checkbox"
+        label='จดจำฉันไว้ในครั้งถัดไป'
+        className='content-checkbox my-2 md:my-0'
       />
-      <Link href="/">
+      <Link href='/'>
         <Button
           disabled
-          size="sm"
+          size='sm'
           fullWidth
-          className="bg-content hover:bg-content hover:opacity-75"
+          className='bg-content hover:bg-content hover:opacity-75'
         >
           เข้าสู่ระบบ
         </Button>
       </Link>
-      <div className="flex flex-row gap-2 text-content">
-        <AlertTriangle size={14} className="mt-1" />
-        <Text size="xs">
+      <Group noWrap className='text-content mt-4 md:mt-0'>
+        <AlertTriangle width={24} className='m-2 md:m-0' />
+        <Text size='xs'>
           ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
           กำลังปิดปรับปรุงระบบการเข้าสู่ระบบด้วย อีเมล และ รหัสผ่าน
         </Text>
-      </div>
-      <Text size="xs">
+      </Group>
+      <Text size='xs' className='mt-4 md:mt-0'>
         ผู้ใช้ที่ต้องการลงทะเบียนโปรดลงชื่อเข้าใช้ด้วย Google
       </Text>
     </Stack>

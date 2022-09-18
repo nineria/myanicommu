@@ -27,7 +27,7 @@ export default function CardLayout(props) {
       end={{ transform: 'translateY(0%)', opacity: '1' }}
     >
       {props.layout === 'grid' ? (
-        <Grid gutter="xs">{postGrids}</Grid>
+        <Grid gutter='xs'>{postGrids}</Grid>
       ) : (
         <Stack spacing={8}>{postStacks}</Stack>
       )}

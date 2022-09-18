@@ -27,7 +27,7 @@ export default function Status({ header, headerLink, body, date, post }) {
             </a>
           </Link>
           {/* Body */}
-          <p className='text-title truncate opacity-50 md:text-sm text-xs max-w-[650px]'>
+          <p className='text-title truncate opacity-50 md:text-sm text-xs max-w-[600px]'>
             {body}
           </p>
         </div>
