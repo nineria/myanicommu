@@ -1,3 +1,4 @@
+import ADSide from '@components/ADSide';
 import { Footer } from '@components/Footer';
 import Loading from '@components/Loading';
 import Metatags from '@components/Metatags';
@@ -96,6 +97,7 @@ export default function UserProfilePage({
     <div className='bg-background text-accent min-h-[1024px] mb-[235px] pb-10'>
       <Navbar page='/profile' isBusy />
       <Metatags />
+      <ADSide />
       <Container size='md'>
         {username && user && posts && (
           <Animate
