@@ -115,19 +115,16 @@ export default function PostPage(props) {
               <GivePostStars post={post} />
             </AuthCheck>
           </Group> */}
-          {activePage === 1 ? (
+          <Stack spacing='xs'>
+            <PostComponents post={post} postRef={postRef} />
             <Stack spacing='xs'>
-              <PostComponents post={post} postRef={postRef} />
-              <Stack spacing='xs'>
-                {comments &&
-                  comments.map((item, index) => (
-                    <Comment key={index} post={post} comment={item} />
-                  ))}
-              </Stack>
+              {comments &&
+                comments.map((item, index) => (
+                  <Comment key={index} post={post} comment={item} />
+                ))}
             </Stack>
-          ) : (
-            <Stack spacing='xs'></Stack>
-          )}
+          </Stack>
+
           {/* <Pagination
             total={2}
             size='sm'
