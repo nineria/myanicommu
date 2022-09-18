@@ -1,25 +1,29 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 export default function ADSide() {
+  const router = useRouter();
   return (
     <div className='fixed top-16 left-0 right-0 bg-red-400 w-[1310px] mx-auto'>
-      <div className='absolute  hidden xl:block right-0  w-[180px] h-[580px] '>
+      <div className='absolute cursor-pointer hidden xl:block right-0  w-[180px] h-[480px] '>
         <Image
-          src='/image/AD_01.png'
+          onClick={() => router.push('/')}
+          src='/image/AD_02.png'
           alt='AD-01'
           layout='responsive'
           width={180}
-          height={580}
+          height={480}
         />
       </div>
-      <div className='absolute hidden xl:block left-0 w-[180px] h-[580px] '>
+      <div className='absolute cursor-pointer hidden xl:block left-0 w-[180px] h-[480px] '>
         <Image
-          src='/image/AD_01.png'
+          onClick={() => router.push('/')}
+          src='/image/AD_02.png'
           alt='AD-01'
           layout='responsive'
           width={180}
-          height={580}
+          height={480}
         />
       </div>
     </div>
