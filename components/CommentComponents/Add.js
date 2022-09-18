@@ -157,7 +157,7 @@ export default function Add({ post, comments, setComments }) {
               </Modal>
               <WebsiteRule />
               {userData && userData.email === '' ? (
-                <Verify>ตอบกลับ</Verify>
+                <Verify>ส่งความคิดเห็น</Verify>
               ) : (
                 <Button
                   size='xs'
@@ -165,7 +165,7 @@ export default function Add({ post, comments, setComments }) {
                   variant='default'
                   onClick={() => HandleSubmit()}
                 >
-                  ตอบกลับ
+                  ส่งความคิดเห็น
                 </Button>
               )}
             </div>
