@@ -24,5 +24,4 @@ module.exports = {
       display: ['Prompt', 'sans-serif'],
     },
   },
-  plugins: [require('@tailwindcss/typography')],
 };
