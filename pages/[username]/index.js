@@ -1,6 +1,5 @@
 import ADSide from '@components/ADSide';
 import { Footer } from '@components/Footer';
-import Loading from '@components/Loading';
 import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import ProfileComponents from '@components/ProfileComponents';

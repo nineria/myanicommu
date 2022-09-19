@@ -7,15 +7,12 @@ import { firestore, postToJSON } from '@lib/firebase';
 import { Container } from '@mantine/core';
 import React from 'react';
 
-// Max post to query per page
-const LIMIT = 10;
-
 export async function getServerSideProps() {
   // Home posts
   const postsQuery = firestore
     .collectionGroup('homePosts')
     .orderBy('createdAt', 'asc')
-    .limit(LIMIT);
+    .limit(10);
 
   const homePosts = (await postsQuery.get()).docs.map(postToJSON);
 
