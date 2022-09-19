@@ -108,7 +108,7 @@ export default function UserProfilePage({
             }}
             end={{ transform: 'translateY(0%)', opacity: '1' }}
           >
-            <AuthCheck fallback={<Loading />}>
+            <AuthCheck>
               <ProfileComponents
                 user={user}
                 userRef={userRef}
