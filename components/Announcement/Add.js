@@ -58,7 +58,7 @@ export default function AddAnnouncement() {
       title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
       icon: <Check size={18} />,
       classNames: {
-        root: 'bg-foreground border-teal-400',
+        root: 'bg-foreground border-l-teal-400 border-l-4',
       },
     });
 

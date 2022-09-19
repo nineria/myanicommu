@@ -12,6 +12,18 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
 
   const router = useRouter();
 
+  const handleCancel = () => {
+    showNotification({
+      color: 'yellow',
+      title: 'ยกเลิกแล้ว',
+      icon: <X size={18} />,
+      classNames: {
+        root: 'bg-foreground border-l-yellow-400 border-l-4',
+      },
+    });
+    setOpened(false);
+  };
+
   const handleDelete = () => {
     const handleOnClick = async () => {
       await postRef.delete();
@@ -27,9 +39,10 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
         title: 'ลบโพสต์แล้ว',
         icon: <X size={18} />,
         classNames: {
-          root: 'bg-foreground border-red-400',
+          root: 'bg-foreground border-l-red-400 border-l-4',
         },
       });
+
       modals.closeModal(id);
 
       setOpened(false);
@@ -39,8 +52,8 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">คุณต้องการลบโพสต์นี้หรือไม่?</Text>
-          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+          <Text size='sm'>คุณต้องการลบโพสต์นี้หรือไม่?</Text>
+          <Text size='xs'>การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
       zIndex: '999',
@@ -51,19 +64,19 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
       },
       size: 'sm',
       children: (
-        <Stack size="xs">
-          <Group position="right">
+        <Stack size='xs'>
+          <Group position='right'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              size="xs"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
+              size='xs'
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
             </Button>
             <Button
-              type="submit"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              size="xs"
+              type='submit'
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+              size='xs'
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -75,31 +88,31 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
   };
 
   return (
-    <Group mt="md" position="apart">
+    <Group mt='md' position='apart'>
       {type === 'add' ? (
         <div />
       ) : (
         <Button
-          size="xs"
-          className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+          size='xs'
+          className='bg-red-500 hover:bg-red-500 hover:opacity-75'
           onClick={() => handleDelete()}
         >
           ลบ
         </Button>
       )}
 
-      <Group spacing="xs" position="right">
+      <Group spacing='xs' position='right'>
         <Button
-          size="xs"
-          onClick={() => setOpened(false)}
-          className="bg-background text-title hover:bg-background hover:opacity-75"
+          size='xs'
+          onClick={() => handleCancel()}
+          className='bg-background text-title hover:bg-background hover:opacity-75'
         >
           ยกเลิก
         </Button>
         <Button
-          type="submit"
-          size="xs"
-          className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+          type='submit'
+          size='xs'
+          className='bg-green-500 hover:bg-green-500 hover:opacity-75'
         >
           ยืนยัน
         </Button>

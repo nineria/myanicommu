@@ -88,6 +88,11 @@ export default function TagHeader({ data, setData }) {
         data={tagsData}
         onChange={(value) => setData(value)}
         placeholder='เลือกประเภทของโพสต์'
+        classNames={{
+          input: 'bg-accent border-title border-opacity-20 border-[1px]',
+          dropdown: 'bg-foreground border-title border-opacity-20 border-[1px]',
+          nothingFound: 'bg-foreground text-title',
+        }}
       />
     </InputWrapper>
   );

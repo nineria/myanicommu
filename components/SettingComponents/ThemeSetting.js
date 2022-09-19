@@ -156,10 +156,9 @@ export default function ThemeSetting(props) {
               else return false;
             }}
             classNames={{
-              dropdown: 'bg-foreground',
+              dropdown:
+                'bg-foreground border-title border-opacity-20 border-[1px]',
               nothingFound: 'bg-foreground text-title',
-              wrapper: 'your-wrapper-class',
-              invalid: 'your-invalid-class',
               input: 'bg-background text-title',
             }}
           />

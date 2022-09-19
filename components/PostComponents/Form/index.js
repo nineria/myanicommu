@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 // Components
-import { InputWrapper, TextInput } from "@mantine/core";
-import RichTextEditor from "utils/RichText";
+import { InputWrapper, TextInput } from '@mantine/core';
+import RichTextEditor from 'utils/RichText';
 
 export function PostHeader(props) {
   return (
-    <InputWrapper required label="หัวข้อ" description="หัวข้อของโพสต์">
+    <InputWrapper required label='หัวข้อ' description='หัวข้อของโพสต์'>
       <TextInput
-        placeholder="หัวข้อที่น่าสนใจของคุณ!"
+        placeholder='หัวข้อที่น่าสนใจของคุณ!'
         classNames={{
-          input: "bg-accent bg-opacity-50",
+          input: 'bg-accent border-title border-opacity-20 border-[1px]',
         }}
         {...props}
       />
@@ -21,19 +21,19 @@ export function RefCredit(props) {
   return (
     <InputWrapper
       required
-      label="อ้างอิง"
-      description="โปรดระบุแหล่งที่มาของเนื้อหา เช่น รูปภาพ, ข้อความ ก่อนโพสต์ลงบนเว็บไซต์ MyAnimeCommunity"
+      label='อ้างอิง'
+      description='โปรดระบุแหล่งที่มาของเนื้อหา เช่น รูปภาพ, ข้อความ ก่อนโพสต์ลงบนเว็บไซต์ MyAnimeCommunity'
     >
       <RichTextEditor
-        controls={[["bold", "italic", "underline", "orderedList"], ["link"]]}
+        controls={[['bold', 'italic', 'underline', 'orderedList'], ['link']]}
         stickyOffset={-50}
         {...props}
-        placeholder="ระบุแหล่งที่มาของเนื้อหา"
+        placeholder='ระบุแหล่งที่มาของเนื้อหา'
         classNames={{
-          root: "bg-black/5 text-title border-[#fff] border-opacity-20",
-          toolbar: "bg-foreground text-title",
+          root: 'bg-black/5 text-title border-[#fff] border-opacity-20',
+          toolbar: 'bg-foreground text-title',
           toolbarControl:
-            "bg-foreground border-title border-opacity-20 hover:bg-background",
+            'bg-foreground border-title border-opacity-20 hover:bg-background',
         }}
       />
     </InputWrapper>

@@ -115,7 +115,8 @@ export default function ReviewsPage(props) {
                     value={searchValue}
                     icon={<Search size={14} />}
                     classNames={{
-                      input: 'bg-accent',
+                      input:
+                        'bg-accent border-title border-opacity-20 border-[1px]',
                     }}
                     onChange={(e) => setSearchValue(e.target.value)}
                   />

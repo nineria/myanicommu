@@ -74,7 +74,7 @@ export default function Add({ setOpened }) {
         title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
         icon: <Check size={18} />,
         classNames: {
-          root: 'bg-foreground border-teal-400',
+          root: 'bg-foreground border-l-teal-400 border-l-4',
         },
       });
 
@@ -88,7 +88,7 @@ export default function Add({ setOpened }) {
           title: 'กรุณาใส่รูปภาพประจำโพสต์!',
           icon: <X size={18} />,
           classNames: {
-            root: 'bg-foreground border-teal-400',
+            root: 'bg-foreground border-l-teal-400 border-l-4',
           },
         });
         setLoading(false);
@@ -98,9 +98,10 @@ export default function Add({ setOpened }) {
           title: 'มีข้อผิดพลาดเกิดขึ้น! โปรดลองอีกครั้ง',
           icon: <X size={18} />,
           classNames: {
-            root: 'bg-foreground border-teal-400',
+            root: 'bg-foreground border-l-teal-400 border-l-4',
           },
         });
+
         setLoading(false);
       }
     }
@@ -127,7 +128,7 @@ export default function Add({ setOpened }) {
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <LoadingOverlay visible={loading} />
-      <Stack spacing="sm">
+      <Stack spacing='sm'>
         <TagHeader data={tags} setData={setTags} />
         <TagGenre data={genres} setData={setGenres} />
         <PostHeader {...form.getInputProps('title')} />
@@ -135,7 +136,7 @@ export default function Add({ setOpened }) {
         <PostContent {...form.getInputProps('content')} />
         <RefCredit {...form.getInputProps('credit')} />
         <WebsiteRule />
-        <ButtonControl setOpened={setOpened} type="add" />
+        <ButtonControl setOpened={setOpened} type='add' />
       </Stack>
     </form>
   );

@@ -13,7 +13,7 @@ export default function TagGenre({ data, setData }) {
 
   const removeButton = (item, index) => {
     return (
-      <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
+      <ActionIcon size='xs' color='blue' radius='xl' variant='transparent'>
         <X size={10} onClick={() => handleRemoveTag(item, index)} />
       </ActionIcon>
     );
@@ -22,7 +22,7 @@ export default function TagGenre({ data, setData }) {
   const genres = data.map((item, index) => (
     <Badge
       key={index}
-      variant="outline"
+      variant='outline'
       sx={{ paddingRight: 3 }}
       rightSection={removeButton(item, index)}
     >
@@ -54,25 +54,25 @@ export default function TagGenre({ data, setData }) {
   return (
     <InputWrapper
       label={
-        <Group spacing="xs">
+        <Group spacing='xs'>
           <Tag size={14} /> ประเภทของเนื้อหา
         </Group>
       }
-      description="เช่น Action, Comedy, Romance, Drama - กด Enter เพื่อเพิ่มประเภทของเนื้อหา"
+      description='เช่น Action, Comedy, Romance, Drama - กด Enter เพื่อเพิ่มประเภทของเนื้อหา'
     >
       <Group
-        spacing="4px"
-        className="bg-accent bg-opacity-50 border-title border-opacity-20 border-[1px] rounded-md p-1"
+        spacing='4px'
+        className='bg-accent border-title border-opacity-20 border-[1px] rounded-md p-1'
       >
         {genres}
         <Input
           icon={<Tag size={14} />}
-          placeholder="เพิ่ม"
+          placeholder='เพิ่ม'
           onKeyDown={handleKeyDown}
           classNames={{
-            input: 'bg-transparent bg-opacity-50 border-none',
+            input: 'bg-transparent  border-none',
           }}
-          size="xs"
+          size='xs'
         />
       </Group>
     </InputWrapper>

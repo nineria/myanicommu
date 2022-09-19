@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 // Components
-import { Button, Group, Stack, Text } from "@mantine/core";
-import { useModals } from "@mantine/modals";
-import { showNotification } from "@mantine/notifications";
-import { X } from "tabler-icons-react";
-import { useRouter } from "next/router";
+import { Button, Group, Stack, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
+import { showNotification } from '@mantine/notifications';
+import { useRouter } from 'next/router';
+import { X } from 'tabler-icons-react';
 
 export default function ButtonControl({ setOpened, postRef, type }) {
   const modals = useModals();
@@ -13,11 +13,11 @@ export default function ButtonControl({ setOpened, postRef, type }) {
 
   const handleCancel = () => {
     showNotification({
-      color: "yellow",
-      title: "ยกเลิกแล้ว",
+      color: 'yellow',
+      title: 'ยกเลิกแล้ว',
       icon: <X size={18} />,
       classNames: {
-        root: "bg-foreground border-yellow-400",
+        root: 'bg-foreground border-l-yellow-400 border-l-4',
       },
     });
     setOpened(false);
@@ -28,11 +28,11 @@ export default function ButtonControl({ setOpened, postRef, type }) {
       await postRef.delete();
 
       showNotification({
-        color: "red",
-        title: "ลบประกาศแล้ว",
+        color: 'red',
+        title: 'ลบประกาศแล้ว',
         icon: <X size={18} />,
         classNames: {
-          root: "bg-foreground border-red-400",
+          root: 'bg-foreground border-l-red-400 border-l-4',
         },
       });
       modals.closeModal(id);
@@ -43,32 +43,32 @@ export default function ButtonControl({ setOpened, postRef, type }) {
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">คุณต้องการลบประกาศนี้หรือไม่?</Text>
-          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+          <Text size='sm'>คุณต้องการลบประกาศนี้หรือไม่?</Text>
+          <Text size='xs'>การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
         </Stack>
       ),
-      zIndex: "999",
+      zIndex: '999',
       centered: true,
       withCloseButton: false,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
       },
-      size: "sm",
+      size: 'sm',
       children: (
-        <Stack size="xs">
-          <Group position="right">
+        <Stack size='xs'>
+          <Group position='right'>
             <Button
-              size="xs"
-              className="bg-background text-title hover:bg-background hover:opacity-75"
+              size='xs'
+              className='bg-background text-title hover:bg-background hover:opacity-75'
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
             </Button>
             <Button
-              type="submit"
-              size="xs"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              type='submit'
+              size='xs'
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -80,31 +80,31 @@ export default function ButtonControl({ setOpened, postRef, type }) {
   };
 
   return (
-    <Group mt="md" position="apart">
-      {type === "add" ? (
+    <Group mt='md' position='apart'>
+      {type === 'add' ? (
         <div />
       ) : (
         <Button
-          size="xs"
-          className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+          size='xs'
+          className='bg-red-500 hover:bg-red-500 hover:opacity-75'
           onClick={() => handleDelete()}
         >
           ลบ
         </Button>
       )}
 
-      <Group spacing="xs" position="right">
+      <Group spacing='xs' position='right'>
         <Button
-          size="xs"
+          size='xs'
           onClick={() => handleCancel()}
-          className="bg-background text-title hover:bg-background hover:opacity-75"
+          className='bg-background text-title hover:bg-background hover:opacity-75'
         >
           ยกเลิก
         </Button>
         <Button
-          size="xs"
-          type="submit"
-          className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+          size='xs'
+          type='submit'
+          className='bg-green-500 hover:bg-green-500 hover:opacity-75'
         >
           ยืนยัน
         </Button>
