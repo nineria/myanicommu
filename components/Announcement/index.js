@@ -85,9 +85,9 @@ export default function Announcement(props) {
   };
 
   return (
-    <div className='shadow-md'>
-      {onClose ? (
-        <Motion posY={10}>
+    <Motion posY={10}>
+      <div className='shadow-md'>
+        {onClose ? (
           <div
             className={`${
               props.type === 'danger'
@@ -100,7 +100,7 @@ export default function Announcement(props) {
             <div>
               <AlertCircle size={25} className='text-white m-1' />
             </div>
-            <div className='flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm'>
+            <div className='relative flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm'>
               <div className='w-full'>
                 <h1 className='font-bold md:text-base text-sm '>
                   {props.title}
@@ -133,8 +133,8 @@ export default function Announcement(props) {
               </Group>
             </div>
           </div>
-        </Motion>
-      ) : null}
-    </div>
+        ) : null}
+      </div>
+    </Motion>
   );
 }
