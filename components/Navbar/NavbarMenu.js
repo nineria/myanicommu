@@ -9,7 +9,7 @@ export default function NavbarMenu({ page, menu }) {
           <div
             className={`py-2 px-2 text-base  ${
               item.path === page
-                ? 'bg-opposite bg-opacity-90'
+                ? 'bg-opposite bg-opacity-70'
                 : 'bg-transparent'
             }`}
           >
