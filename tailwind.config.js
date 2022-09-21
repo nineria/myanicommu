@@ -12,6 +12,8 @@ module.exports = {
           `rgba(var(--title) / var(${opacityVariable}))`,
         content: ({ opacityVariable }) =>
           `rgba(var(--content) / var(${opacityVariable}))`,
+        opposite: ({ opacityVariable }) =>
+          `rgba(var(--opposite) / var(${opacityVariable}))`,
         foreground: ({ opacityVariable }) =>
           `rgba(var(--foreground) / var(${opacityVariable}))`,
         background: ({ opacityVariable }) =>

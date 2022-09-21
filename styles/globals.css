@@ -19,6 +19,7 @@ body {
     --accent: 50 50 50;
     --title: 244 244 244;
     --content: 236 85 85;
+    --opposite: 56 178 172;
     --background: 24 26 29;
     --foreground: 36 38 41;
   }
@@ -35,6 +36,7 @@ body {
   --accent: 50 50 50;
   --title: 244 244 244;
   --content: 95 133 219;
+  --opposite: 237 100 166;
   --background: 24 26 29;
   --foreground: 36 38 41;
 }
@@ -42,6 +44,7 @@ body {
   --accent: 50 50 50;
   --title: 244 244 244;
   --content: 255 92 141;
+  --opposite: 56 178 172;
   --background: 24 26 29;
   --foreground: 36 38 41;
 }
@@ -49,6 +52,7 @@ body {
   --accent: 50 50 50;
   --title: 244 244 244;
   --content: 0 173 181;
+  --opposite: 56 178 172;
   --background: 24 26 29;
   --foreground: 36 38 41;
 }
@@ -58,6 +62,7 @@ body {
   --accent: 244 244 244;
   --title: 50 50 50;
   --content: 236 85 85;
+  --opposite: 237 100 166;
   --background: 211 211 211;
   --foreground: 255 255 255;
 }
@@ -72,6 +77,7 @@ body {
   --accent: 244 244 244;
   --title: 50 50 50;
   --content: 51 130 184;
+  --opposite: 237 100 166;
   --background: 211 211 211;
   --foreground: 255 255 255;
 }
@@ -79,6 +85,7 @@ body {
   --accent: 244 244 244;
   --title: 50 50 50;
   --content: 255 93 141;
+  --opposite: 56 178 172;
   --background: 211 211 211;
   --foreground: 255 255 255;
 }
@@ -86,6 +93,7 @@ body {
   --accent: 244 244 244;
   --title: 50 50 50;
   --content: 0 173 181;
+  --opposite: 237 100 166;
   --background: 211 211 211;
   --foreground: 255 255 255;
 }
