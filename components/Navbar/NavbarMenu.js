@@ -3,32 +3,22 @@ import React from 'react';
 
 export default function NavbarMenu({ page, menu }) {
   return (
-    <div className='flex flex-row gap-5 '>
+    <div className='flex flex-row gap-3'>
       {menu.map((item) => (
         <Link key={item.name} href={item.path}>
           <div
-            className={`border-b-4 text-base hover:border-b-4 hover:border-content ${
-              item.path === page ? 'border-content' : 'border-transparent'
+            className={`py-2 px-2 text-base  ${
+              item.path === page
+                ? 'bg-opposite bg-opacity-90'
+                : 'bg-transparent'
             }`}
           >
-            <div className='truncate text-title font-bold cursor-pointer hover:text-title hover:opacity-75'>
+            <div className='truncate text-title font-bold cursor-pointer hover:underline'>
               {item.name}
             </div>
           </div>
         </Link>
       ))}
-
-      <Link href='/search'>
-        <div
-          className={`border-b-4 text-base hover:border-b-4 hover:border-content ${
-            '/search' === page ? 'border-content' : 'border-transparent'
-          }`}
-        >
-          <div className='truncate text-title font-bold cursor-pointer hover:text-title hover:opacity-75'>
-            ค้นหา
-          </div>
-        </div>
-      </Link>
     </div>
   );
 }

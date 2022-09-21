@@ -46,4 +46,8 @@ export const navbarProperty = [
     name: 'Q&A',
     path: '/qandas',
   },
+  {
+    name: 'ค้นหา',
+    path: '/search',
+  },
 ];
