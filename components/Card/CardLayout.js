@@ -1,9 +1,9 @@
 // Components
+import Motion from '@components/Animate/Motion';
 import Loading from '@components/Loading';
 import { Grid, Stack } from '@mantine/core';
 import Card from 'components/Card';
 import React, { useState } from 'react';
-import { Animate } from 'react-simple-animate';
 
 export default function CardLayout(props) {
   const [posts] = useState(props.posts);
@@ -21,16 +21,12 @@ export default function CardLayout(props) {
   ));
 
   return (
-    <Animate
-      play
-      start={{ transform: 'translateY(2%)', opacity: '0' }}
-      end={{ transform: 'translateY(0%)', opacity: '1' }}
-    >
+    <Motion>
       {props.layout === 'grid' ? (
         <Grid gutter='xs'>{postGrids}</Grid>
       ) : (
         <Stack spacing={8}>{postStacks}</Stack>
       )}
-    </Animate>
+    </Motion>
   );
 }

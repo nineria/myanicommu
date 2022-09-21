@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // Context
 // Components
 import PostsMenuController from 'components/Post/MenuController';
-import PostLayout from 'components/Post/PostLayout';
+import Motion from 'components/Post/Motion';
 // Icons
 import { Settings } from 'tabler-icons-react';
 
@@ -27,7 +27,7 @@ export default function LayoutSetting({ data }) {
       {/* Menu Controller */}
       <PostsMenuController layout={layout} setLayout={setLayout} />
       {/* Posts */}
-      <PostLayout property={data} layout={layout} />
+      <Motion property={data} layout={layout} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import Motion from '@components/Animate/Motion';
 import Comment from '@components/CommentComponents';
 import CreateComment from '@components/CommentComponents/Add';
 import { Footer } from '@components/Footer';
@@ -93,12 +94,13 @@ export default function PostPage(props) {
       />
       <Navbar />
       <Container size='md'>
-        <Stack spacing='xs'>
-          <Breadcrumbs separator='→' className='truncate'>
-            {items}
-          </Breadcrumbs>
-          <Top data={post} />
-          {/* <Group position='apart'>
+        <Motion>
+          <Stack spacing='xs'>
+            <Breadcrumbs separator='→' className='truncate'>
+              {items}
+            </Breadcrumbs>
+            <Top data={post} />
+            {/* <Group position='apart'>
             <Pagination
               total={2}
               my={2}
@@ -115,17 +117,17 @@ export default function PostPage(props) {
               <GivePostStars post={post} />
             </AuthCheck>
           </Group> */}
-          <Stack spacing='xs'>
-            <PostComponents post={post} postRef={postRef} />
             <Stack spacing='xs'>
-              {comments &&
-                comments.map((item, index) => (
-                  <Comment key={index} post={post} comment={item} />
-                ))}
+              <PostComponents post={post} postRef={postRef} />
+              <Stack spacing='xs'>
+                {comments &&
+                  comments.map((item, index) => (
+                    <Comment key={index} post={post} comment={item} />
+                  ))}
+              </Stack>
             </Stack>
-          </Stack>
 
-          {/* <Pagination
+            {/* <Pagination
             total={2}
             size='sm'
             my={6}
@@ -137,31 +139,32 @@ export default function PostPage(props) {
               active: 'bg-content text-[#fff]',
             }}
           /> */}
-          <AuthCheck
-            fallback={
-              username ? (
-                <Loading />
-              ) : (
-                <div className='flex flex-col justify-center bg-foreground rounded-sm py-10'>
-                  <Text className='text-title text-center'>
-                    เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ
-                  </Text>
-                  <Text className='text-title text-center mb-5'>
-                    <Logo />
-                    และอื่น ๆ อีกมากมาย!
-                  </Text>
-                  <LoginRegister center />
-                </div>
-              )
-            }
-          >
-            <CreateComment
-              post={post}
-              comments={comments}
-              setComments={setComments}
-            />
-          </AuthCheck>
-        </Stack>
+            <AuthCheck
+              fallback={
+                username ? (
+                  <Loading />
+                ) : (
+                  <div className='flex flex-col justify-center bg-foreground rounded-sm py-10'>
+                    <Text className='text-title text-center'>
+                      เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ
+                    </Text>
+                    <Text className='text-title text-center mb-5'>
+                      <Logo />
+                      และอื่น ๆ อีกมากมาย!
+                    </Text>
+                    <LoginRegister center />
+                  </div>
+                )
+              }
+            >
+              <CreateComment
+                post={post}
+                comments={comments}
+                setComments={setComments}
+              />
+            </AuthCheck>
+          </Stack>
+        </Motion>
       </Container>
       <Footer />
     </div>

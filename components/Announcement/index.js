@@ -1,3 +1,4 @@
+import Motion from '@components/Animate/Motion';
 import { Button, Group, Stack, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
@@ -6,7 +7,6 @@ import { UserContext } from 'lib/context';
 import { firestore } from 'lib/firebase';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
-import { Animate } from 'react-simple-animate';
 import { AlertCircle, X } from 'tabler-icons-react';
 import EditAnnouncement from './Edit';
 
@@ -87,11 +87,7 @@ export default function Announcement(props) {
   return (
     <div className='shadow-md'>
       {onClose ? (
-        <Animate
-          play
-          start={{ transform: 'translateY(5%)', opacity: '0' }}
-          end={{ transform: 'translateY(0%)', opacity: '1' }}
-        >
+        <Motion posY={10}>
           <div
             className={`${
               props.type === 'danger'
@@ -137,7 +133,7 @@ export default function Announcement(props) {
               </Group>
             </div>
           </div>
-        </Animate>
+        </Motion>
       ) : null}
     </div>
   );

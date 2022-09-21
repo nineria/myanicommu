@@ -1,9 +1,9 @@
+import Motion from '@components/Animate/Motion';
 import Add from '@components/HomeComponents/Add';
 import AdminCheck from '@hooks/AdminCheck';
 import { Button, Center, Modal, Space } from '@mantine/core';
 import { UserContext } from 'lib/context';
 import React, { useContext, useState } from 'react';
-import { Animate } from 'react-simple-animate';
 import Advertisement from './Advertisement';
 import Post from './Elements/Body';
 import HeroSection from './HeroSection';
@@ -17,14 +17,7 @@ export default function HomeComponents({ homePosts, reviewPosts, todayPosts }) {
 
   return (
     <div className={` text-white w-full`}>
-      <Animate
-        play
-        start={{
-          transform: 'translateY(1%)',
-          opacity: '0',
-        }}
-        end={{ transform: 'translateY(0%)', opacity: '1' }}
-      >
+      <Motion>
         <div className='flex flex-col gap-2'>
           {todayPosts && <HeroSection props={todayPosts} />}
 
@@ -76,7 +69,7 @@ export default function HomeComponents({ homePosts, reviewPosts, todayPosts }) {
             </AdminCheck>
           )}
         </div>
-      </Animate>
+      </Motion>
     </div>
   );
 }

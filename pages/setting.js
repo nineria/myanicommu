@@ -1,3 +1,4 @@
+import Motion from '@components/Animate/Motion';
 import { Footer } from '@components/Footer.js';
 import Loading from '@components/Loading.js';
 import Metatags from '@components/Metatags.js';
@@ -7,7 +8,6 @@ import AuthCheck from '@hooks/AuthCheck.js';
 import { firestore, postToJSON } from '@lib/firebase.js';
 import { Container } from '@mantine/core';
 import React from 'react';
-import { Animate } from 'react-simple-animate';
 
 const LIMIT = 3;
 // This gets called on every request
@@ -31,13 +31,9 @@ export default function SettingPage({ posts }) {
         {/* Check user and Setting*/}
         <Container size='md'>
           <AuthCheck fallback={<Loading />}>
-            <Animate
-              play
-              start={{ transform: 'translateY(1%)', opacity: '0' }}
-              end={{ transform: 'translateY(0%)', opacity: '1' }}
-            >
+            <Motion>
               <SettingComponents posts={posts} />
-            </Animate>
+            </Motion>
           </AuthCheck>
         </Container>
       </div>

@@ -1,3 +1,4 @@
+import Motion from '@components/Animate/Motion';
 import Card from '@components/Card';
 import { Footer } from '@components/Footer';
 import Metatags from '@components/Metatags';
@@ -65,48 +66,50 @@ export default function SearchPage(props) {
         <Metatags />
         <Navbar page='/search' />
         <Container size='md'>
-          <Space h='xl' />
-          <Stack spacing='xs'>
+          <Motion>
+            <Space h='xl' />
             <Stack spacing='xs'>
-              <Grid color={12} grow>
-                <Grid.Col span={10}>
-                  <TextInput
-                    placeholder='ค้นหา'
-                    value={searchValue}
-                    icon={<Search size={14} />}
-                    classNames={{
-                      input:
-                        'bg-accent border-title border-opacity-20 border-[1px]',
-                    }}
-                    onChange={(e) => setSearchValue(e.target.value)}
+              <Stack spacing='xs'>
+                <Grid color={12} grow>
+                  <Grid.Col span={10}>
+                    <TextInput
+                      placeholder='ค้นหา'
+                      value={searchValue}
+                      icon={<Search size={14} />}
+                      classNames={{
+                        input:
+                          'bg-accent border-title border-opacity-20 border-[1px]',
+                      }}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={1}>
+                    <Button
+                      fullWidth
+                      onClick={() => handleSearch()}
+                      className='bg-content text-[#fff] hover:bg-content hover:opacity-75 '
+                      variant='default'
+                    >
+                      ค้นหา
+                    </Button>
+                  </Grid.Col>
+                </Grid>
+                {filteredPosts.length >= 1 && (
+                  <>
+                    <Divider label='ผลการค้นหา' labelPosition='center' />
+                    {filtered}
+                    <Space h='xs' />
+                  </>
+                )}
+                {notFound && (
+                  <Divider
+                    label='ไม่พบโพสต์ที่ต้องการ 😭'
+                    labelPosition='center'
                   />
-                </Grid.Col>
-                <Grid.Col span={1}>
-                  <Button
-                    fullWidth
-                    onClick={() => handleSearch()}
-                    className='bg-content text-[#fff] hover:bg-content hover:opacity-75 '
-                    variant='default'
-                  >
-                    ค้นหา
-                  </Button>
-                </Grid.Col>
-              </Grid>
-              {filteredPosts.length >= 1 && (
-                <>
-                  <Divider label='ผลการค้นหา' labelPosition='center' />
-                  {filtered}
-                  <Space h='xs' />
-                </>
-              )}
-              {notFound && (
-                <Divider
-                  label='ไม่พบโพสต์ที่ต้องการ 😭'
-                  labelPosition='center'
-                />
-              )}
+                )}
+              </Stack>
             </Stack>
-          </Stack>
+          </Motion>
         </Container>
       </div>
       <Footer />

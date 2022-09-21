@@ -1,5 +1,7 @@
 import ADSide from '@components/ADSide';
+import Motion from '@components/Animate/Motion';
 import { Footer } from '@components/Footer';
+import Loading from '@components/Loading';
 import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
 import ProfileComponents from '@components/ProfileComponents';
@@ -9,7 +11,6 @@ import AuthCheck from 'hooks/AuthCheck';
 import { UserContext } from 'lib/context';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
-import { Animate } from 'react-simple-animate';
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -73,41 +74,15 @@ export default function UserProfilePage({
   // p = ( x / y ) * 100
   // Ex 100 (10 / 73) * 100
 
-  // const socialProps = [
-  //   {
-  //     name: user?.email,
-  //     icon: <Mail />,
-  //   },
-  //   {
-  //     name: "Instagram",
-  //     icon: <BrandInstagram />,
-  //   },
-  //   {
-  //     name: "Github",
-  //     icon: <BrandGithub />,
-  //   },
-  //   {
-  //     name: "Linkedin",
-  //     icon: <BrandLinkedin />,
-  //   },
-  // ];
-
   return (
     <div className='bg-background text-accent min-h-[1024px] mb-[235px] pb-10'>
       <Navbar page='/profile' isBusy />
       <Metatags />
       <ADSide />
       <Container size='md'>
-        {username && user && posts && (
-          <Animate
-            play
-            start={{
-              transform: 'translateY(1%)',
-              opacity: '0',
-            }}
-            end={{ transform: 'translateY(0%)', opacity: '1' }}
-          >
-            <AuthCheck>
+        {user && posts && (
+          <Motion>
+            <AuthCheck fallback={<Loading />}>
               <ProfileComponents
                 user={user}
                 userRef={userRef}
@@ -117,7 +92,7 @@ export default function UserProfilePage({
                 posts={posts}
               />
             </AuthCheck>
-          </Animate>
+          </Motion>
         )}
       </Container>
       <Footer />
