@@ -1,44 +1,44 @@
-import { Group, TextInput } from "@mantine/core";
-import React from "react";
+import { Group, TextInput } from '@mantine/core';
+import React from 'react';
 
 export default function VerifyUser(props) {
   return (
     <>
       <Group grow>
         <TextInput
-          label="ชื่อจริง"
+          label='ชื่อจริง'
           required
           {...props.firstName}
-          placeholder="ชื่อจริงของคุณ"
+          placeholder='ชื่อจริงของคุณ'
           classNames={{
-            input: "bg-accent bg-opacity-50",
+            input: 'bg-accent border-title border-opacity-20 border-[1px]',
           }}
         />
         <TextInput
-          label="นามสกุล"
+          label='นามสกุล'
           required
           {...props.lastName}
-          placeholder="นามสกุลของคุณ"
+          placeholder='นามสกุลของคุณ'
           classNames={{
-            input: "bg-accent bg-opacity-50",
+            input: 'bg-accent border-title border-opacity-20 border-[1px]',
           }}
         />
       </Group>
       <TextInput
         required
-        label="ยืนยันอีเมล (Email)"
+        label='ยืนยันอีเมล (Email)'
         {...props.email}
-        placeholder="อีเมลของคุณ"
+        placeholder='อีเมลของคุณ'
         classNames={{
-          input: "bg-accent bg-opacity-50",
+          input: 'bg-accent border-title border-opacity-20 border-[1px]',
         }}
       />
       <TextInput
-        label="เบอร์โทรศัพท์"
+        label='เบอร์โทรศัพท์'
         {...props.phoneNumber}
-        placeholder="เบอร์โทรศัพท์ของคุณ"
+        placeholder='เบอร์โทรศัพท์ของคุณ'
         classNames={{
-          input: "bg-accent bg-opacity-50",
+          input: 'bg-accent border-title border-opacity-20 border-[1px]',
         }}
       />
     </>

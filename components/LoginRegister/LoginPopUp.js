@@ -113,14 +113,11 @@ export function LoginPopUp({ setOpenedRegister }) {
           เข้าสู่ระบบ
         </Button>
       </Link>
-      <Group
-        noWrap
-        className='text-white p-2 mt-4 md:mt-0 bg-red-500 rounded-sm'
-      >
-        <AlertTriangle width={24} className='m-2 md:m-0' />
+      <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
+        <AlertTriangle width={34} className='m-2 md:m-0' />
         <Text size='xs'>
           ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
-          กำลังปิดปรับปรุงการเข้าสู่ระบบและสมัครสมาชิกด้วย อีเมล ชั่วคราว
+          ขอปิดปรับปรุงการเข้าสู่ระบบ และลงทะเบียนด้วย อีเมล ชั่วคราว
         </Text>
       </Group>
       <Text size='xs' className='mt-4 md:mt-0'>

@@ -124,7 +124,7 @@ export default function PrivacyPolicy() {
               className='bg-background text-title hover:bg-background hover:opacity-75'
               onClick={() => modals.closeModal(id)}
             >
-              เข้าใจแล้ว
+              ยอมรับ
             </Button>
           </Group>
         </Stack>

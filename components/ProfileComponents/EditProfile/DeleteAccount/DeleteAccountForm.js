@@ -31,11 +31,11 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">
+          <Text size='sm'>
             คุณจำเป็นต้อง <b>เข้าสู่ระบบ</b> ใหม่อีกครั้งเพื่อยืนยันตัวตน
             และดำเนินการต่อ
           </Text>
-          <Text size="xs">
+          <Text size='xs'>
             (กรณีเข้าสู่ระบบอีกครั้งไม่ได้แสดงว่าบัญชีถูกลบไปแล้ว)
           </Text>
         </Stack>
@@ -49,11 +49,11 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
       },
       size: 'sm',
       children: (
-        <Stack size="xs">
-          <Group position="right">
+        <Stack size='xs'>
+          <Group position='right'>
             <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              size="xs"
+              className='bg-background text-title hover:bg-background hover:opacity-75'
+              size='xs'
               onClick={() => {
                 modals.closeModal(id);
                 setOpenedConfirm(false);
@@ -62,8 +62,8 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
               ยกเลิก
             </Button>
             <Button
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              size="xs"
+              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+              size='xs'
               onClick={handleSignOut}
             >
               ออกจากระบบ
@@ -111,20 +111,20 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
   };
 
   return (
-    <Stack spacing="xl">
+    <Stack spacing='xl'>
       <Stack>
-        <Title order={2} align="center" mb="sm">
+        <Title order={2} align='center' mb='sm'>
           ลบบัญชีส่วนบุคคล
         </Title>
-        <Text align="center">
+        <Text align='center'>
           MyAnimeCommunity จะลบบัญชี และข้อมูลส่วนบุคคลทั้งหมดของคุณ
           แต่โพสต์ของคุณอาจยังปรากฏอยู่
         </Text>
-        <Text align="center">
+        <Text align='center'>
           MyAnimeCommunity แนะนำให้คุณลบโพสต์ทั้งหมดออกด้วยตนเองก่อนลบบัญชี
         </Text>
-        <div className="bg-[#ff0000] rounded-md py-2">
-          <Text align="center" color="white">
+        <div className='bg-[#ff3333] py-2'>
+          <Text align='center' color='white'>
             การดำเนินการนี้ไม่สามารถย้อนกลับได้ โปรดตรวจสอบให้แน่ใจ
           </Text>
         </div>
@@ -140,19 +140,19 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
         </Text>
         <TextInput onChange={checkConfirm} />
       </Stack>
-      <Stack size="xs">
-        <Group position="right">
+      <Stack size='xs'>
+        <Group position='right'>
           <Button
-            className="bg-background text-title hover:bg-background hover:opacity-75"
-            size="xs"
+            className='bg-background text-title hover:bg-background hover:opacity-75'
+            size='xs'
             onClick={() => setOpenedConfirm(false)}
           >
             ยกเลิก
           </Button>
           <Button
             disabled={usernameValid && confirmValid ? false : true}
-            className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
-            size="xs"
+            className='bg-[#ff3333] hover:bg-[#ff3333] hover:opacity-75'
+            size='xs'
             onClick={() => deleteAccount()}
           >
             ลบบัญชี
