@@ -86,7 +86,7 @@ export function LoginPopUp({ setOpenedRegister }) {
         icon={<Mail size={20} />}
         placeholder='อีเมลของคุณ'
         classNames={{
-          input: 'bg-accent bg-opacity-50',
+          input: 'bg-accent border-title border-opacity-20 border-[1px]',
         }}
       />
       <PasswordInput
@@ -95,7 +95,7 @@ export function LoginPopUp({ setOpenedRegister }) {
         label='รหัสผ่าน'
         placeholder='รหัสผ่านของคุณ'
         classNames={{
-          input: 'bg-accent bg-opacity-50',
+          input: 'bg-accent border-title border-opacity-20 border-[1px]',
         }}
       />
       <Checkbox
@@ -113,15 +113,18 @@ export function LoginPopUp({ setOpenedRegister }) {
           เข้าสู่ระบบ
         </Button>
       </Link>
-      <Group noWrap className='text-content mt-4 md:mt-0'>
+      <Group
+        noWrap
+        className='text-white p-2 mt-4 md:mt-0 bg-red-500 rounded-sm'
+      >
         <AlertTriangle width={24} className='m-2 md:m-0' />
         <Text size='xs'>
           ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
-          กำลังปิดปรับปรุงระบบการเข้าสู่ระบบด้วย อีเมล และ รหัสผ่าน
+          กำลังปิดปรับปรุงการเข้าสู่ระบบและสมัครสมาชิกด้วย อีเมล ชั่วคราว
         </Text>
       </Group>
       <Text size='xs' className='mt-4 md:mt-0'>
-        ผู้ใช้ที่ต้องการลงทะเบียนโปรดลงชื่อเข้าใช้ด้วย Google
+        ผู้ใช้ที่ต้องการเข้าสู่ระบบโปรดลงชื่อเข้าใช้ด้วย Google หรือ Facebook
       </Text>
     </Stack>
   );

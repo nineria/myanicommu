@@ -4,6 +4,7 @@ import {
   Group,
   PasswordInput,
   Stack,
+  Text,
   TextInput,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
@@ -11,7 +12,7 @@ import { UserContext } from 'lib/context';
 import { firestore, serverTimestamp } from 'lib/firebase';
 import debounce from 'lodash.debounce';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Mail } from 'tabler-icons-react';
+import { AlertTriangle, Mail } from 'tabler-icons-react';
 import { z } from 'zod';
 import { UsernameMessage } from '.';
 import PrivacyPolicy from '../PrivacyPolicy';
@@ -170,31 +171,34 @@ export function RegisterForm() {
         {!user && (
           <Group grow>
             <TextInput
+              disabled
               label='ชื่อจริง'
               {...form.getInputProps('firstName')}
               placeholder='ชื่อจริงของคุณ'
               classNames={{
-                input: 'bg-accent bg-opacity-50',
+                input: 'bg-accent border-title border-opacity-20 border-[1px]',
               }}
             />
             <TextInput
+              disabled
               label='นามสกุล'
               {...form.getInputProps('lastName')}
               placeholder='นามสกุลของคุณ'
               classNames={{
-                input: 'bg-accent bg-opacity-50',
+                input: 'bg-accent border-title border-opacity-20 border-[1px]',
               }}
             />
           </Group>
         )}
 
         <TextInput
+          disabled
           required
           label='ชื่อผู้ใช้'
           // {...form.getInputProps("username")}
           placeholder='ชื่อผู้ใช้ของคุณ'
           classNames={{
-            input: 'bg-accent bg-opacity-50',
+            input: 'bg-accent border-title border-opacity-20 border-[1px]',
           }}
           value={formValue}
           onChange={onChange}
@@ -209,28 +213,31 @@ export function RegisterForm() {
         {!user && (
           <>
             <TextInput
+              disabled
               label='อีเมล (Email)'
               icon={<Mail size={20} />}
               {...form.getInputProps('email')}
               placeholder='อีเมลของคุณ'
               classNames={{
-                input: 'bg-accent bg-opacity-50',
+                input: 'bg-accent border-title border-opacity-20 border-[1px]',
               }}
             />
             <PasswordInput
+              disabled
               label='รหัสผ่าน'
               placeholder='รหัสผ่านของคุณ'
               {...form.getInputProps('password')}
               classNames={{
-                input: 'bg-accent bg-opacity-50',
+                input: 'bg-accent border-title border-opacity-20 border-[1px]',
               }}
             />
             <PasswordInput
+              disabled
               label='ยืนยันรหัสผ่าน'
               placeholder='ยืนยันรหัสผ่านของคุณ'
               {...form.getInputProps('confirmPassword')}
               classNames={{
-                input: 'bg-accent bg-opacity-50',
+                input: 'bg-accent border-title border-opacity-20 border-[1px]',
               }}
             />
           </>
@@ -249,6 +256,19 @@ export function RegisterForm() {
             label={<PrivacyPolicy />}
           />
         </Stack>
+        <Group
+          noWrap
+          className='text-white p-2 mt-4 md:mt-0 bg-red-500 rounded-sm'
+        >
+          <AlertTriangle width={24} className='m-2 md:m-0' />
+          <Text size='xs'>
+            ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
+            กำลังปิดปรับปรุงการเข้าสู่ระบบและสมัครสมาชิกด้วย อีเมล ชั่วคราว
+          </Text>
+        </Group>
+        <Text size='xs' className='mt-4 md:mt-0'>
+          ผู้ใช้ที่ต้องการเข้าสู่ระบบโปรดลงทะเบียนด้วย Google หรือ Facebook
+        </Text>
         <Button
           size='sm'
           type='submit'
