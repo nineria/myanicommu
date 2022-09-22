@@ -34,18 +34,27 @@ export default function TagGenre({ data, setData }) {
     if (e.key !== 'Enter') return;
 
     const value = e.target.value;
+    const pattern = /,/;
 
     if (!value.trim()) return;
 
-    const str = value.replace(/[, ]+/g, ' ').trim();
+    if (pattern.test(value)) {
+      console.log('if');
+      const str = value.replace(/[, ]+/g, ' ').trim();
 
-    const list = str.split(' ');
+      const list = str.split(' ');
 
-    list.map((item) => {
-      data.push(item);
+      list.map((item) => {
+        data.push(item);
+        setData(data);
+        setTags([...tags, item]);
+      });
+    } else {
+      console.log('else');
+      data.push(value);
       setData(data);
-      setTags([...tags, item]);
-    });
+      setTags([...tags, value]);
+    }
 
     e.target.value = '';
     e.preventDefault();
