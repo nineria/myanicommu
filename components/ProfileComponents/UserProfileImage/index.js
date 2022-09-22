@@ -14,6 +14,7 @@ import {
 import UserReport from '@components/UserReport';
 import { UserContext } from 'lib/context';
 import { getUserWithUsername } from 'lib/firebase';
+import { useRouter } from 'next/router';
 import { BiLinkExternal } from 'react-icons/bi';
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { Edit } from 'tabler-icons-react';
@@ -58,12 +59,14 @@ const DUMMY_CUSTOM_WEBSITE = {
 
 export default function UserCardImage({ user, posts, statistics }) {
   const { username } = useContext(UserContext);
+  const router = useRouter();
 
   const [editOpened, setEditOpened] = useState(false);
-
   const [userRanks, setUserRanks] = useState(null);
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
+    if (router.asPath.split('#')[1] === user.username) return setActive(true);
     const getRanks = async () => {
       const userDoc = await getUserWithUsername(user.username);
 
@@ -81,7 +84,19 @@ export default function UserCardImage({ user, posts, statistics }) {
   }, [posts, user.username]);
 
   return (
-    <Card p='md' radius='sm' className='bg-foreground'>
+    <Card
+      p='md'
+      className={`relative bg-foreground ${
+        active ? 'border-2 border-[#ff3333] rounded-none' : 'rounded-sm'
+      }`}
+    >
+      {active && (
+        <div className='absolute -top-4 left-0 right-0'>
+          <div className='bg-[#ff3333] text-white text-center mt-4'>
+            เนื้อหาที่ถูกรายงาน
+          </div>
+        </div>
+      )}
       <Card.Section
         sx={{
           backgroundImage: `url(${user.image})`,
@@ -91,8 +106,12 @@ export default function UserCardImage({ user, posts, statistics }) {
         }}
       />
       {username !== user.username && (
-        <div className='fixed top-2 right-0 p-[2px] bg-foreground rounded-l-md'>
-          <UserReport />
+        <div className='absolute flex top-8 right-0 p-[4px] pr-2 bg-foreground rounded-l-sm'>
+          <UserReport
+            size='xs'
+            from={router.asPath + '#' + user.username}
+            title={'โปรไฟล์ของ ' + user.username}
+          />
         </div>
       )}
 
