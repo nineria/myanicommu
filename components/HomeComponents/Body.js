@@ -7,13 +7,7 @@ import { ChevronUp, Edit as EditIcon } from 'tabler-icons-react';
 import Edit from './Edit';
 import Status from './Status';
 
-export default function Body({
-  today,
-  post,
-  disabled,
-  homePosts,
-  setHomePosts,
-}) {
+export default function Body({ today, post, disabled }) {
   const { user } = useContext(UserContext);
   const [toggle, setToggle] = useState(true);
   const [opened, setOpened] = useState(false);
@@ -101,12 +95,7 @@ export default function Body({
                   title: 'text-title',
                 }}
               >
-                <Edit
-                  setOpened={setOpened}
-                  postData={post}
-                  homePosts={homePosts}
-                  setHomePosts={setHomePosts}
-                />
+                <Edit setOpened={setOpened} postData={post} />
               </Modal>
               {!disabled && !today && (
                 <AdminCheck>

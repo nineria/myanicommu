@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react';
-// Hooks
-import { useForm } from '@mantine/hooks';
-// Components
-import { Divider, Stack } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
-import ButtonControl from './Elements/ButtonControl';
-import Content from './Elements/Content';
-import Header from './Elements/Header';
-import Title from './Elements/Title';
-// Icons
+import ButtonControl from '@components/HomeComponents/ButtonControl';
+import Content from '@components/HomeComponents/Content';
+import Header from '@components/HomeComponents/Header';
+import Title from '@components/HomeComponents/Title';
 import WebsiteRule from '@components/WebsiteRule';
 import { firestore, getUserWithUsername, serverTimestamp } from '@lib/firebase';
+import { Divider, Stack } from '@mantine/core';
+import { useForm } from '@mantine/hooks';
+import { showNotification } from '@mantine/notifications';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { Check } from 'tabler-icons-react';
 
 export default function Edit(props) {
@@ -58,7 +55,6 @@ export default function Edit(props) {
     });
 
     props.setOpened(false);
-
     router.reload();
   };
 

@@ -16,7 +16,6 @@ import React, { useContext, useState } from 'react';
 export const admin = 'ผู้ดูแลระบบ';
 
 export async function getServerSideProps() {
-  // Home posts
   const postsQuery = firestore
     .collectionGroup('homePosts')
     .orderBy('createdAt', 'asc')
@@ -24,7 +23,6 @@ export async function getServerSideProps() {
 
   const homePosts = (await postsQuery.get()).docs.map(postToJSON);
 
-  // Review posts
   const postsReviewQuery = firestore
     .collectionGroup('posts')
     .orderBy('createdAt', 'desc');
@@ -36,8 +34,6 @@ export async function getServerSideProps() {
       return post.tag[0].label === 'รีวิว' ? true : false;
     })
     .map((filtered) => filtered);
-
-  // Today posts
 
   const todayQuery = firestore
     .collectionGroup('posts')
@@ -68,7 +64,7 @@ export default function HomePage(props) {
               <Advertisement />
               <div className='block  space-y-2 mt-2 sm:mt-0'>
                 {props.homePosts.map((post) => (
-                  <Post key={post.slug} postData={post} />
+                  <Post key={post.slug} post={post} />
                 ))}
               </div>
               {user && (
@@ -87,11 +83,7 @@ export default function HomePage(props) {
                         title: 'text-title',
                       }}
                     >
-                      <Add
-                        setOpened={setOpened}
-                        homePosts={homePosts}
-                        setHomePosts={setHomePosts}
-                      />
+                      <Add setOpened={setOpened} />
                     </Modal>
                     <Button
                       onClick={() => setOpened(true)}

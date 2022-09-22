@@ -1,18 +1,15 @@
-import React, { useContext } from 'react';
-// Hooks
-import { useForm } from '@mantine/hooks';
-// Components
+import ButtonControl from '@components/HomeComponents/ButtonControl';
+import Content from '@components/HomeComponents/Content';
+import Header from '@components/HomeComponents/Header';
+import Title from '@components/HomeComponents/Title';
 import { Divider, Stack } from '@mantine/core';
+import { useForm } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
-import ButtonControl from './Elements/ButtonControl';
-import Content from './Elements/Content';
-import Header from './Elements/Header';
-import Title from './Elements/Title';
-// Icons
 import WebsiteRule from 'components/WebsiteRule';
 import { UserContext } from 'lib/context';
 import { auth, firestore, serverTimestamp } from 'lib/firebase';
 import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
 import { Check, X } from 'tabler-icons-react';
 
 export default function Add({ setOpened }) {
