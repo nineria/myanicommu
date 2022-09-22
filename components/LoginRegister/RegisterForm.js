@@ -192,7 +192,6 @@ export function RegisterForm() {
         )}
 
         <TextInput
-          disabled
           required
           label='ชื่อผู้ใช้'
           // {...form.getInputProps("username")}
