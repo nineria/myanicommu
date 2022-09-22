@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { auth, firestore, getUserWithUsername } from 'lib/firebase';
-
+import { useRouter } from 'next/router';
 import Body from './Elements/Body';
 import LeftMenu from './Elements/LeftMenu';
 import TopMenu from './Elements/TopMenu';
@@ -12,8 +12,12 @@ export default function PostComponents({ post, postRef }) {
   const [stars, setStars] = useState();
   const [likes, setLikes] = useState();
   const [likeState, setLikeState] = useState(false);
+  const [active, setActive] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
+    if (router.asPath.split('#')[1] === post.uid) return setActive(true);
+
     const getRanks = async () => {
       const userDoc = await getUserWithUsername(post.username);
 
@@ -78,7 +82,12 @@ export default function PostComponents({ post, postRef }) {
   }, [post]);
 
   return (
-    <div className='bg-foreground rounded-sm my-2 sm:my-0'>
+    <div
+      className={`bg-foreground rounded-sm my-2 sm:my-0 ${
+        active ? 'border-2 border-content' : ''
+      }`}
+      onClick={() => setActive(false)}
+    >
       <Layout>
         {post && (
           <LeftMenu
@@ -98,6 +107,7 @@ export default function PostComponents({ post, postRef }) {
         )}
         {post && (
           <Body
+            id={post.uid}
             post={post}
             postRef={postRef}
             likes={likes}

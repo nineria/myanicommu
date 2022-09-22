@@ -27,7 +27,6 @@ export default function Body({
   setLikeState,
 }) {
   const [opened, setOpened] = useState(false);
-
   const { user } = useContext(UserContext);
 
   const modals = useModals();

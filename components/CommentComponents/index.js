@@ -1,4 +1,5 @@
 import { auth, firestore, getUserWithUsername } from 'lib/firebase';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Body from './Body';
 import Layout from './Layout';
@@ -10,6 +11,9 @@ export default function Comment(props) {
   const [likes, setLikes] = useState();
   const [likeState, setLikeState] = useState(false);
   const [comment] = useState(props.comment);
+  const [active, setActive] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const getComments = async () => {
@@ -55,12 +59,25 @@ export default function Comment(props) {
       }
     };
 
+    const getActive = () => {
+      if (router.asPath.split('#')[1] === props.id) return setActive(true);
+    };
+
     getLikes();
     getComments();
+    getActive();
   }, [props.post, comment]);
 
+  console.log(active);
+
   return (
-    <div className='bg-foreground rounded-sm'>
+    <div
+      id={props.id}
+      className={`bg-foreground rounded-sm ${
+        active ? 'border-2 border-content' : ''
+      } `}
+      onClick={() => setActive(false)}
+    >
       <Layout>
         {props.post && <LeftMenu comment={comment} likes={likes} />}
         {props.post && <TopMenu comment={comment} likes={likes} />}

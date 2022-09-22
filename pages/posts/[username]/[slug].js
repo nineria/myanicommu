@@ -121,8 +121,13 @@ export default function PostPage(props) {
               <PostComponents post={post} postRef={postRef} />
               <Stack spacing='xs'>
                 {comments &&
-                  comments.map((item, index) => (
-                    <Comment key={index} post={post} comment={item} />
+                  comments.map((item) => (
+                    <Comment
+                      id={item.uid}
+                      key={item.uid}
+                      post={post}
+                      comment={item}
+                    />
                   ))}
               </Stack>
             </Stack>
