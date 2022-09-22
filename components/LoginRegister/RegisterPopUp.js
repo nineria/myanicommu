@@ -14,7 +14,7 @@ export function RegisterPopUp() {
     try {
       await auth.signInWithPopup(googleAuthProvider);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       router.push('/');
     }
   };
@@ -23,7 +23,7 @@ export function RegisterPopUp() {
     try {
       await auth.signInWithPopup(facebookAuthProvider);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       router.push('/');
     }
   };

@@ -95,7 +95,7 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
       await auth.currentUser.delete();
       router.push('/');
     } catch (error) {
-      console.log('ERROR => ', auth.currentUser.uid, error);
+      // console.log('ERROR => ', auth.currentUser.uid, error);
       loginAgain();
     }
   };

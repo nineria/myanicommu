@@ -30,7 +30,7 @@ export function LoginPopUp({ setOpenedRegister }) {
 
       if (!username) setOpenedRegister(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       router.push('/');
     }
   };
@@ -41,7 +41,7 @@ export function LoginPopUp({ setOpenedRegister }) {
 
       if (!username) setOpenedRegister(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       router.push('/');
     }
   };
