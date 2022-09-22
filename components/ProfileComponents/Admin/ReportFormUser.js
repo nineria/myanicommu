@@ -15,6 +15,7 @@ import {
   TextInput,
   UnstyledButton,
 } from '@mantine/core';
+import { useModals } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -118,7 +119,7 @@ export default function ReportFormUser({ reports }) {
     });
 
     return (
-      <tr key={row.reporterUsername}>
+      <tr key={row.id}>
         <td>
           <Anchor size='sm'>
             <Link href={`/${row.reporterUsername}`}>
@@ -139,7 +140,12 @@ export default function ReportFormUser({ reports }) {
         </td>
         <td>
           <Anchor size='sm'>
-            <ReportDetail detail={row.detail} id={row.id} />
+            <ReportDetail
+              detail={row.detail}
+              id={row.id}
+              sortedData={sortedData}
+              setSortedData={setSortedData}
+            />
           </Anchor>
         </td>
         <td>{createdAt || '-'}</td>
@@ -153,100 +159,149 @@ export default function ReportFormUser({ reports }) {
         <Text size='xl' weight={700} mb='sm'>
           รายงานจากผู้ใช้
         </Text>
-        <TextInput
-          placeholder='ค้นหา'
-          mb='md'
-          icon={<Search size={14} />}
-          value={search}
-          classNames={{
-            input: 'bg-accent bg-opacity-50',
-          }}
-          onChange={handleSearchChange}
-        />
-        <Table
-          highlightOnHover
-          horizontalSpacing='md'
-          verticalSpacing='xs'
-          sx={{ minWidth: 800 }}
-        >
-          <thead>
-            <tr>
-              <Th
-                sorted={sortBy === 'reporterUsername'}
-                reversed={reverseSortDirection}
-                onSort={() => setSorting('reporterUsername')}
-              >
-                ผู้ใช้ที่แจ้งรายงาน
-              </Th>
-              <Th
-                sorted={sortBy === 'title'}
-                reversed={reverseSortDirection}
-                onSort={() => setSorting('title')}
-              >
-                ผู้ใช้ / โพสต์ / คอมเมอนต์ ที่ถูกรายงาน
-              </Th>
-              <Th
-                sorted={sortBy === 'email'}
-                reversed={reverseSortDirection}
-                onSort={() => setSorting('email')}
-              >
-                รายละเอียด
-              </Th>
-              <Th
-                sorted={sortBy === 'createdAt'}
-                reversed={reverseSortDirection}
-                onSort={() => setSorting('createdAt')}
-              >
-                รายงานเมื่อ
-              </Th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length > 0 ? (
-              rows
-            ) : (
-              <tr>
-                <td colSpan={Object.keys(reports[0]).length}>
-                  <Text weight={500} align='center' size='sm'>
-                    ไม่พบรายการที่ค้นหา
-                  </Text>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        {reports[0] && (
+          <>
+            <TextInput
+              placeholder='ค้นหา'
+              mb='md'
+              icon={<Search size={14} />}
+              value={search}
+              classNames={{
+                input: 'bg-accent bg-opacity-50',
+              }}
+              onChange={handleSearchChange}
+            />
+            <Table
+              highlightOnHover
+              horizontalSpacing='md'
+              verticalSpacing='xs'
+              sx={{ minWidth: 800 }}
+            >
+              <thead>
+                <tr>
+                  <Th
+                    sorted={sortBy === 'reporterUsername'}
+                    reversed={reverseSortDirection}
+                    onSort={() => setSorting('reporterUsername')}
+                  >
+                    ผู้ใช้ที่แจ้งรายงาน
+                  </Th>
+                  <Th
+                    sorted={sortBy === 'title'}
+                    reversed={reverseSortDirection}
+                    onSort={() => setSorting('title')}
+                  >
+                    ผู้ใช้ / โพสต์ / คอมเมอนต์ ที่ถูกรายงาน
+                  </Th>
+                  <Th
+                    sorted={sortBy === 'email'}
+                    reversed={reverseSortDirection}
+                    onSort={() => setSorting('email')}
+                  >
+                    รายละเอียด
+                  </Th>
+                  <Th
+                    sorted={sortBy === 'createdAt'}
+                    reversed={reverseSortDirection}
+                    onSort={() => setSorting('createdAt')}
+                  >
+                    รายงานเมื่อ
+                  </Th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.length > 0 ? (
+                  rows
+                ) : (
+                  <tr>
+                    <td colSpan={Object.keys(reports[0]).length}>
+                      <Text weight={500} align='center' size='sm'>
+                        ไม่พบรายการที่ค้นหา
+                      </Text>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          </>
+        )}
+        {!reports[0] && <Text align='center'>ไม่พบรายงานจากผู้ใช้</Text>}
       </ScrollArea>
     </Card>
   );
 }
 
-function ReportDetail({ detail, id }) {
+function ReportDetail({ detail, id, sortedData, setSortedData }) {
   const [opened, setOpened] = useState(false);
+  const modals = useModals();
 
-  const handleDelete = async () => {
-    try {
-      const reportRef = firestore.collection('reports').doc(id);
-      await reportRef.delete();
-    } catch {
-      showNotification({
-        color: 'red',
-        title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
-        icon: <X size={18} />,
-        classNames: {
-          root: 'bg-foreground border-l-red-400 border-l-4',
-        },
-      });
-    } finally {
-      showNotification({
-        color: 'teal',
-        title: 'ลบรายงานแล้ว',
-        icon: <Check size={18} />,
-        classNames: {
-          root: 'bg-foreground border-l-teal-400 border-l-4',
-        },
-      });
-      setOpened(false);
-    }
+  const handleDelete = () => {
+    const handleOnClick = async () => {
+      try {
+        const reportRef = firestore.collection('reports').doc(id);
+        await reportRef.delete();
+
+        const remainingResults = sortedData.filter(
+          (result) => result.id !== id
+        );
+        setSortedData(remainingResults);
+      } catch {
+        showNotification({
+          color: 'red',
+          title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+          icon: <X size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-red-400 border-l-4',
+          },
+        });
+      } finally {
+        showNotification({
+          color: 'teal',
+          title: 'ลบรายงานแล้ว',
+          icon: <Check size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-teal-400 border-l-4',
+          },
+        });
+        modals.closeModal(modal);
+        setOpened(false);
+      }
+    };
+    const modal = modals.openModal({
+      title: (
+        <Stack>
+          <Text size='md'>คุณต้องการลบรายการนี้หรือไม่?</Text>
+          <Text size='sm'>การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+        </Stack>
+      ),
+      zIndex: '999',
+      centered: true,
+      withCloseButton: false,
+      classNames: {
+        modal: 'bg-foreground',
+        overlay: 'bg-background',
+      },
+      size: 'sm',
+      children: (
+        <Stack size='xs'>
+          <Group position='right'>
+            <Button
+              className='bg-background text-title hover:bg-background hover:opacity-75'
+              onClick={() => modals.closeModal(modal)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type='submit'
+              className='bg-red-500 hover:bg-red-500 text-white hover:opacity-75'
+              onClick={() => handleOnClick()}
+            >
+              ยืนยัน
+            </Button>
+          </Group>
+        </Stack>
+      ),
+    });
   };
 
   return (
@@ -294,20 +349,18 @@ function ReportDetail({ detail, id }) {
         </Stack>
         <Group position='center' mt='sm'>
           <Button
-            className='bg-[#ff3333] text-title hover:bg-[#ff3333] hover:opacity-75'
-            variant='default'
-            size='xs'
-            onClick={() => handleDelete()}
-          >
-            ลบ
-          </Button>
-          <Button
             className='bg-background text-title hover:bg-background hover:opacity-75'
             variant='default'
-            size='xs'
             onClick={() => setOpened(false)}
           >
             ปิด
+          </Button>
+          <Button
+            className='bg-red-500 text-white hover:bg-red-500 hover:opacity-75'
+            variant='default'
+            onClick={() => handleDelete()}
+          >
+            ลบ
           </Button>
         </Group>
       </Modal>
