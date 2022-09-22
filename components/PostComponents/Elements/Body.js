@@ -1,3 +1,4 @@
+import UserReport from '@components/UserReport';
 import { Button, Group, Image, Modal, Space, Stack, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
@@ -8,13 +9,7 @@ import { UserContext } from 'lib/context';
 import { auth, firestore } from 'lib/firebase';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
-import {
-  AlertTriangle,
-  Edit as EditIcon,
-  ThumbUp,
-  Trash,
-  X,
-} from 'tabler-icons-react';
+import { Edit as EditIcon, ThumbUp, Trash, X } from 'tabler-icons-react';
 import RichTextEditor from 'utils/RichText';
 import Edit from '../Edit';
 
@@ -257,10 +252,12 @@ export default function Body({
       />
       <AuthCheck fallback={<div />}>
         <Group position='apart' className='text-xs px-2' my='xs'>
-          <div className='flex flex-row gap-1 items-end hover:underline cursor-pointer '>
-            <AlertTriangle size={14} />
-            รายงานโพสต์
-          </div>
+          <UserReport
+            size='xs'
+            from={router.asPath + '#' + post.slug}
+            title={post.title}
+          />
+
           <Group position='right'>
             <div
               className={`flex flex-row gap-1 items-end hover:underline cursor-pointer ${

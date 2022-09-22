@@ -1,6 +1,7 @@
 import { auth, firestore, getUserWithUsername } from 'lib/firebase';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { X } from 'tabler-icons-react';
 import Body from './Body';
 import Layout from './Layout';
 import LeftMenu from './LeftMenu';
@@ -71,11 +72,20 @@ export default function Comment(props) {
   return (
     <div
       id={props.id}
-      className={`bg-foreground rounded-sm ${
-        active ? 'border-2 border-content' : ''
+      className={`bg-foreground  ${
+        active ? 'border-2 border-[#ff3333] rounded-none' : 'rounded-sm'
       } `}
-      onClick={() => setActive(false)}
     >
+      {active && (
+        <div className='relative bg-[#ff3333] text-white text-center'>
+          เนื้อหาที่ถูกรายงาน
+          <X
+            onClick={() => setActive(false)}
+            size={20}
+            className='absolute top-[2px] right-[2px] cursor-pointer hover:opacity-75'
+          />
+        </div>
+      )}
       <Layout>
         {props.post && <LeftMenu comment={comment} likes={likes} />}
         {props.post && <TopMenu comment={comment} likes={likes} />}

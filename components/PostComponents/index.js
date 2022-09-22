@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { auth, firestore, getUserWithUsername } from 'lib/firebase';
 import { useRouter } from 'next/router';
+import { X } from 'tabler-icons-react';
 import Body from './Elements/Body';
 import LeftMenu from './Elements/LeftMenu';
 import TopMenu from './Elements/TopMenu';
@@ -16,7 +17,7 @@ export default function PostComponents({ post, postRef }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (router.asPath.split('#')[1] === post.uid) return setActive(true);
+    if (router.asPath.split('#')[1] === postRef.id) return setActive(true);
 
     const getRanks = async () => {
       const userDoc = await getUserWithUsername(post.username);
@@ -83,11 +84,21 @@ export default function PostComponents({ post, postRef }) {
 
   return (
     <div
-      className={`bg-foreground rounded-sm my-2 sm:my-0 ${
-        active ? 'border-2 border-content' : ''
+      className={`bg-foreground  my-2 sm:my-0 ${
+        active ? 'border-2 border-[#ff3333] rounded-none' : 'rounded-sm'
       }`}
-      onClick={() => setActive(false)}
     >
+      {active && (
+        <div className='relative bg-[#ff3333] text-white text-center'>
+          เนื้อหาที่ถูกรายงาน
+          <X
+            onClick={() => setActive(false)}
+            size={20}
+            className='absolute top-[2px] right-[2px] cursor-pointer hover:opacity-75'
+          />
+        </div>
+      )}
+
       <Layout>
         {post && (
           <LeftMenu
@@ -107,7 +118,6 @@ export default function PostComponents({ post, postRef }) {
         )}
         {post && (
           <Body
-            id={post.uid}
             post={post}
             postRef={postRef}
             likes={likes}
