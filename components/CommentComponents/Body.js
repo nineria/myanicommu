@@ -259,7 +259,7 @@ export default function Body({
         >
           <div className='flex flex-row gap-1 items-end hover:underline cursor-pointer '>
             <AlertTriangle size={14} />
-            รายงานโพสต์
+            แจ้งรายงาน
           </div>
           <Group position='right'>
             <div
