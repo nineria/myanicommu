@@ -123,7 +123,7 @@ export default function PostPage(props) {
                 {comments &&
                   comments.map((item) => (
                     <Comment
-                      id={item.uid}
+                      id={item.slug}
                       key={item.uid}
                       post={post}
                       comment={item}

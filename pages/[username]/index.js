@@ -4,11 +4,18 @@ import { Footer } from '@components/Footer';
 import Loading from '@components/Loading';
 import Metatags from '@components/Metatags';
 import Navbar from '@components/Navbar';
-import ProfileComponents from '@components/ProfileComponents';
+import AnnouncementControl from '@components/ProfileComponents/Admin/AnnouncementControl';
+import ReportFormUser from '@components/ProfileComponents/Admin/ReportFormUser';
+import StatsSegmentsAdmin from '@components/ProfileComponents/Admin/StatsSegmentsAdmin';
+import UserManagement from '@components/ProfileComponents/Admin/UserManagement';
+import { TableSort } from '@components/ProfileComponents/PostsTableSort';
+import StatsSegments from '@components/ProfileComponents/StatsSegments';
+import UserProfileImage from '@components/ProfileComponents/UserProfileImage';
+import AdminCheck from '@hooks/AdminCheck';
+import { UserContext } from '@lib/context';
 import { firestore, getUserWithUsername, postToJSON } from '@lib/firebase';
-import { Container } from '@mantine/core';
+import { Container, Stack, Title } from '@mantine/core';
 import AuthCheck from 'hooks/AuthCheck';
-import { UserContext } from 'lib/context';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 
@@ -22,27 +29,30 @@ export async function getServerSideProps({ query }) {
   let statisticsAdmin = null;
   let users = null;
   let posts = null;
+  let reports = null;
 
   if (userDoc) {
     user = postToJSON(userDoc);
-    const postsQuery = userDoc.ref.collection('posts');
-    posts = (await postsQuery.get()).docs.map(postToJSON);
+    const postsRef = userDoc.ref.collection('posts');
+    posts = (await postsRef.get()).docs.map(postToJSON);
 
     const usersRef = firestore.collection('users');
-
     users = (await usersRef.get()).docs.map(postToJSON);
 
-    const userStatistics = firestore.collection('statistics').doc(userDoc.id);
-    statistics = (await userStatistics.get()).data();
+    const statisticsRef = firestore.collection('statistics').doc(userDoc.id);
+    statistics = (await statisticsRef.get()).data();
 
-    const usersStatistics = firestore.collection('statistics');
-    statisticsAdmin = (await usersStatistics.get()).docs.map((doc) =>
+    const statisticsAdminRef = firestore.collection('statistics');
+    statisticsAdmin = (await statisticsAdminRef.get()).docs.map((doc) =>
       doc.data()
     );
+
+    const reportsRef = firestore.collection('reports');
+    reports = (await reportsRef.get()).docs.map(postToJSON);
   }
 
   return {
-    props: { user, statistics, statisticsAdmin, users, posts },
+    props: { user, statistics, statisticsAdmin, users, posts, reports },
   };
 }
 
@@ -52,6 +62,7 @@ export default function UserProfilePage({
   statistics,
   statisticsAdmin,
   posts,
+  reports,
 }) {
   const router = useRouter();
 
@@ -83,14 +94,36 @@ export default function UserProfilePage({
         {user && posts && (
           <Motion>
             <AuthCheck fallback={<Loading />}>
-              <ProfileComponents
+              <UserProfileImage
                 user={user}
                 userRef={userRef}
-                users={users}
-                statistics={statistics}
-                statisticsAdmin={statisticsAdmin}
                 posts={posts}
+                statistics={statistics}
               />
+              {/* <StatsGridIcons statistics={statistics} /> */}
+              {statistics && (
+                <StatsSegments user={user} statistics={statistics} />
+              )}
+
+              {posts[0] && (
+                <TableSort user={user} posts={posts} statistics={statistics} />
+              )}
+
+              {username === user.username && (
+                <AdminCheck>
+                  <Stack spacing='sm'>
+                    <Title order={2} align='center' className='text-title mt-4'>
+                      ส่วนของผู้ดูแลระบบ
+                    </Title>
+                    <StatsSegmentsAdmin statistics={statisticsAdmin} />
+                    {users && <UserManagement users={users} />}
+                    <div id='announcementControl'>
+                      <AnnouncementControl />
+                    </div>
+                    {reports[0] && <ReportFormUser reports={reports} />}
+                  </Stack>
+                </AdminCheck>
+              )}
             </AuthCheck>
           </Motion>
         )}

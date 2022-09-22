@@ -128,7 +128,7 @@ export function TableSort({ user, posts, statistics }) {
 
     return (
       <tr key={row.title}>
-        <td>
+        <td className='max-w-[550px]'>
           <Anchor size='sm'>
             <Link href={`/posts/${row.username}/${row.slug}`}>
               <a target='_blank' rel='noreferrer'>
