@@ -1,4 +1,4 @@
-import Post from '@components/HomeComponents/Elements/Body';
+import Post from '@components/HomeComponents/Body';
 import { LOCAL_THEME } from '@constants/Themes';
 import {
   Box,

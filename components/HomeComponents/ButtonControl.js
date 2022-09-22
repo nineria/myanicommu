@@ -3,13 +3,16 @@ import React from 'react';
 import { Button, Group, Stack, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
-import { useRouter } from 'next/router';
 import { X } from 'tabler-icons-react';
 
-export default function ButtonControl({ setOpened, postRef, type }) {
+export default function ButtonControl({
+  setOpened,
+  postRef,
+  type,
+  homePosts,
+  setHomePosts,
+}) {
   const modals = useModals();
-
-  const router = useRouter();
 
   const handleCancel = () => {
     showNotification({
@@ -27,6 +30,8 @@ export default function ButtonControl({ setOpened, postRef, type }) {
     const handleOnClick = async () => {
       try {
         await postRef.delete();
+        const remainingResults = homePosts.filter((p) => p.slug !== postRef.id);
+        setHomePosts(remainingResults);
         showNotification({
           color: 'red',
           title: 'ลบโพสต์แล้ว',
@@ -47,7 +52,6 @@ export default function ButtonControl({ setOpened, postRef, type }) {
       } finally {
         modals.closeModal(id);
         setOpened(false);
-        router.reload();
       }
     };
     const id = modals.openModal({

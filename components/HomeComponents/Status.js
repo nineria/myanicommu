@@ -1,8 +1,5 @@
 import Link from 'next/link';
 import React from 'react';
-// Components
-import Stats from './Stats';
-// Icons
 import { Messages } from 'tabler-icons-react';
 
 export default function Status({ header, headerLink, body, date, post }) {
@@ -33,11 +30,27 @@ export default function Status({ header, headerLink, body, date, post }) {
         </div>
       </div>
       {/* Stat */}
-      <Stats>
-        <Stats.Posts>{post?.posts.length || 1}</Stats.Posts>
-        <Stats.Comments>{post?.comments.length || 1}</Stats.Comments>
-        <Stats.EditDate>{date}</Stats.EditDate>
-      </Stats>
+      <div className='flex flex-row gap-4 text-title min-w-[190px] mt-2 sm:mt-0'>
+        <div className='flex text-xs sm:text-sm lg:flex-col lg:items-center items-center gap-1 mr-4 sm:mr-0'>
+          <div>{post?.posts.length || 1}</div>
+          <div className='text-xs text-title opacity-50 ml-1 sm:ml-0'>
+            โพสต์
+          </div>
+        </div>
+        <div className='lg:border-r-[1px] lg:border-[#aaa]' />
+        <div className='flex text-xs sm:text-sm lg:flex-col lg:items-center items-center gap-1 mr-4 sm:mr-0'>
+          <div>{post?.comments.length || 1}</div>
+          <div className='text-xs text-title opacity-50 ml-1 sm:ml-0'>
+            ข้อความ
+          </div>
+        </div>
+        <div className='flex text-xs sm:text-sm lg:flex-col lg:items-center items-center gap-1 mr-4 sm:mr-0'>
+          <span>แก้ไขล่าสุด</span>
+          <span className='text-xs text-title opacity-50 ml-1 sm:ml-0 '>
+            {date}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
