@@ -26,28 +26,39 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
 
   const handleDelete = () => {
     const handleOnClick = async () => {
-      await postRef.delete();
+      try {
+        await postRef.delete();
 
-      const userStatistics = firestore.collection('statistics').doc(post.uid);
-      const userStatisticsPosts = (await userStatistics.get()).data();
-      await userStatistics.update({
-        posts: userStatisticsPosts.posts - 1,
-      });
+        const userStatistics = firestore.collection('statistics').doc(post.uid);
+        const userStatisticsPosts = (await userStatistics.get()).data();
+        await userStatistics.update({
+          posts: userStatisticsPosts.posts - 1,
+        });
 
-      showNotification({
-        color: 'red',
-        title: 'ลบโพสต์แล้ว',
-        icon: <X size={18} />,
-        classNames: {
-          root: 'bg-foreground border-l-red-400 border-l-4',
-        },
-      });
+        showNotification({
+          color: 'red',
+          title: 'ลบโพสต์แล้ว',
+          icon: <X size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-red-400 border-l-4',
+          },
+        });
 
-      modals.closeModal(id);
+        router.replace('/posts');
+      } catch {
+        showNotification({
+          color: 'red',
+          title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+          icon: <X size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-red-400 border-l-4',
+          },
+        });
+      } finally {
+        modals.closeModal(id);
 
-      setOpened(false);
-
-      router.replace('/posts');
+        setOpened(false);
+      }
     };
     const id = modals.openModal({
       title: (

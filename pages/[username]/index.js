@@ -1,4 +1,3 @@
-import ADSide from '@components/ADSide';
 import Motion from '@components/Animate/Motion';
 import { Footer } from '@components/Footer';
 import Loading from '@components/Loading';
@@ -65,9 +64,7 @@ export default function UserProfilePage({
   reports,
 }) {
   const router = useRouter();
-
   const { username } = useContext(UserContext);
-
   const [userRef, setUserRef] = useState();
 
   useEffect(() => {
@@ -89,26 +86,30 @@ export default function UserProfilePage({
     <div className='bg-background text-accent min-h-[1024px] mb-[235px] pb-10'>
       <Navbar page='/profile' isBusy />
       <Metatags />
-      <ADSide />
       <Container size='md'>
         {user && posts && (
           <Motion>
             <AuthCheck fallback={<Loading />}>
-              <UserProfileImage
-                user={user}
-                userRef={userRef}
-                posts={posts}
-                statistics={statistics}
-              />
-              {/* <StatsGridIcons statistics={statistics} /> */}
-              {statistics && (
-                <StatsSegments user={user} statistics={statistics} />
-              )}
+              <Stack spacing='sm'>
+                <UserProfileImage
+                  user={user}
+                  userRef={userRef}
+                  posts={posts}
+                  statistics={statistics}
+                />
+                {/* <StatsGridIcons statistics={statistics} /> */}
+                {statistics && (
+                  <StatsSegments user={user} statistics={statistics} />
+                )}
 
-              {posts[0] && (
-                <TableSort user={user} posts={posts} statistics={statistics} />
-              )}
-
+                {posts[0] && (
+                  <TableSort
+                    user={user}
+                    posts={posts}
+                    statistics={statistics}
+                  />
+                )}
+              </Stack>
               {username === user.username && (
                 <AdminCheck>
                   <Stack spacing='sm'>

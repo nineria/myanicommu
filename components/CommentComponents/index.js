@@ -1,7 +1,6 @@
 import { auth, firestore, getUserWithUsername } from 'lib/firebase';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { X } from 'tabler-icons-react';
 import Body from './Body';
 import Layout from './Layout';
 import LeftMenu from './LeftMenu';
@@ -77,13 +76,10 @@ export default function Comment(props) {
       } `}
     >
       {active && (
-        <div className='relative bg-[#ff3333] text-white text-center'>
-          เนื้อหาที่ถูกรายงาน
-          <X
-            onClick={() => setActive(false)}
-            size={20}
-            className='absolute top-[2px] right-[2px] cursor-pointer hover:opacity-75'
-          />
+        <div className='absolute -top-4 left-0 right-0'>
+          <div className='bg-[#ff3333] text-white text-center mt-4'>
+            เนื้อหาที่ถูกรายงาน
+          </div>
         </div>
       )}
       <Layout>

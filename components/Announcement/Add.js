@@ -34,37 +34,47 @@ export default function AddAnnouncement() {
   const router = useRouter();
 
   const HandleChange = async (values) => {
-    const uid = auth.currentUser.uid;
-    const ref = firestore
-      .collection('users')
-      .doc(uid)
-      .collection('announcements')
-      .doc();
-    const data = {
-      slug: ref.id,
-      type: values.type,
-      title: values.title,
-      content: values.content,
-      author: username,
-      updatedAt: serverTimestamp(),
-      createdAt: serverTimestamp(),
-      uid: uid,
-      published: values.published,
-    };
-    await ref.set(data);
+    try {
+      const uid = auth.currentUser.uid;
+      const ref = firestore
+        .collection('users')
+        .doc(uid)
+        .collection('announcements')
+        .doc();
+      const data = {
+        slug: ref.id,
+        type: values.type,
+        title: values.title,
+        content: values.content,
+        author: username,
+        updatedAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+        uid: uid,
+        published: values.published,
+      };
+      await ref.set(data);
 
-    showNotification({
-      color: 'teal',
-      title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
-      icon: <Check size={18} />,
-      classNames: {
-        root: 'bg-foreground border-l-teal-400 border-l-4',
-      },
-    });
-
-    setOpened(false);
-
-    router.reload();
+      showNotification({
+        color: 'teal',
+        title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
+        icon: <Check size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-teal-400 border-l-4',
+        },
+      });
+    } catch {
+      showNotification({
+        color: 'red',
+        title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+        icon: <Check size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-red-400 border-l-4',
+        },
+      });
+    } finally {
+      setOpened(false);
+      router.reload();
+    }
   };
 
   const form = useForm({

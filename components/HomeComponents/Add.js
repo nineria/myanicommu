@@ -13,7 +13,7 @@ import WebsiteRule from 'components/WebsiteRule';
 import { UserContext } from 'lib/context';
 import { auth, firestore, serverTimestamp } from 'lib/firebase';
 import { useRouter } from 'next/router';
-import { Check } from 'tabler-icons-react';
+import { Check, X } from 'tabler-icons-react';
 
 export default function Add({ setOpened }) {
   const { username } = useContext(UserContext);
@@ -21,40 +21,50 @@ export default function Add({ setOpened }) {
   const router = useRouter();
 
   const HandleChange = async (values) => {
-    const uid = auth.currentUser.uid;
-    const ref = firestore
-      .collection('users')
-      .doc(uid)
-      .collection('homePosts')
-      .doc();
+    try {
+      const uid = auth.currentUser.uid;
+      const ref = firestore
+        .collection('users')
+        .doc(uid)
+        .collection('homePosts')
+        .doc();
 
-    const data = {
-      uid: uid,
-      slug: ref.id,
-      username: username,
-      title: values.title,
-      titleLink: values.titleLink,
-      header: values.header,
-      headerLink: values.headerLink,
-      body: values.body,
-      updatedAt: serverTimestamp(),
-      createdAt: serverTimestamp(),
-    };
+      const data = {
+        uid: uid,
+        slug: ref.id,
+        username: username,
+        title: values.title,
+        titleLink: values.titleLink,
+        header: values.header,
+        headerLink: values.headerLink,
+        body: values.body,
+        updatedAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+      };
 
-    showNotification({
-      color: 'teal',
-      title: 'สร้างโพสต์แล้ว',
-      icon: <Check size={18} />,
-      classNames: {
-        root: 'bg-foreground border-l-teal-400 border-l-4',
-      },
-    });
+      showNotification({
+        color: 'teal',
+        title: 'สร้างโพสต์แล้ว',
+        icon: <Check size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-teal-400 border-l-4',
+        },
+      });
 
-    setOpened(false);
-
-    await ref.set(data);
-
-    router.reload();
+      await ref.set(data);
+    } catch {
+      showNotification({
+        color: 'red',
+        title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+        icon: <X size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-red-400 border-l-4',
+        },
+      });
+    } finally {
+      setOpened(false);
+      router.reload();
+    }
   };
 
   const form = useForm({

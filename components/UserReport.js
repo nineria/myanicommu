@@ -58,6 +58,15 @@ export default function UserReport({ size = 'md', from, title }) {
 
       console.log(data);
       await ref.set(data);
+
+      showNotification({
+        color: 'teal',
+        title: 'แจ้งรายงานแล้ว',
+        icon: <Check size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-teal-400 border-l-4',
+        },
+      });
     } catch {
       showNotification({
         color: 'red',
@@ -68,14 +77,6 @@ export default function UserReport({ size = 'md', from, title }) {
         },
       });
     } finally {
-      showNotification({
-        color: 'teal',
-        title: 'แจ้งรายงานแล้ว',
-        icon: <Check size={18} />,
-        classNames: {
-          root: 'bg-foreground border-l-teal-400 border-l-4',
-        },
-      });
       setLoading(false);
       setOpened(false);
     }
@@ -168,7 +169,7 @@ export default function UserReport({ size = 'md', from, title }) {
         </form>
       </Modal>
       <Button
-        className='border-none mr-2 text-title hover:bg-content hover:text-[#fff]'
+        className='border-none text-title hover:bg-[#ff3333] hover:text-[#fff]'
         compact
         variant='default'
         leftIcon={<AlertTriangle size={14} />}

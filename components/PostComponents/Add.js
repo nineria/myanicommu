@@ -36,15 +36,16 @@ export default function Add({ setOpened }) {
   const [image, setImage] = useState();
 
   const HandleChange = async (values) => {
-    const uid = auth.currentUser.uid;
-    const ref = await firestore
-      .collection('users')
-      .doc(uid)
-      .collection('posts')
-      .doc();
+    setLoading(true);
 
     try {
-      setLoading(true);
+      const uid = auth.currentUser.uid;
+      const ref = await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('posts')
+        .doc();
+
       const userStatistics = firestore.collection('statistics').doc(uid);
       const userStatisticsPosts = (await userStatistics.get()).data();
       await userStatistics.update({
@@ -79,31 +80,28 @@ export default function Add({ setOpened }) {
       });
 
       router.replace(`posts/${username}/${ref.id}`);
-      setLoading(false);
     } catch (error) {
-      setLoading(true);
       if (image === undefined || image === null) {
         showNotification({
           color: 'red',
           title: 'กรุณาใส่รูปภาพประจำโพสต์!',
           icon: <X size={18} />,
           classNames: {
-            root: 'bg-foreground border-l-teal-400 border-l-4',
+            root: 'bg-foreground border-l-red-400 border-l-4',
           },
         });
-        setLoading(false);
       } else {
         showNotification({
           color: 'red',
-          title: 'มีข้อผิดพลาดเกิดขึ้น! โปรดลองอีกครั้ง',
+          title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
           icon: <X size={18} />,
           classNames: {
-            root: 'bg-foreground border-l-teal-400 border-l-4',
+            root: 'bg-foreground border-l-red-400 border-l-4',
           },
         });
-
-        setLoading(false);
       }
+    } finally {
+      setLoading(false);
     }
   };
 

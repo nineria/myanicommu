@@ -43,23 +43,34 @@ export default function Edit({ commentP, commentRef, setOpened }) {
   });
 
   const HandleChange = async (values) => {
-    await commentRef.update({
-      content: values.content,
-      username: userData.username,
-      avatar: userData.avatar,
-      updateAt: serverTimestamp(),
-    });
+    try {
+      await commentRef.update({
+        content: values.content,
+        username: userData.username,
+        avatar: userData.avatar,
+        updateAt: serverTimestamp(),
+      });
 
-    showNotification({
-      color: 'teal',
-      title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
-      icon: <Check size={18} />,
-      classNames: {
-        root: 'bg-foreground border-teal-400',
-      },
-    });
-
-    setOpened(false);
+      showNotification({
+        color: 'teal',
+        title: 'บันทึกการเปลี่ยนแปลงเรียบร้อย',
+        icon: <Check size={18} />,
+        classNames: {
+          root: 'bg-foreground border-teal-400',
+        },
+      });
+    } catch {
+      showNotification({
+        color: 'red',
+        title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+        icon: <X size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-red-400 border-l-4',
+        },
+      });
+    } finally {
+      setOpened(false);
+    }
   };
 
   const handleCancel = () => {
@@ -76,29 +87,40 @@ export default function Edit({ commentP, commentRef, setOpened }) {
 
   const handleDelete = () => {
     const handleOnClick = async () => {
-      const userStatistics = firestore
-        .collection('statistics')
-        .doc(comment.uid);
-      const userStatisticsPosts = (await userStatistics.get()).data();
+      try {
+        const userStatistics = firestore
+          .collection('statistics')
+          .doc(comment.uid);
+        const userStatisticsPosts = (await userStatistics.get()).data();
 
-      await userStatistics.update({
-        comments: userStatisticsPosts.comments - 1,
-      });
+        await userStatistics.update({
+          comments: userStatisticsPosts.comments - 1,
+        });
 
-      await commentRef.delete();
+        await commentRef.delete();
 
-      showNotification({
-        color: 'red',
-        title: 'ลบคอมเมนต์แล้ว',
-        icon: <X size={18} />,
-        classNames: {
-          root: 'bg-foreground border-red-400',
-        },
-      });
-
-      modals.closeModal(id);
-      router.reload();
-      setOpened(false);
+        showNotification({
+          color: 'red',
+          title: 'ลบคอมเมนต์แล้ว',
+          icon: <X size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-red-400 border-l-4',
+          },
+        });
+      } catch {
+        showNotification({
+          color: 'red',
+          title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+          icon: <X size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-red-400 border-l-4',
+          },
+        });
+      } finally {
+        modals.closeModal(id);
+        router.reload();
+        setOpened(false);
+      }
     };
     const id = modals.openModal({
       title: (

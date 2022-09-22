@@ -10,7 +10,7 @@ import { showNotification } from '@mantine/notifications';
 import { UserContext } from 'lib/context';
 import { auth, firestore, serverTimestamp } from 'lib/firebase';
 import React, { useContext, useState } from 'react';
-import { Check } from 'tabler-icons-react';
+import { Check, X } from 'tabler-icons-react';
 import RichTextEditor from 'utils/RichText';
 import LeftMenuAdd from './LeftMenuAdd';
 
@@ -70,46 +70,56 @@ export default function Add({ post, comments, setComments }) {
       return;
     }
 
-    const uid = auth.currentUser.uid;
+    try {
+      const uid = auth.currentUser.uid;
 
-    const userStatistics = firestore.collection('statistics').doc(uid);
-    const userStatisticsPosts = (await userStatistics.get()).data();
-    await userStatistics.update({
-      comments: userStatisticsPosts.comments + 1,
-    });
+      const userStatistics = firestore.collection('statistics').doc(uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        comments: userStatisticsPosts.comments + 1,
+      });
 
-    const ref = firestore
-      .collection('users')
-      .doc(post.uid)
-      .collection('posts')
-      .doc(post.slug)
-      .collection('comments')
-      .doc();
+      const ref = firestore
+        .collection('users')
+        .doc(post.uid)
+        .collection('posts')
+        .doc(post.slug)
+        .collection('comments')
+        .doc();
 
-    const data = {
-      uid: uid,
-      slug: ref.id,
-      content: value,
-      username: userData.username,
-      avatar: userData.avatar,
-      updatedAt: serverTimestamp(),
-      createdAt: serverTimestamp(),
-      likes: 0,
-    };
+      const data = {
+        uid: uid,
+        slug: ref.id,
+        content: value,
+        username: userData.username,
+        avatar: userData.avatar,
+        updatedAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+        likes: 0,
+      };
 
-    await ref.set(data);
+      await ref.set(data);
 
-    setComments([...comments, data]);
+      setComments([...comments, data]);
 
-    showNotification({
-      color: 'teal',
-      title: `${userData?.username} ได้เขียนคอมเมต์แล้ว`,
-      icon: <Check size={18} />,
-      classNames: {
-        root: 'bg-foreground border-teal-400',
-      },
-    });
-    // router.reload();
+      showNotification({
+        color: 'teal',
+        title: `${userData?.username} ได้เขียนคอมเมต์แล้ว`,
+        icon: <Check size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-teal-400 border-l-4',
+        },
+      });
+    } catch {
+      showNotification({
+        color: 'red',
+        title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+        icon: <X size={18} />,
+        classNames: {
+          root: 'bg-foreground border-l-red-400 border-l-4',
+        },
+      });
+    }
   };
 
   return (

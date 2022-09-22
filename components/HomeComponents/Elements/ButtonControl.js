@@ -25,20 +25,30 @@ export default function ButtonControl({ setOpened, postRef, type }) {
 
   const handleDelete = () => {
     const handleOnClick = async () => {
-      await postRef.delete();
-
-      showNotification({
-        color: 'red',
-        title: 'ลบโพสต์แล้ว',
-        icon: <X size={18} />,
-        classNames: {
-          root: 'bg-foreground border-l-red-400 border-l-4',
-        },
-      });
-      modals.closeModal(id);
-      setOpened(false);
-
-      router.reload();
+      try {
+        await postRef.delete();
+        showNotification({
+          color: 'red',
+          title: 'ลบโพสต์แล้ว',
+          icon: <X size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-red-400 border-l-4',
+          },
+        });
+      } catch {
+        showNotification({
+          color: 'red',
+          title: 'มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง',
+          icon: <X size={18} />,
+          classNames: {
+            root: 'bg-foreground border-l-red-400 border-l-4',
+          },
+        });
+      } finally {
+        modals.closeModal(id);
+        setOpened(false);
+        router.reload();
+      }
     };
     const id = modals.openModal({
       title: (
