@@ -76,10 +76,8 @@ export default function Comment(props) {
       } `}
     >
       {active && (
-        <div className='absolute -top-4 left-0 right-0'>
-          <div className='bg-[#ff3333] text-white text-center mt-4'>
-            เนื้อหาที่ถูกรายงาน
-          </div>
+        <div className='bg-[#ff3333] text-white text-center'>
+          เนื้อหาที่ถูกรายงาน
         </div>
       )}
       <Layout>
