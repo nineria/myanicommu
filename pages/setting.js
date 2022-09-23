@@ -3,11 +3,12 @@ import { Footer } from '@components/Footer.js';
 import Loading from '@components/Loading.js';
 import Metatags from '@components/Metatags.js';
 import Navbar from '@components/Navbar';
-import SettingComponents from '@components/SettingComponents/index.js';
+import ThemeSetting from '@components/SettingComponents/ThemeSetting';
 import AuthCheck from '@hooks/AuthCheck.js';
 import { firestore, postToJSON } from '@lib/firebase.js';
-import { Container } from '@mantine/core';
+import { Container, Divider, Group, Text } from '@mantine/core';
 import React from 'react';
+import { Settings } from 'tabler-icons-react';
 
 const LIMIT = 3;
 // This gets called on every request
@@ -32,7 +33,16 @@ export default function SettingPage({ posts }) {
         <Container size='md'>
           <AuthCheck fallback={<Loading />}>
             <Motion>
-              <SettingComponents posts={posts} />
+              <div className='bg-foreground my-2 w-full rounded-sm shadow-md'>
+                <Group className='py-2 px-4 font-bold w-full text-title'>
+                  <Settings size={18} />
+                  <Text size='lg' className='font-bold '>
+                    การตั้งค่า
+                  </Text>
+                </Group>
+                <Divider className='opacity-50' />
+                <ThemeSetting posts={posts} />
+              </div>
             </Motion>
           </AuthCheck>
         </Container>

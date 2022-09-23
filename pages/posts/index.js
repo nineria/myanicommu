@@ -109,7 +109,7 @@ export default function PostsPage(props) {
 
   return (
     <>
-      <div className='bg-background text-white min-h-[1024px] mb-[235px] pb-10'>
+      <div className='bg-background text-white min-h-[1024px] mb-[235px] pb-10 '>
         <Metatags />
         <Navbar page='/posts' />
         <ADSide />

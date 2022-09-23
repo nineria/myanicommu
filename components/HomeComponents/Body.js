@@ -76,7 +76,7 @@ export default function Body({ today, post, disabled }) {
       >
         <Link href={post?.titleLink || '/'}>
           <a className='truncate text-title  max-w-[600px] cursor-pointer hover:underline'>
-            {today ? 'TOP รีวิว' : post?.title || 'หัวข้อหลัก'}
+            {today ? 'TOP รีวิว 🔥' : post?.title || 'หัวข้อหลัก'}
           </a>
         </Link>
         <div className='flex flex-row gap-2 '>
@@ -124,7 +124,7 @@ export default function Body({ today, post, disabled }) {
         <div className='flex flex-col bg-[#aaa] gap-[1px]'>
           {toggle && (
             <Status
-              header={post?.title || 'หัวข้อย่อย'}
+              header={post?.header || 'หัวข้อย่อย'}
               headerLink={post?.headerLink || '/'}
               body={post?.body || 'เนื้อหา'}
               date={date}

@@ -24,14 +24,14 @@ export default function PostContent(props) {
   return (
     <InputWrapper
       required
-      label="เนื้อหา"
-      description="รายระเอียดเนื้อหาของโพสต์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
+      label='เนื้อหา'
+      description='รายระเอียดเนื้อหาของโพสต์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ'
     >
       <RichTextEditor
         sticky={true}
         stickyOffset={-55}
         {...props}
-        placeholder="คุณกำลังคิดอะไรอยู่"
+        placeholder='คุณกำลังคิดอะไรอยู่'
         onImageUpload={handleImageUpload}
         classNames={{
           root: 'bg-black/5 text-title border-[#fff] border-opacity-20',

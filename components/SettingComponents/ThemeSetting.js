@@ -100,7 +100,7 @@ export default function ThemeSetting(props) {
         <div className='flex flex-col gap-2'>
           {posts &&
             posts.map((item, index) => (
-              <Post homePosts={item} key={index} disabled={true} />
+              <Post key={index} post={item} disabled={true} />
             ))}
         </div>
       </div>
