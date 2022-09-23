@@ -92,6 +92,8 @@ export default function Comment(props) {
             setLikes={setLikes}
             likeState={likeState}
             setLikeState={setLikeState}
+            comments={props.comments}
+            setComments={props.setComments}
           />
         )}
       </Layout>

@@ -28,7 +28,13 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error('Upload failed')));
   });
 
-export default function Edit({ commentP, commentRef, setOpened }) {
+export default function Edit({
+  commentP,
+  commentRef,
+  setOpened,
+  comments,
+  setComments,
+}) {
   const { userData } = useContext(UserContext);
   const [comment] = useState(commentP);
 
@@ -50,6 +56,8 @@ export default function Edit({ commentP, commentRef, setOpened }) {
         avatar: userData.avatar,
         updateAt: serverTimestamp(),
       });
+
+      router.reload();
 
       showNotification({
         color: 'teal',
@@ -99,6 +107,11 @@ export default function Edit({ commentP, commentRef, setOpened }) {
 
         await commentRef.delete();
 
+        const remainingResults = comments.filter(
+          (result) => result.slug !== comment.slug
+        );
+        setComments(remainingResults);
+
         showNotification({
           color: 'red',
           title: 'ลบคอมเมนต์แล้ว',
@@ -118,7 +131,7 @@ export default function Edit({ commentP, commentRef, setOpened }) {
         });
       } finally {
         modals.closeModal(id);
-        router.reload();
+        // router.reload();
         setOpened(false);
       }
     };

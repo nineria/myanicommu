@@ -21,6 +21,8 @@ export default function Body({
   setLikes,
   likeState,
   setLikeState,
+  comments,
+  setComments,
 }) {
   const [comment] = useState(commentP);
   const [opened, setOpened] = useState(false);
@@ -132,6 +134,11 @@ export default function Body({
 
       await commentRef.delete();
 
+      const remainingResults = comments.filter(
+        (result) => result.slug !== comment.slug
+      );
+      setComments(remainingResults);
+
       showNotification({
         color: 'red',
         title: 'ลบคอมเมนต์แล้ว',
@@ -141,7 +148,7 @@ export default function Body({
         },
       });
       modals.closeModal(id);
-      router.reload();
+      // router.reload();
     };
     const id = modals.openModal({
       title: (
@@ -200,6 +207,8 @@ export default function Body({
           commentRef={commentRef}
           setOpened={setOpened}
           post={post}
+          comments={comments}
+          setComments={setComments}
         />
       </Modal>
       <Group position='apart'>

@@ -6,15 +6,7 @@ import Loading from '@components/Loading';
 import LoginRegister from '@components/LoginRegister';
 import Top from '@components/PostComponents/Elements/Top';
 import { UserContext } from '@lib/context';
-import {
-  Anchor,
-  Breadcrumbs,
-  Container,
-  // Group,
-  // Pagination,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { Anchor, Breadcrumbs, Container, Stack, Text } from '@mantine/core';
 import Logo from 'components/Logo';
 import Metatags from 'components/Metatags';
 import Navbar from 'components/Navbar';
@@ -42,6 +34,7 @@ export async function getServerSideProps({ query }) {
         .collection('posts')
         .doc(slug)
         .collection('comments')
+        .orderBy('createdAt', 'asc')
         .get();
 
       const commentData = await JSON.stringify(
@@ -127,6 +120,8 @@ export default function PostPage(props) {
                       key={item.uid}
                       post={post}
                       comment={item}
+                      comments={comments}
+                      setComments={setComments}
                     />
                   ))}
               </Stack>
