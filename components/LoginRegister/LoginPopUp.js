@@ -52,7 +52,7 @@ export function LoginPopUp({ setOpenedRegister }) {
         <Button
           size='sm'
           radius='lg'
-          className='bg-white w-[200px] text-black border-[1px] border-gray-300  hover:bg-white hover:opacity-75'
+          className='bg-white w-[200px] text-black border-[1px] border-gray-300  hover:bg-white hover:opacity-75 mr-2 md:mr-0'
           onClick={signInWithGoogle}
         >
           <Image

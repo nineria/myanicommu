@@ -60,8 +60,14 @@ export default function HomePage(props) {
           <Motion>
             <Stack spacing='lg'>
               {props.todayPosts && <HeroSection props={props.todayPosts} />}
-              {props.reviewPosts && <Post today post={props.reviewPosts} />}
-              <Advertisement />
+              {props.reviewPosts && (
+                <div className='block  mt-2 sm:mt-0'>
+                  <Post today post={props.reviewPosts} />
+                </div>
+              )}
+              <div className='block  mt-2 sm:mt-0'>
+                <Advertisement />
+              </div>
               <div className='block  space-y-2 mt-2 sm:mt-0'>
                 {props.homePosts.map((post) => (
                   <Post key={post.slug} post={post} />

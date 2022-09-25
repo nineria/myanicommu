@@ -22,7 +22,12 @@ export default function Body({ today, post, disabled }) {
   }, [post.title, toggle]);
 
   const date =
-    post.createdAt && new Date(post.createdAt * 1000).toLocaleDateString();
+    post.updatedAt &&
+    new Date(post.updatedAt * 1000).toLocaleDateString('th-th', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
 
   const handleToggle = (toggle) => {
     localStorage.setItem(post.title, JSON.stringify(toggle));
@@ -36,12 +41,7 @@ export default function Body({ today, post, disabled }) {
       const description = item.content.replace(regex, '');
       const link = `posts/${item.username}/${item.slug}`;
 
-      const updatedAt =
-        typeof item?.updatedAt === 'number'
-          ? new Date(item.updatedAt)
-          : item?.updatedAt?.toDate();
-
-      const date = updatedAt?.toLocaleDateString('th-th', {
+      const date = new Date(item.updatedAt * 1000).toLocaleDateString('th-th', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
