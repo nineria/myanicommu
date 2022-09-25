@@ -12,7 +12,7 @@ export function RegisterPopUp() {
 
   const signInWithGoogle = async () => {
     try {
-      await auth.signInWithPopup(googleAuthProvider);
+      await auth.signInWithRedirect(googleAuthProvider);
     } catch (error) {
       // console.log(error);
       router.push('/');
@@ -21,7 +21,7 @@ export function RegisterPopUp() {
 
   const signInWithFacebook = async () => {
     try {
-      await auth.signInWithPopup(facebookAuthProvider);
+      await auth.signInWithRedirect(facebookAuthProvider);
     } catch (error) {
       // console.log(error);
       router.push('/');

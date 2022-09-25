@@ -135,8 +135,6 @@ export default function Add({ post, comments, setComments }) {
                 ['h3', 'h4'],
                 ['image', 'video'],
               ]}
-              sticky={true}
-              stickyOffset={55}
               value={value}
               onChange={onChange}
               placeholder='คุณกำลังคิดอะไรอยู่'

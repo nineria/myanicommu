@@ -26,7 +26,7 @@ export function LoginPopUp({ setOpenedRegister }) {
 
   const signInWithGoogle = async () => {
     try {
-      await auth.signInWithPopup(googleAuthProvider);
+      await auth.signInWithRedirect(googleAuthProvider);
 
       if (!username) setOpenedRegister(true);
     } catch (error) {
@@ -37,7 +37,7 @@ export function LoginPopUp({ setOpenedRegister }) {
 
   const signInWithFacebook = async () => {
     try {
-      await auth.signInWithPopup(facebookAuthProvider);
+      await auth.signInWithRedirect(facebookAuthProvider);
 
       if (!username) setOpenedRegister(true);
     } catch (error) {
