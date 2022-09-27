@@ -13,7 +13,8 @@ import Navbar from 'components/Navbar';
 import PostComponents from 'components/PostComponents';
 import AuthCheck from 'hooks/AuthCheck';
 import { firestore, getUserWithUsername, postToJSON } from 'lib/firebase';
-import React, { useContext, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useState } from 'react';
 
 export async function getServerSideProps({ query }) {
   try {
@@ -56,14 +57,32 @@ export async function getServerSideProps({ query }) {
 
 export default function PostPage(props) {
   const postRef = firestore.doc(props.path);
-
-  const { username } = useContext(UserContext);
-
   const post = props.post;
 
-  // const [activePage, setPage] = useState(1);
-
+  const { username } = useContext(UserContext);
   const [comments, setComments] = useState(props.comments);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const externalLinks = document.querySelectorAll('[href^="http"]');
+
+      for (let i = externalLinks.length - 1; i >= 0; i--) {
+        externalLinks[i].addEventListener(
+          'click',
+          (e) => {
+            e.preventDefault();
+            const externalLink = externalLinks[i].href;
+            router.push(`/external-link?external=${externalLink}`);
+          },
+          false
+        );
+      }
+    }
+  }, []);
+
+  // const [activePage, setPage] = useState(1);
 
   const items = [
     { title: 'หน้าหลัก', href: '/' },
