@@ -1,31 +1,26 @@
 import { Button, Divider, Group, Image, Stack } from '@mantine/core';
 import { UserContext } from 'lib/context';
 import { auth, facebookAuthProvider, googleAuthProvider } from 'lib/firebase';
-import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { RegisterForm } from './RegisterForm';
 
 export function RegisterPopUp() {
-  const router = useRouter();
-
   const { username } = useContext(UserContext);
 
   const signInWithGoogle = async () => {
-    try {
-      await auth.signInWithRedirect(googleAuthProvider);
-    } catch (error) {
-      // console.log(error);
-      router.push('/');
-    }
+    await auth.signInWithPopup(googleAuthProvider).catch((e) => {
+      if (e.code == 'auth/popup-blocked') {
+        auth.signInWithRedirect(googleAuthProvider);
+      }
+    });
   };
 
   const signInWithFacebook = async () => {
-    try {
-      await auth.signInWithRedirect(facebookAuthProvider);
-    } catch (error) {
-      // console.log(error);
-      router.push('/');
-    }
+    await auth.signInWithPopup(facebookAuthProvider).catch((e) => {
+      if (e.code == 'auth/popup-blocked') {
+        auth.signInWithRedirect(facebookAuthProvider);
+      }
+    });
   };
 
   return (

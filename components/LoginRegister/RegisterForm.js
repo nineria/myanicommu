@@ -11,6 +11,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { UserContext } from 'lib/context';
 import { firestore, serverTimestamp } from 'lib/firebase';
 import debounce from 'lodash.debounce';
+import { useRouter } from 'next/router';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { AlertTriangle, Mail } from 'tabler-icons-react';
 import { z } from 'zod';
@@ -58,6 +59,7 @@ const schema = z
 
 export function RegisterForm() {
   const { user } = useContext(UserContext);
+  const router = useRouter();
 
   const [formValue, setFormValue] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -107,6 +109,8 @@ export function RegisterForm() {
     await batch.commit();
 
     setDefaultRank(user.uid);
+
+    router.replace('/');
   };
 
   const onChange = (e) => {
@@ -128,10 +132,6 @@ export function RegisterForm() {
     }
   };
 
-  useEffect(() => {
-    checkUsername(formValue);
-  }, [formValue, checkUsername]);
-
   // Hit the database for username match after each debounced change
   // useCallback is required for debounce to work
   const checkUsername = useCallback(
@@ -145,6 +145,10 @@ export function RegisterForm() {
     }, 500),
     []
   );
+
+  useEffect(() => {
+    checkUsername(formValue);
+  }, [formValue, checkUsername]);
 
   const displayName = user?.displayName.split(' ') || '';
 
@@ -255,16 +259,20 @@ export function RegisterForm() {
             label={<PrivacyPolicy />}
           />
         </Stack>
-        <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
-          <AlertTriangle width={34} className='m-2 md:m-0' />
-          <Text size='xs'>
-            ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
-            ขอปิดปรับปรุงการเข้าสู่ระบบ และลงทะเบียนด้วย อีเมล ชั่วคราว
-          </Text>
-        </Group>
-        <Text size='xs' className='mt-4 md:mt-0'>
-          ผู้ใช้ที่ต้องการเข้าสู่ระบบโปรดลงทะเบียนด้วย Google หรือ Facebook
-        </Text>
+        {!user && (
+          <>
+            <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
+              <AlertTriangle width={34} className='m-2 md:m-0' />
+              <Text size='xs'>
+                ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
+                ขอปิดปรับปรุงการเข้าสู่ระบบ และลงทะเบียนด้วย อีเมล ชั่วคราว
+              </Text>
+            </Group>
+            <Text size='xs' className='mt-4 md:mt-0'>
+              ผู้ใช้ที่ต้องการเข้าสู่ระบบโปรดลงทะเบียนด้วย Google หรือ Facebook
+            </Text>
+          </>
+        )}
         <Button
           size='sm'
           type='submit'
