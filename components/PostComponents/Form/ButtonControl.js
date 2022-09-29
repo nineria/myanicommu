@@ -56,7 +56,6 @@ export function ButtonControl({ setOpened, post, postRef, type }) {
         });
       } finally {
         modals.closeModal(id);
-
         setOpened(false);
       }
     };

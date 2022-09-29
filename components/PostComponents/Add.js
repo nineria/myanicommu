@@ -101,6 +101,7 @@ export default function Add({ setOpened }) {
         });
       }
     } finally {
+      setOpened(false);
       setLoading(false);
     }
   };
