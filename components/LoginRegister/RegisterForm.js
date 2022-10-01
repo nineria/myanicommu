@@ -13,7 +13,7 @@ import { firestore, serverTimestamp } from 'lib/firebase';
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/router';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { AlertTriangle, Mail } from 'tabler-icons-react';
+import { Mail } from 'tabler-icons-react';
 import { z } from 'zod';
 import { UsernameMessage } from '.';
 import PrivacyPolicy from '../PrivacyPolicy';
@@ -261,15 +261,16 @@ export function RegisterForm() {
         </Stack>
         {!user && (
           <>
-            <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
+            {/* <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
               <AlertTriangle width={34} className='m-2 md:m-0' />
               <Text size='xs'>
                 ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
                 ขอปิดปรับปรุงการเข้าสู่ระบบ และลงทะเบียนด้วย อีเมล ชั่วคราว
               </Text>
-            </Group>
+            </Group> */}
             <Text size='xs' className='mt-4 md:mt-0'>
-              ผู้ใช้ที่ต้องการเข้าสู่ระบบโปรดลงทะเบียนด้วย Google หรือ Facebook
+              * ผู้ใช้ที่ต้องการเข้าสู่ระบบโปรดลงทะเบียนด้วย Google หรือ
+              Facebook
             </Text>
           </>
         )}

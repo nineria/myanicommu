@@ -34,6 +34,7 @@ export default function VerifyUser(props) {
         }}
       />
       <TextInput
+        disabled
         label='เบอร์โทรศัพท์'
         {...props.phoneNumber}
         placeholder='เบอร์โทรศัพท์ของคุณ'
