@@ -45,14 +45,14 @@ export function DropzoneProfileAvatar({ setImage }) {
       centered: true,
       children: (
         <Stack>
-          <Text size="sm">
+          <Text size='sm'>
             ขนาดความกว้างของไฟล์จะต้องไม่เกิน 512px
             และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG, WEBP หรือ SVG เท่านั้น
           </Text>
           <Button
-            type="submit"
-            className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-            size="xs"
+            type='submit'
+            className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+            size='xs'
             onClick={() => modals.closeModal(id)}
           >
             ลองใหม่อีกครั้ง
@@ -84,7 +84,7 @@ export function DropzoneProfileAvatar({ setImage }) {
   return (
     <Dropzone
       loading={loading}
-      radius="100px"
+      radius='100px'
       multiple={false}
       onDrop={(file) => handleImageUpload(file)}
       onReject={openConfirmModal}
@@ -95,12 +95,12 @@ export function DropzoneProfileAvatar({ setImage }) {
         MIME_TYPES.svg,
         MIME_TYPES.webp,
       ]}
-      className="absolute  top-2 right-2 bottom-2 left-2 text-[#fff] bg-transparent hover:bg-black/40"
+      className='absolute m-2 top-0 right-0 bottom-0 left-0 text-[#fff] bg-transparent hover:bg-black/40 hover:backdrop-blur-sm'
     >
       {(status) => (
-        <div className="flex flex-col justify-center items-center h-full w-full">
+        <div className='flex flex-col justify-center items-center h-full w-full'>
           <ImageUploadIcon status={status} size={80} />
-          <Text size="sm" className="text-center">
+          <Text size='sm' className='text-center'>
             เปลี่ยนรูปโปรไฟล์
           </Text>
         </div>

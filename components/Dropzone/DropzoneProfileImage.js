@@ -112,7 +112,7 @@ export function DropzoneProfileImage({ setImage }) {
         MIME_TYPES.svg,
         MIME_TYPES.webp,
       ]}
-      className='absolute top-2 right-2 bottom-[85px] left-2 text-[#fff] bg-transparent hover:bg-black/30'
+      className='m-2 absolute top-0 right-0 bottom-[76px] left-0 text-[#fff] bg-transparent hover:bg-black/30 hover:backdrop-blur-sm'
     >
       {(status) => dropzoneChildren(status)}
     </Dropzone>

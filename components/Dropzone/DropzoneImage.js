@@ -37,7 +37,7 @@ const dropzoneChildren = (status) => (
   <Group
     position='center'
     spacing='xl'
-    style={{ minHeight: 220, pointerEvents: 'none' }}
+    style={{ minHeight: 240, pointerEvents: 'none' }}
   >
     <ImageUploadIcon status={status} size={50} />
 
@@ -113,7 +113,7 @@ export function DropzoneImage({ setImage }) {
         MIME_TYPES.svg,
         MIME_TYPES.webp,
       ]}
-      className='absolute top-2 right-2 bottom-2 left-2 text-[#fff] bg-transparent hover:bg-black/30'
+      className='absolute m-2 top-0 right-0 bottom-0 left-0 text-[#fff] bg-transparent hover:bg-black/30 hover:backdrop-blur-sm'
     >
       {(status) => dropzoneChildren(status)}
     </Dropzone>
