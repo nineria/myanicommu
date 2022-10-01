@@ -121,8 +121,8 @@ export default function UserCardImage({ user, posts, statistics }) {
           src={user.avatar}
           size={150}
           radius={150}
-          mt={-120}
-          className='border-2 border-[#fff]'
+          mt={-80}
+          className='border-4 border-[#fff]'
         />
         <div className='block'>
           <Title order={2} align='center' weight={500}>
