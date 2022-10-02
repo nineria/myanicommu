@@ -1,11 +1,18 @@
-import { Divider, LoadingOverlay, Modal, Stack } from '@mantine/core';
+import {
+  Divider,
+  Group,
+  LoadingOverlay,
+  Modal,
+  Stack,
+  Text,
+} from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
 import AuthCheck from 'hooks/AuthCheck';
 import { getUserWithUsername } from 'lib/firebase';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Check } from 'tabler-icons-react';
+import { AlertTriangle, Check } from 'tabler-icons-react';
 import AvatarAndBanner from './AvatarAndBanner';
 import ButtonControl from './ButtonControl';
 import ChangePassword from './ChangePassword';
@@ -120,13 +127,13 @@ function ProfileForm({ user, userRef, setOpened }) {
           phoneNumber={form.getInputProps('phoneNumber')}
         />
         <Divider label='เปลี่ยนรหัสผ่าน' labelPosition='center' />
-        {/* <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
+        <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
           <AlertTriangle width={20} className='m-2 md:m-0' />
           <Text size='xs'>
             ทางเว็บไซต์ MyAnimeCommunity -
             ปิดปรับปรุงระบบการเปลี่ยนแปลงรหัสผ่านใหม่ชั่วคราว
           </Text>
-        </Group> */}
+        </Group>
         <ChangePassword password={form.getInputProps('password')} />
         <Divider label='ลบบัญชีส่วนบุคคล' labelPosition='center' />
         <DeleteAccount setOpenedConfirm={setOpenedConfirm} />
