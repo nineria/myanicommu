@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 // Components
 import { LoadingOverlay, Stack } from '@mantine/core';
-import TagHeader from './Form/TagHeader';
-import TagGenre from './Form/TagGenre';
-import { PostHeader, RefCredit } from './Form';
-import PostImage from './Form/PostImage';
-import PostContent from './Form/PostContent';
-import { ButtonControl } from './Form/ButtonControl';
-import { serverTimestamp } from 'lib/firebase';
-import AuthCheck from 'hooks/AuthCheck';
-import WebsiteRule from 'components/WebsiteRule';
 import { useForm, zodResolver } from '@mantine/form';
-import { z } from 'zod';
 import { showNotification } from '@mantine/notifications';
-import { Check } from 'tabler-icons-react';
+import WebsiteRule from 'components/WebsiteRule';
+import AuthCheck from 'hooks/AuthCheck';
+import { serverTimestamp } from 'lib/firebase';
 import { useRouter } from 'next/router';
+import { Check } from 'tabler-icons-react';
+import { z } from 'zod';
+import { PostHeader, RefCredit } from './Form';
+import { ButtonControl } from './Form/ButtonControl';
+import PostContent from './Form/PostContent';
+import PostImage from './Form/PostImage';
+import TagGenre from './Form/TagGenre';
+import TagHeader from './Form/TagHeader';
 
 const schema = z.object({
   title: z
@@ -80,7 +80,7 @@ function PostForm({ post, postRef, setOpened }) {
     <AuthCheck>
       <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
         <LoadingOverlay visible={loading} />
-        <Stack spacing="sm">
+        <Stack spacing='sm'>
           <TagHeader data={tags} setData={setTags} />
           <TagGenre data={genres} setData={setGenres} />
           <PostHeader {...form.getInputProps('title')} />

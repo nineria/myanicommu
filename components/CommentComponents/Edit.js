@@ -54,7 +54,7 @@ export default function Edit({
         content: values.content,
         username: userData.username,
         avatar: userData.avatar,
-        updateAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
       });
 
       router.reload();

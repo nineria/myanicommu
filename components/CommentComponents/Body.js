@@ -26,7 +26,7 @@ export default function Body({
 }) {
   const [comment] = useState(commentP);
   const [opened, setOpened] = useState(false);
-  const [date, setDate] = useState(false);
+  const [date, setDate] = useState('');
 
   const { user } = useContext(UserContext);
 
@@ -41,6 +41,8 @@ export default function Body({
       year: 'numeric',
       month: 'short',
       day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
 
     setDate(date);
@@ -213,7 +215,9 @@ export default function Body({
       </Modal>
       <Group position='apart'>
         {comment.createdAt?.seconds !== comment.updatedAt?.seconds ? (
-          <p className='text-xs opacity-80 mb-2'>แกไขล่าสุด : {date}</p>
+          <p className='absolute md:block hidden md:top-2 -top-9 left-4 text-xs opacity-80'>
+            แกไขล่าสุด : {date}
+          </p>
         ) : (
           <div />
         )}

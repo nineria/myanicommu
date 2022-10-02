@@ -171,8 +171,8 @@ export default function Body({
   return (
     <div className='relative p-2 text-title text-opacity-90 w-full'>
       <Group position='apart'>
-        {post.createdAt?.seconds !== post.updatedAt?.seconds ? (
-          <p className='text-xs opacity-80 mb-2'>แก้ไขล่าสุด : {date}</p>
+        {post.createdAt !== post.updatedAt ? (
+          <p className='text-xs opacity-80 '>แก้ไขล่าสุด : {date}</p>
         ) : (
           <div />
         )}
