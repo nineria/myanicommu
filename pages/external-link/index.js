@@ -7,10 +7,7 @@ import { ExternalLink } from 'tabler-icons-react';
 
 const ExternalLinkPage = () => {
   const router = useRouter();
-  const { pid, external } = router.query;
-
-  console.log(pid);
-  console.log(external);
+  const { external } = router.query;
 
   return (
     <div className='relative bg-background text-white h-screen'>
