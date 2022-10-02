@@ -11,6 +11,9 @@ export function RegisterPopUp() {
     await auth.signInWithPopup(googleAuthProvider).catch((e) => {
       if (e.code == 'auth/popup-blocked') {
         auth.signInWithRedirect(googleAuthProvider);
+      } else {
+        console.error(e.code);
+        router.push('/');
       }
     });
   };
@@ -19,6 +22,9 @@ export function RegisterPopUp() {
     await auth.signInWithPopup(facebookAuthProvider).catch((e) => {
       if (e.code == 'auth/popup-blocked') {
         auth.signInWithRedirect(facebookAuthProvider);
+      } else {
+        console.error(e.code);
+        router.push('/');
       }
     });
   };

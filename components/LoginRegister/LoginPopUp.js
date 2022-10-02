@@ -43,25 +43,29 @@ export function LoginPopUp({ setOpenedRegister }) {
   }, []);
 
   const signInWithGoogle = async () => {
-    try {
-      await auth.signInWithRedirect(googleAuthProvider);
+    await auth.signInWithPopup(googleAuthProvider).catch((e) => {
+      if (e.code == 'auth/popup-blocked') {
+        auth.signInWithRedirect(googleAuthProvider);
+      } else {
+        console.error(e.code);
+        router.push('/');
+      }
+    });
 
-      if (!username) setOpenedRegister(true);
-    } catch (error) {
-      // console.log(error);
-      router.push('/');
-    }
+    if (!username) setOpenedRegister(true);
   };
 
   const signInWithFacebook = async () => {
-    try {
-      await auth.signInWithRedirect(facebookAuthProvider);
+    await auth.signInWithPopup(facebookAuthProvider).catch((e) => {
+      if (e.code == 'auth/popup-blocked') {
+        auth.signInWithRedirect(facebookAuthProvider);
+      } else {
+        console.error(e.code);
+        router.push('/');
+      }
+    });
 
-      if (!username) setOpenedRegister(true);
-    } catch (error) {
-      // console.log(error);
-      router.push('/');
-    }
+    if (!username) setOpenedRegister(true);
   };
 
   return (

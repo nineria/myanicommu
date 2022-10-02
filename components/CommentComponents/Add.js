@@ -93,6 +93,7 @@ export default function Add({ post, comments, setComments }) {
         content: value,
         username: userData.username,
         avatar: userData.avatar,
+        rule: userData.rule,
         updatedAt: serverTimestamp(),
         createdAt: serverTimestamp(),
         likes: 0,
