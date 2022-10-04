@@ -55,6 +55,7 @@ export default function Announcement(props) {
       ),
       zIndex: '999',
       centered: true,
+      withCloseButton: false,
       classNames: {
         modal: 'bg-foreground',
         overlay: 'bg-background',
