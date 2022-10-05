@@ -216,7 +216,7 @@ export default function Body({
       <Group position='apart'>
         {comment.createdAt?.seconds !== comment.updatedAt?.seconds ? (
           <p className='absolute md:block hidden md:top-2 -top-9 left-4 text-xs opacity-80'>
-            แกไขล่าสุด : {date}
+            มีการแก้ไข : {date}
           </p>
         ) : (
           <div />
