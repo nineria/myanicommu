@@ -100,10 +100,10 @@ export default function UserCardImage({ user, posts, statistics }) {
       <Card.Section
         sx={{
           backgroundImage: `url(${user.image})`,
-          height: 360,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'top',
         }}
+        className='md:h-[490px] h-[250px]'
       />
       {username !== user.username && (
         <div className='absolute flex top-8 right-0 p-[4px] pr-2 bg-foreground rounded-l-sm'>

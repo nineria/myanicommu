@@ -15,10 +15,11 @@ export default function AvatarAndBanner({
       <Card.Section
         sx={{
           backgroundImage: `url(${image || user.image})`,
-          height: 260,
+          height: 350,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
+        className='md:h-[350px] h-[150px]'
       >
         <DropzoneProfileImage setImage={setImage} />
       </Card.Section>
