@@ -20,7 +20,7 @@ export default function TopMenu({ comment }) {
             size='md'
             src={comment?.avatar}
             alt={comment?.username}
-            className='cursor-pointer'
+            className='cursor-pointer border-[1px] border-white'
           />
         </Link>
 

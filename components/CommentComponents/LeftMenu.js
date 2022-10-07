@@ -21,7 +21,7 @@ export default function LeftMenu({ comment }) {
             size='lg'
             src={comment?.avatar}
             alt={comment?.username}
-            className='cursor-pointer'
+            className='cursor-pointer border-[1px] border-white'
           />
         </Link>
         <div className='block  md:text-center text-left'>

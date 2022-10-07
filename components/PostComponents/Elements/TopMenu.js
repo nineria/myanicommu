@@ -36,11 +36,11 @@ export default function TopMenu({ post, userRanks, stars, likes }) {
         <div className='flex flex-row flex-wrap justify-around items-center w-full'>
           <Link href={`/${user.username}`}>
             <Avatar
-              radius='xl'
-              size='lg'
+              radius='200px'
+              size='xl'
               src={user.avatar}
               alt={user.username}
-              className='border-2 border-title cursor-pointer'
+              className='cursor-pointer border-2 border-white'
             />
           </Link>
           <div className='flex flex-col ml-4 '>

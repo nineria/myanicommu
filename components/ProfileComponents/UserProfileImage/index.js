@@ -122,7 +122,7 @@ export default function UserCardImage({ user, posts, statistics }) {
           size={150}
           radius={150}
           mt={-80}
-          className='border-4 border-[#fff]'
+          className='border-2 border-[#fff]'
         />
         <div className='block'>
           <Title order={2} align='center' weight={500}>

@@ -122,6 +122,7 @@ const DropdownMenu = ({ user, isBusy, signOut }) => {
                 name={user?.username || 'ไม่พบข้อมูล'}
                 src={user?.avatar}
                 radius='xl'
+                className='border-[1px] border-white'
               />
             </Indicator>
             <div style={{ flex: 1 }}>
