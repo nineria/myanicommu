@@ -34,18 +34,15 @@ function ImageUploadIcon({ status, size }) {
 }
 
 const dropzoneChildren = (status) => (
-  <Group
-    position='center'
-    spacing='xl'
-    style={{ minHeight: 220, pointerEvents: 'none' }}
-  >
-    <ImageUploadIcon status={status} size={50} />
-
+  <Group position='center' className='h-full pointer-events-none'>
+    <div className='md:block hidden'>
+      <ImageUploadIcon status={status} size={50} />
+    </div>
     <div>
-      <Text size='xl' inline>
+      <Text className='md:text-xl text-md' inline>
         ลากรูปภาพมาที่นี่ หรือคลิกเพื่อเลือกไฟล์
       </Text>
-      <Text size='sm' inline mt={7}>
+      <Text className='md:text-sm text-xs' inline>
         ประเภทไฟล์ที่รองรับ PNG, JPEG, WEBP และ SVG ขนาดไฟล์ไม่ควรเกิน 5MB
       </Text>
     </div>

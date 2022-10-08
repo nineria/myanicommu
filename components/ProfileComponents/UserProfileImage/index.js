@@ -103,7 +103,7 @@ export default function UserCardImage({ user, posts, statistics }) {
           backgroundSize: 'cover',
           backgroundPosition: 'top',
         }}
-        className='md:h-[490px] h-[250px]'
+        className='md:h-[440px] h-[240px]'
       />
       {username !== user.username && (
         <div className='absolute flex top-8 right-0 p-[4px] pr-2 bg-foreground rounded-l-sm'>

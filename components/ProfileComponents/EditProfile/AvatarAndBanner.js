@@ -19,7 +19,7 @@ export default function AvatarAndBanner({
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
-        className='md:h-[350px] h-[150px]'
+        className='md:h-[280px] h-[180px]'
       >
         <DropzoneProfileImage setImage={setImage} />
       </Card.Section>
