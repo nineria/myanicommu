@@ -1,4 +1,4 @@
-import { AspectRatio, Image, Tooltip } from '@mantine/core';
+import { AspectRatio, Tooltip } from '@mantine/core';
 import React from 'react';
 import { Clock, Star, ThumbUp } from 'tabler-icons-react';
 import { kFormatter } from 'utils/Calculator';
