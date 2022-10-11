@@ -11,7 +11,7 @@ export default function CardLayout(props) {
   if (props.loading) return <Loading />;
 
   const postGrids = posts.map((data, index) => (
-    <Grid.Col key={index} xs={6} md={4}>
+    <Grid.Col key={index} xs={12} sm={6} md={4}>
       <Card layout={props.layout} posts={data} />
     </Grid.Col>
   ));

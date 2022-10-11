@@ -1,4 +1,4 @@
-import { AspectRatio, Badge, Image, Tooltip } from '@mantine/core';
+import { AspectRatio, Badge, Tooltip } from '@mantine/core';
 import { firestore } from 'lib/firebase';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -81,7 +81,16 @@ export default function Card({ posts, layout }) {
       {layout === 'grid' ? (
         <AspectRatio ratio={16 / 9}>
           <div className='relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90'>
-            <Image className='mb-16 w-full' src={data.image} alt={data.title} />
+            <div
+              style={{
+                backgroundImage: `url(${data.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'top',
+                width: '100%',
+                height: '100%',
+              }}
+            />
+            {/* <Image className='mb-16 w-full' src={data.image} alt={data.title} /> */}
             <div className='absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm'>
               {badges}
             </div>
