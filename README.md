@@ -2,7 +2,7 @@
 
 [https://myanimecommunity.vercel.app](https://myanimecommunity.vercel.app)
 
-<img src="https://i.ibb.co/mhVXDPw/1.png">
+<img src="https://i.ibb.co/6n9xKR4/c8c244b6-4568-4cd8-a159-d303f9bac13c.png">
 
 ## Description
 
