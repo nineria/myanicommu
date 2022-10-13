@@ -138,6 +138,7 @@ export default function Add({ post, comments, setComments }) {
               ]}
               value={value}
               onChange={onChange}
+              defaultValue=''
               placeholder='คุณกำลังคิดอะไรอยู่'
               onImageUpload={handleImageUpload}
               classNames={{

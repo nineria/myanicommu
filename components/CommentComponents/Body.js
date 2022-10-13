@@ -35,7 +35,7 @@ export default function Body({
   const router = useRouter();
 
   useEffect(() => {
-    const timestamp = new Date(comment.updatedAt.seconds * 1000);
+    const timestamp = new Date(comment.updatedAt?.seconds * 1000);
 
     const date = timestamp?.toLocaleDateString('th-th', {
       year: 'numeric',
@@ -44,6 +44,8 @@ export default function Body({
       hour: '2-digit',
       minute: '2-digit',
     });
+
+    console.log(comment.slug);
 
     setDate(date);
   }, [comment.updatedAt.seconds]);

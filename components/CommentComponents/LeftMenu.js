@@ -4,7 +4,7 @@ import React from 'react';
 import { CalendarMinus } from 'tabler-icons-react';
 
 export default function LeftMenu({ comment }) {
-  const timestamp = new Date(comment.createdAt?.seconds * 1000);
+  const timestamp = new Date(comment.createdAt?.seconds * 1000 || Date.now());
 
   const date = timestamp?.toLocaleDateString('th-th', {
     year: 'numeric',
