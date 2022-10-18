@@ -11,7 +11,7 @@ export default function SmallScreen({ data, badges, date, likes, stars }) {
           style={{
             backgroundImage: `url(${data.image})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'top',
+            backgroundPosition: 'center',
             width: '100%',
             height: '100%',
           }}

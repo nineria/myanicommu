@@ -85,7 +85,7 @@ export default function Card({ posts, layout }) {
               style={{
                 backgroundImage: `url(${data.image})`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'top',
+                backgroundPosition: 'center',
                 width: '100%',
                 height: '100%',
               }}
