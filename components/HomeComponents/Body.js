@@ -23,7 +23,7 @@ export default function Body({ today, post, disabled }) {
 
   const date =
     post.updatedAt &&
-    new Date(post.updatedAt * 1000).toLocaleDateString('th-th', {
+    new Date(post.updatedAt).toLocaleDateString('th-th', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -41,7 +41,7 @@ export default function Body({ today, post, disabled }) {
       const description = item.content.replace(regex, '');
       const link = `posts/${item.username}/${item.slug}`;
 
-      const date = new Date(item.updatedAt * 1000).toLocaleDateString('th-th', {
+      const date = new Date(item.createdAt).toLocaleDateString('th-th', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -49,20 +49,13 @@ export default function Body({ today, post, disabled }) {
 
       return (
         <Status
+          isReviewPosts
           key={index}
           header={item?.title || 'หัวข้อย่อย'}
           headerLink={item?.headerLink || link}
           body={item?.body || description}
           date={date}
           disabled={disabled}
-          post={{
-            posts: {
-              length: 1,
-            },
-            comments: {
-              length: 1,
-            },
-          }}
         />
       );
     });
@@ -117,11 +110,11 @@ export default function Body({ today, post, disabled }) {
         </div>
       </div>
       {today ? (
-        <div className='flex flex-col bg-[#aaa] gap-[1px]'>
+        <div className='flex flex-col bg-background gap-[3px]'>
           {toggle && todaysPosts}
         </div>
       ) : (
-        <div className='flex flex-col bg-[#aaa] gap-[1px]'>
+        <div className='flex flex-col bg-background gap-[3px]'>
           {toggle && (
             <Status
               header={post?.header || 'หัวข้อย่อย'}
