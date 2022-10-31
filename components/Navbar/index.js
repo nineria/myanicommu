@@ -156,11 +156,10 @@ const DropdownMenu = ({ user, isBusy, signOut }) => {
               ค้นหา
             </Menu.Item>
           </Link>
-
-          {/* Setting */}
-          <Menu.Label>การตั้งค่า</Menu.Label>
-          {settingMenuProperty &&
-            settingMenuProperty.map((item, index) => (
+          {/* Pages */}
+          <Menu.Label>การเข้าถึง</Menu.Label>
+          {accessMenuProperty &&
+            accessMenuProperty.map((item, index) => (
               <Link href={item.link} key={index}>
                 <Menu.Item
                   className='hover:bg-content hover:text-[#fff]'
@@ -170,10 +169,10 @@ const DropdownMenu = ({ user, isBusy, signOut }) => {
                 </Menu.Item>
               </Link>
             ))}
-          {/* Pages */}
-          <Menu.Label>การเข้าถึง</Menu.Label>
-          {accessMenuProperty &&
-            accessMenuProperty.map((item, index) => (
+          {/* Setting */}
+          <Menu.Label>การตั้งค่า</Menu.Label>
+          {settingMenuProperty &&
+            settingMenuProperty.map((item, index) => (
               <Link href={item.link} key={index}>
                 <Menu.Item
                   className='hover:bg-content hover:text-[#fff]'
