@@ -33,7 +33,7 @@ export default function VerifyUser(props) {
           input: 'bg-accent border-title border-opacity-20 border-[1px]',
         }}
       />
-      <TextInput
+      {/* <TextInput
         disabled
         label='เบอร์โทรศัพท์'
         {...props.phoneNumber}
@@ -41,7 +41,7 @@ export default function VerifyUser(props) {
         classNames={{
           input: 'bg-accent border-title border-opacity-20 border-[1px]',
         }}
-      />
+      /> */}
     </>
   );
 }

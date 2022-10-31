@@ -1,21 +1,13 @@
-import {
-  Divider,
-  Group,
-  LoadingOverlay,
-  Modal,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { Divider, LoadingOverlay, Modal, Stack } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
 import AuthCheck from 'hooks/AuthCheck';
 import { getUserWithUsername } from 'lib/firebase';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { AlertTriangle, Check } from 'tabler-icons-react';
+import { Check } from 'tabler-icons-react';
 import AvatarAndBanner from './AvatarAndBanner';
 import ButtonControl from './ButtonControl';
-import ChangePassword from './ChangePassword';
 import DeleteAccount from './DeleteAccount';
 import DeleteAccountForm from './DeleteAccount/DeleteAccountForm';
 import VerifyUser from './VerifyUser';
@@ -126,7 +118,7 @@ function ProfileForm({ user, userRef, setOpened }) {
           email={form.getInputProps('email')}
           phoneNumber={form.getInputProps('phoneNumber')}
         />
-        <Divider label='เปลี่ยนรหัสผ่าน' labelPosition='center' />
+        {/* <Divider label='เปลี่ยนรหัสผ่าน' labelPosition='center' />
         <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
           <AlertTriangle width={20} className='m-2 md:m-0' />
           <Text size='xs'>
@@ -134,7 +126,7 @@ function ProfileForm({ user, userRef, setOpened }) {
             ปิดปรับปรุงระบบการเปลี่ยนแปลงรหัสผ่านใหม่ชั่วคราว
           </Text>
         </Group>
-        <ChangePassword password={form.getInputProps('password')} />
+        <ChangePassword password={form.getInputProps('password')} /> */}
         <Divider label='ลบบัญชีส่วนบุคคล' labelPosition='center' />
         <DeleteAccount setOpenedConfirm={setOpenedConfirm} />
         <ButtonControl setOpened={setOpened} />
