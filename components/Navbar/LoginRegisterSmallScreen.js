@@ -4,8 +4,8 @@ import React from 'react';
 
 export default function LoginRegisterSmallScreen() {
   return (
-    <Menu withArrow placement="end" size="xl" p="sm">
-      <LoginPopUp />
+    <Menu withArrow placement='end' size='xl' p='sm'>
+      <LoginPopUp mobile />
     </Menu>
   );
 }

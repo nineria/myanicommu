@@ -10,7 +10,7 @@ export default function LoginRegister({ center = false }) {
   return (
     <Group
       spacing={0}
-      className={`${center ? 'justify-center' : 'justify-end'} w-full`}
+      className={`${center ? 'justify-center gap-2' : 'justify-end'} w-full`}
     >
       <Modal
         centered
@@ -34,7 +34,7 @@ export default function LoginRegister({ center = false }) {
         {openedLogin && <LoginPopUp setOpenedRegister={setOpenedRegister} />}
       </Modal>
       <Button
-        className='bg-content text-[#fff] hover:bg-content hover:opacity-75 mr-2'
+        className='bg-content text-[#fff] hover:bg-content hover:opacity-75'
         variant='default'
         onClick={() => setOpenedLogin(true)}
       >

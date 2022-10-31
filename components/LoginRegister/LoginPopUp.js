@@ -21,10 +21,11 @@ import { useRouter } from 'next/router';
 import { AlertTriangle, Mail, X } from 'tabler-icons-react';
 import { RegisterForm } from './RegisterForm';
 
-export function LoginPopUp({ setOpenedRegister }) {
+export function LoginPopUp({ setOpenedRegister, mobile = false }) {
   const router = useRouter();
   const { user, username } = useContext(UserContext);
   const [noUsername, setNoUsername] = useState(false);
+  const [usernameMobile, setUsernameMobile] = useState(false);
 
   useEffect(() => {
     if (user && !username) {
@@ -52,7 +53,13 @@ export function LoginPopUp({ setOpenedRegister }) {
       }
     });
 
-    if (!username) setOpenedRegister(true);
+    if (mobile) setUsernameMobile(true);
+
+    try {
+      if (!username) setOpenedRegister(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const signInWithFacebook = async () => {
@@ -65,19 +72,28 @@ export function LoginPopUp({ setOpenedRegister }) {
       }
     });
 
-    if (!username) setOpenedRegister(true);
+    if (mobile) setUsernameMobile(true);
+
+    try {
+      if (!username) setOpenedRegister(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  if (noUsername || usernameMobile) {
+    return <RegisterForm />;
+  }
 
   return (
     <Stack>
-      {noUsername && <RegisterForm />}
       {!noUsername && (
         <>
-          <Group grow position='center'>
+          <Group position='center'>
             <Button
               size='sm'
               radius='lg'
-              className='bg-white w-[200px] text-black border-[1px] border-gray-300  hover:bg-white hover:opacity-75 mr-2 md:mr-0'
+              className='bg-white w-[200px] text-black border-[1px] border-gray-300  hover:bg-white hover:opacity-75  md:mr-0'
               onClick={signInWithGoogle}
             >
               <Image
