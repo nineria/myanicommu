@@ -35,6 +35,7 @@ export default function Add({ post, comments, setComments }) {
   const modals = useModals();
   const { userData } = useContext(UserContext);
   const [value, onChange] = useState('');
+  const [reload, setReload] = useState(false);
 
   const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
 
@@ -102,6 +103,8 @@ export default function Add({ post, comments, setComments }) {
       await ref.set(data);
 
       setComments([...comments, data]);
+      setReload(!reload);
+      onChange('<p><br></p>');
 
       showNotification({
         color: 'teal',
@@ -131,6 +134,7 @@ export default function Add({ post, comments, setComments }) {
         <div className='p-2 text-title w-full'>
           <div className='border-[1px] border-white border-opacity-10 rounded-sm p-2'>
             <RichTextEditor
+              key={reload}
               controls={[
                 ['bold', 'italic', 'underline', 'link'],
                 ['h3', 'h4'],
@@ -148,7 +152,6 @@ export default function Add({ post, comments, setComments }) {
                   'bg-foreground border-title border-opacity-20 hover:bg-background',
               }}
             />
-
             <div className='flex flex-row justify-between mt-2'>
               <Modal
                 size='1000px'
