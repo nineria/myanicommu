@@ -30,11 +30,10 @@ export default function LoginRegister({ center = false }) {
         }
       >
         {/* Modal content */}
-
         {openedLogin && <LoginPopUp setOpenedRegister={setOpenedRegister} />}
       </Modal>
       <Button
-        className='bg-content text-[#fff] hover:bg-content hover:opacity-75'
+        className='bg-content text-[#fff] hover:bg-content hover:opacity-75 mr-2'
         variant='default'
         onClick={() => setOpenedLogin(true)}
       >
