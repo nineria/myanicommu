@@ -9,8 +9,8 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
-  const [colorScheme, setColorScheme] = useState('light');
-  const [theme, setTheme] = useState('red-light');
+  const [colorScheme, setColorScheme] = useState('dark');
+  const [theme, setTheme] = useState('pinky');
 
   const toggleColorScheme = useCallback(
     (value) => {
@@ -31,8 +31,8 @@ function MyApp({ Component, pageProps }) {
       document.body.classList.add(`theme-${localTheme.label}`);
     } catch {
       const defaultTheme = {
-        label: 'red-light',
-        mode: 'light',
+        label: 'pinky',
+        mode: 'dark',
       };
       localStorage.setItem('themes', JSON.stringify(defaultTheme));
       setTheme(defaultTheme.label);
