@@ -65,13 +65,14 @@ export default function HomePage(props) {
                   <Post today post={props.reviewPosts} />
                 </div>
               )}
-              <div className='block  mt-2 sm:mt-0'>
-                <Advertisement />
-              </div>
+
               <div className='block  space-y-2 mt-2 sm:mt-0'>
                 {props.homePosts.map((post) => (
                   <Post key={post.slug} post={post} />
                 ))}
+              </div>
+              <div className='block  mt-2 sm:mt-0'>
+                <Advertisement />
               </div>
               {user && (
                 <AdminCheck>
