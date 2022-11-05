@@ -4,7 +4,7 @@ import React from 'react';
 export default function Metatags({
   title = 'ยินดีต้อนรับสู่ My Anime Community!',
   description = 'รวมพลคนรักอนิเมะ พูดคุยแลกเปลี่ยนความรู้เกี่ยวกับ อนิเมะ มังงะ ไลท์โนเวล และอื่นๆ อีกมากมาย!',
-  image = 'https://i.ibb.co/6n9xKR4/c8c244b6-4568-4cd8-a159-d303f9bac13c.png',
+  image = '/background.png',
 }) {
   return (
     <Head>
