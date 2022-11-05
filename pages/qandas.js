@@ -15,7 +15,7 @@ import {
   Stack,
   TextInput,
 } from '@mantine/core';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { uid } from 'react-uid';
 import { Search } from 'tabler-icons-react';
 
@@ -51,6 +51,8 @@ export default function QAndAsPage(props) {
   const [searchValue, setSearchValue] = useState('');
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [notFound, setNotFound] = useState(false);
+
+  const searchRef = useRef();
 
   useEffect(() => {
     if (localStorage.getItem('post-layout') == null) {
@@ -99,6 +101,16 @@ export default function QAndAsPage(props) {
     setSearchValue('');
   };
 
+  const handleSearchSummit = (e) => {
+    e.preventDefault();
+
+    console.log(searchRef.current.value);
+    if (searchRef.current) {
+      setSearchValue(searchRef.current.value);
+      handleSearch();
+    }
+  };
+
   return (
     <>
       <div className='bg-background text-white min-h-[1024px] mb-[235px] pb-10'>
@@ -110,16 +122,20 @@ export default function QAndAsPage(props) {
             <Stack spacing='xs'>
               <Grid color={12} grow>
                 <Grid.Col span={10}>
-                  <TextInput
-                    placeholder='ค้นหา'
-                    value={searchValue}
-                    icon={<Search size={14} />}
-                    classNames={{
-                      input:
-                        'bg-accent border-title border-opacity-20 border-[1px]',
-                    }}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                  />
+                  <form onSubmit={(e) => handleSearchSummit(e)}>
+                    <TextInput
+                      ref={searchRef}
+                      placeholder='ค้นหา'
+                      value={searchValue}
+                      icon={<Search size={14} />}
+                      classNames={{
+                        input:
+                          'bg-accent border-title border-opacity-20 border-[1px]',
+                      }}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                    <input type='submit' style={{ display: 'none' }} />
+                  </form>
                 </Grid.Col>
                 <Grid.Col span={1}>
                   <Button
