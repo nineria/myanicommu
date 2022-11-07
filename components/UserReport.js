@@ -56,7 +56,6 @@ export default function UserReport({ size = 'md', from, title }) {
         updatedAt: serverTimestamp(),
       };
 
-      console.log(data);
       await ref.set(data);
 
       showNotification({
