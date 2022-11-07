@@ -94,7 +94,7 @@ export default function HomePage(props) {
                     </Modal>
                     <Button
                       onClick={() => setOpened(true)}
-                      className='bg-content text-[#fff] hover:bg-content hover:opacity-75 '
+                      className='bg-content rounded-lg text-[#fff] hover:bg-content hover:opacity-75 '
                       variant='default'
                     >
                       สร้างโพสต์ +

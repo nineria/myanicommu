@@ -86,8 +86,8 @@ export default function UserCardImage({ user, posts, statistics }) {
   return (
     <Card
       p='md'
-      className={`relative bg-foreground ${
-        active ? 'border-2 border-[#ff3333] rounded-none' : 'rounded-sm'
+      className={`relative bg-foreground rounded-lg ${
+        active ? 'border-2 border-[#ff3333] rounded-none' : 'rounded-lg'
       }`}
     >
       {active && (
@@ -106,7 +106,7 @@ export default function UserCardImage({ user, posts, statistics }) {
         className='md:h-[440px] h-[240px]'
       />
       {username !== user.username && (
-        <div className='absolute flex top-8 right-0 p-[4px] pr-2 bg-foreground rounded-l-sm'>
+        <div className='absolute flex top-8 right-0 p-[4px] pr-2 bg-foreground rounded-l-lg'>
           <UserReport
             size='xs'
             from={router.asPath + '#' + user.username}

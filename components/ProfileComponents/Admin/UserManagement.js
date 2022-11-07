@@ -1,22 +1,22 @@
-import React, { useState } from "react";
 import {
-  createStyles,
-  Table,
-  ScrollArea,
-  UnstyledButton,
-  Group,
-  Text,
-  Center,
-  TextInput,
-  Card,
   Anchor,
-} from "@mantine/core";
-import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
-import Link from "next/link";
+  Card,
+  Center,
+  createStyles,
+  Group,
+  ScrollArea,
+  Table,
+  Text,
+  TextInput,
+  UnstyledButton,
+} from '@mantine/core';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { ChevronDown, ChevronUp, Search, Selector } from 'tabler-icons-react';
 
 const useStyles = createStyles(() => ({
   th: {
-    padding: "0 !important",
+    padding: '0 !important',
   },
 }));
 
@@ -25,12 +25,12 @@ function Th({ children, reversed, sorted, onSort }) {
   const Icon = sorted ? (reversed ? ChevronUp : ChevronDown) : Selector;
   return (
     <th className={classes.th}>
-      <UnstyledButton onClick={onSort} className="w-full p-2 hover:bg-black/10">
-        <Group position="apart">
-          <Text weight={500} size="sm" className="text-title">
+      <UnstyledButton onClick={onSort} className='w-full p-2 hover:bg-black/10'>
+        <Group position='apart'>
+          <Text weight={500} size='sm' className='text-title'>
             {children}
           </Text>
-          <Center className="w-[21px] h-[21px]">
+          <Center className='w-[21px] h-[21px]'>
             <Icon size={14} />
           </Center>
         </Group>
@@ -68,7 +68,7 @@ function sortData(data, payload) {
 }
 
 export default function UserManagement({ users }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [sortedData, setSortedData] = useState(users);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
@@ -94,22 +94,22 @@ export default function UserManagement({ users }) {
 
   const rows = sortedData.map((row) => {
     const createdAtTimestamp =
-      typeof row?.createdAt === "number"
+      typeof row?.createdAt === 'number'
         ? new Date(row.createdAt)
         : row.createdAt?.toDate();
 
-    const createdAt = createdAtTimestamp?.toLocaleDateString("th-th", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    const createdAt = createdAtTimestamp?.toLocaleDateString('th-th', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     });
 
     return (
       <tr key={row.username}>
         <td>
-          <Anchor size="sm">
+          <Anchor size='sm'>
             <Link href={`/${row.username}`}>
-              <a target="_blank" rel="noreferrer">
+              <a target='_blank' rel='noreferrer'>
                 {row.username}
               </a>
             </Link>
@@ -120,57 +120,57 @@ export default function UserManagement({ users }) {
         </td>
         <td>
           {row.email || (
-            <span className="text-red-500">ยังไม่ได้ยืนยัน Email</span>
+            <span className='text-red-500'>ยังไม่ได้ยืนยัน Email</span>
           )}
         </td>
         {/* <td>{row.rule}</td> */}
-        <td>{createdAt || "-"}</td>
+        <td>{createdAt || '-'}</td>
       </tr>
     );
   });
 
   return (
-    <Card p="md" radius="sm" className="bg-foreground">
+    <Card className='bg-foreground rounded-lg'>
       <ScrollArea>
-        <Text size="xl" weight={700} mb="sm">
+        <Text size='xl' weight={700} mb='sm'>
           จัดการผู้ใช้
         </Text>
         <TextInput
-          placeholder="ค้นหา"
-          mb="md"
+          placeholder='ค้นหา'
+          mb='md'
           icon={<Search size={14} />}
           value={search}
           classNames={{
-            input: "bg-accent bg-opacity-50",
+            input: 'bg-accent bg-opacity-50 rounded-full',
           }}
           onChange={handleSearchChange}
         />
         <Table
           highlightOnHover
-          horizontalSpacing="md"
-          verticalSpacing="xs"
+          horizontalSpacing='md'
+          verticalSpacing='xs'
           sx={{ minWidth: 800 }}
         >
           <thead>
             <tr>
               <Th
-                sorted={sortBy === "username"}
+                sorted={sortBy === 'username'}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("username")}
+                onSort={() => setSorting('username')}
               >
                 ชื่อผู้ใช้
               </Th>
               <Th
-                sorted={sortBy === "firstName"}
+                sorted={sortBy === 'firstName'}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("firstName")}
+                onSort={() => setSorting('firstName')}
               >
                 ชื่อ-นามสกุล
               </Th>
               <Th
-                sorted={sortBy === "email"}
+                sorted={sortBy === 'email'}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("email")}
+                onSort={() => setSorting('email')}
               >
                 อีเมล
               </Th>
@@ -183,9 +183,9 @@ export default function UserManagement({ users }) {
                 สถานะ
               </Th> */}
               <Th
-                sorted={sortBy === "createdAt"}
+                sorted={sortBy === 'createdAt'}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("createdAt")}
+                onSort={() => setSorting('createdAt')}
               >
                 เข้าร่วมเมื่อ
               </Th>
@@ -223,7 +223,7 @@ export default function UserManagement({ users }) {
             ) : (
               <tr>
                 <td colSpan={Object.keys(users[0]).length}>
-                  <Text weight={500} align="center" size="sm">
+                  <Text weight={500} align='center' size='sm'>
                     ไม่พบรายการที่ค้นหา
                   </Text>
                 </td>

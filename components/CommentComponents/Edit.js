@@ -153,16 +153,14 @@ export default function Edit({
         <Stack size='xs'>
           <Group position='right'>
             <Button
-              className='bg-background text-title hover:bg-background hover:opacity-75'
-              size='xs'
+              className='bg-background rounded-lg text-title hover:bg-background hover:opacity-75'
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
             </Button>
             <Button
               type='submit'
-              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
-              size='xs'
+              className='bg-red-500 rounded-lg hover:bg-red-500 hover:opacity-75'
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -205,24 +203,21 @@ export default function Edit({
 
           <Group mt='sm' position='apart'>
             <Button
-              size='xs'
-              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
+              className='bg-red-500 rounded-lg hover:bg-red-500 hover:opacity-75'
               onClick={handleDelete}
             >
               ลบ
             </Button>
             <Group spacing='xs' position='right'>
               <Button
-                size='xs'
                 onClick={() => handleCancel()}
-                className='bg-background text-title hover:bg-background hover:opacity-75'
+                className='bg-background rounded-lg text-title hover:bg-background hover:opacity-75'
               >
                 ยกเลิก
               </Button>
               <Button
                 type='submit'
-                size='xs'
-                className='bg-green-500 hover:bg-green-500 hover:opacity-75'
+                className='bg-green-500 rounded-lg hover:bg-green-500 hover:opacity-75'
               >
                 ยืนยัน
               </Button>

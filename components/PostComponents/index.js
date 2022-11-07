@@ -83,8 +83,8 @@ export default function PostComponents({ post, postRef }) {
 
   return (
     <div
-      className={`bg-foreground  my-2 sm:my-0 ${
-        active ? 'border-2 border-[#ff3333] rounded-none' : 'rounded-sm'
+      className={`bg-foreground my-2 sm:my-0 ${
+        active ? 'border-2 border-[#ff3333] rounded-none' : 'rounded-lg'
       }`}
     >
       {active && (

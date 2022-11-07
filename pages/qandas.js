@@ -10,12 +10,13 @@ import {
   Button,
   Container,
   Divider,
-  Grid,
   Space,
   Stack,
   TextInput,
+  Tooltip,
 } from '@mantine/core';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { BiSearch } from 'react-icons/bi';
 import { uid } from 'react-uid';
 import { Search } from 'tabler-icons-react';
 
@@ -120,34 +121,40 @@ export default function QAndAsPage(props) {
           <Stack spacing='xs'>
             {announcements && announcements}
             <Stack spacing='xs'>
-              <Grid color={12} grow>
-                <Grid.Col span={10}>
-                  <form onSubmit={(e) => handleSearchSummit(e)}>
-                    <TextInput
-                      ref={searchRef}
-                      placeholder='ค้นหา'
-                      value={searchValue}
-                      icon={<Search size={14} />}
-                      classNames={{
-                        input:
-                          'bg-accent border-title border-opacity-20 border-[1px]',
-                      }}
-                      onChange={(e) => setSearchValue(e.target.value)}
-                    />
-                    <input type='submit' style={{ display: 'none' }} />
-                  </form>
-                </Grid.Col>
-                <Grid.Col span={1}>
+              <div className='relative flex flex-row w-full'>
+                <form
+                  className=' w-full'
+                  onSubmit={(e) => handleSearchSummit(e)}
+                >
+                  <TextInput
+                    ref={searchRef}
+                    placeholder='ค้นหา'
+                    value={searchValue}
+                    icon={<Search size={14} />}
+                    classNames={{
+                      input:
+                        'bg-accent border-title border-opacity-20 border-[1px] rounded-full',
+                    }}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                  />
+                  <input type='submit' style={{ display: 'none' }} />
+                </form>
+                <Tooltip
+                  label='ค้าหา'
+                  position='bottom'
+                  withArrow
+                  className='absolute right-0'
+                >
                   <Button
                     fullWidth
                     onClick={() => handleSearch()}
-                    className='bg-content text-[#fff] hover:bg-content hover:opacity-75 '
                     variant='default'
+                    className='rounded-r-full bg-foreground text-title  hover:opacity-75 w-fit '
                   >
-                    ค้นหา
+                    <BiSearch fontSize={20} />
                   </Button>
-                </Grid.Col>
-              </Grid>
+                </Tooltip>
+              </div>
               {filteredPosts.length >= 1 && (
                 <>
                   <Divider label='ผลการค้นหา' labelPosition='center' />

@@ -104,12 +104,12 @@ export default function EditAnnouncement(props) {
                   : form.getInputProps('type').value === 'warning'
                   ? 'border-orange-500 bg-orange-500'
                   : 'border-green-500 bg-green-500'
-              } border-2 rounded-sm flex flex-row items-center`}
+              } border-2 rounded-lg flex flex-row items-center`}
             >
               <div>
                 <AlertCircle size={25} className='text-white m-1' />
               </div>
-              <div className='flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm'>
+              <div className='flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-lg'>
                 <div className='w-full'>
                   <h1 className='font-bold md:text-base text-sm '>
                     <TextInput

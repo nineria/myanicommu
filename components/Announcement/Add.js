@@ -121,12 +121,12 @@ export default function AddAnnouncement() {
                   : form.getInputProps('type').value === 'warning'
                   ? 'border-orange-500 bg-orange-500'
                   : 'border-green-500 bg-green-500'
-              } border-2 rounded-sm flex flex-row items-center`}
+              } border-2 rounded-lg flex flex-row items-center`}
             >
               <div>
                 <AlertCircle size={25} className='text-white m-1' />
               </div>
-              <div className='flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm'>
+              <div className='flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-lg'>
                 <div className='w-full'>
                   <h1 className='font-bold md:text-base text-sm '>
                     <TextInput
@@ -160,20 +160,18 @@ export default function AddAnnouncement() {
       </Modal>
       <Button
         onClick={() => setOpened(true)}
-        className='md:block hidden z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit'
+        className='md:block hidden z-10 bg-content rounded-lg text-[#fff] hover:bg-content hover:opacity-75 max-w-fit'
         variant='default'
-        size='xs'
       >
         สร้างประกาศ +
       </Button>
       <Tooltip label='สร้างประกาศใหม่' placement='start' withArrow>
         <Button
           onClick={() => setOpened(true)}
-          className='md:hidden block z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit'
+          className='md:hidden block z-10  bg-content rounded-lg text-[#fff] hover:bg-content hover:opacity-75 max-w-fit'
           variant='default'
-          size='xs'
         >
-          <Speakerphone size={14} />
+          <Speakerphone size={20} />
         </Button>
       </Tooltip>
     </>

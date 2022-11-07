@@ -54,7 +54,7 @@ export default function Comment(props) {
         if (userStatisticsPosts.length === 0) setLikes(0);
         else setLikes(userStatisticsPosts.length);
       } catch (err) {
-        // console.log('error: ', err);
+        console.log('error: ', err);
         return;
       }
     };

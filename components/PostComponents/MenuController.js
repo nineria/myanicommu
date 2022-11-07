@@ -26,7 +26,7 @@ export default function PostsMenuController({ layout, handleToggle }) {
   const [opened, setOpened] = useState(false);
 
   return (
-    <div className='flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md'>
+    <div className='flex flex-row justify-between w-full '>
       <Modal
         size='xl'
         classNames={{
@@ -41,16 +41,15 @@ export default function PostsMenuController({ layout, handleToggle }) {
       >
         <Add setOpened={setOpened} />
       </Modal>
-      <Group spacing='xs'>
+      <Group className='bg-foreground p-1 rounded-lg' spacing='xs'>
         <AuthCheck fallback={<></>}>
           {userData && userData.email === '' ? (
             <Verify>สร้างโพสต์ +</Verify>
           ) : (
             <Button
               onClick={() => setOpened(true)}
-              className='bg-content text-[#fff] hover:bg-content hover:opacity-75'
+              className='bg-content rounded-lg text-[#fff] hover:bg-content hover:opacity-75'
               variant='default'
-              size='xs'
             >
               สร้างโพสต์ +
             </Button>
@@ -64,9 +63,8 @@ export default function PostsMenuController({ layout, handleToggle }) {
               <Link href={`/${username}#announcementControl`}>
                 <Button
                   leftIcon={<Edit size={14} />}
-                  className='md:block hidden z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75'
+                  className='md:block hidden z-10 bg-background rounded-lg text-title hover:bg-background hover:opacity-75'
                   variant='default'
-                  size='xs'
                 >
                   จัดการประกาศ
                 </Button>
@@ -79,11 +77,10 @@ export default function PostsMenuController({ layout, handleToggle }) {
               >
                 <Link href={`/${username}#announcementControl`}>
                   <Button
-                    className='z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75'
+                    className='z-10 bg-background rounded-lg p-2 text-title hover:bg-background hover:opacity-75'
                     variant='default'
-                    size='xs'
                   >
-                    <Edit size={14} />
+                    <Edit size={20} />
                   </Button>
                 </Link>
               </Tooltip>
@@ -93,13 +90,12 @@ export default function PostsMenuController({ layout, handleToggle }) {
       </Group>
       <Group position='center'>
         <SegmentedControl
-          size='xs'
           value={layout}
           onChange={(value) => handleToggle(value)}
           classNames={{
-            root: 'bg-background',
-            label: 'text-title',
-            active: 'bg-foreground',
+            root: 'bg-foreground rounded-lg',
+            active: 'bg-content',
+            labelActive: 'text-[#fff] hover:text-[#fff]',
           }}
           data={[
             {

@@ -39,7 +39,6 @@ export default function TagGenre({ data, setData }) {
     if (!value.trim()) return;
 
     if (pattern.test(value)) {
-      console.log('if');
       const str = value.replace(/[, ]+/g, ' ').trim();
 
       const list = str.split(' ');
@@ -50,7 +49,6 @@ export default function TagGenre({ data, setData }) {
         setTags([...tags, item]);
       });
     } else {
-      console.log('else');
       data.push(value);
       setData(data);
       setTags([...tags, value]);

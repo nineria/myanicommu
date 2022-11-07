@@ -33,7 +33,7 @@ export default function SettingPage({ posts }) {
         <Container size='md'>
           <AuthCheck fallback={<Loading />}>
             <Motion>
-              <div className='bg-foreground my-2 w-full rounded-sm shadow-md'>
+              <div className='bg-foreground my-2 w-full rounded-lg pb-2 shadow-md'>
                 <Group className='py-2 px-4 font-bold w-full text-title'>
                   <Settings size={18} />
                   <Text size='lg' className='font-bold '>

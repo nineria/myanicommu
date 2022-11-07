@@ -127,12 +127,12 @@ export default function Add({ post, comments, setComments }) {
   };
 
   return (
-    <div className='bg-foreground rounded-sm'>
+    <div className='bg-foreground rounded-lg'>
       <div className='flex md:flex-row flex-col'>
         <LeftMenuAdd data={userData} />
         <div className='md:block hidden px-[0.5px] bg-white opacity-50'></div>
         <div className='p-2 text-title w-full'>
-          <div className='border-[1px] border-white border-opacity-10 rounded-sm p-2'>
+          <div className='border-[1px] border-white border-opacity-10 rounded-lg p-2'>
             <RichTextEditor
               key={reload}
               controls={[
@@ -173,8 +173,7 @@ export default function Add({ post, comments, setComments }) {
                 <Verify>ส่งความคิดเห็น</Verify>
               ) : (
                 <Button
-                  size='xs'
-                  className='bg-content text-[#fff] hover:bg-content hover:opacity-75'
+                  className='bg-content rounded-lg text-[#fff] hover:bg-content hover:opacity-75'
                   variant='default'
                   onClick={() => HandleSubmit()}
                 >

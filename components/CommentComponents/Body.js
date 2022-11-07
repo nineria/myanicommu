@@ -45,8 +45,6 @@ export default function Body({
       minute: '2-digit',
     });
 
-    console.log(comment.slug);
-
     setDate(date);
   }, [comment.updatedAt.seconds]);
 

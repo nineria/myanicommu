@@ -61,10 +61,14 @@ export default function Body({ today, post, disabled }) {
     });
 
   return (
-    <div className='rounded-sm shadow-md'>
+    <div
+      className={`bg-foreground shadow-md rounded-lg ${
+        toggle === true ? 'pb-2' : 'pb-0'
+      }`}
+    >
       <div
-        className={`bg-foreground  border-content border-opacity-30 flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title ${
-          toggle === true ? 'rounded-t-sm border-b-2' : 'rounded-sm border-b-0'
+        className={`border-content border-opacity-30 flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title ${
+          toggle === true ? 'rounded-t-lg border-b-2' : 'rounded-lg border-b-0'
         }`}
       >
         <Link href={post?.titleLink || '/'}>

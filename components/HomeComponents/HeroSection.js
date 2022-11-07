@@ -7,7 +7,7 @@ export default function HeroSection({ props }) {
   return (
     <Box>
       <div
-        className={`bg-foreground flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title drop-shadow`}
+        className={`bg-foreground rounded-lg flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-title drop-shadow`}
       >
         <Group style={{ gap: 2 }}>
           <Link href='/posts'>

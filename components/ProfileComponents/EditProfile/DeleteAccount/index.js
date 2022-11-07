@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function DeleteAccount({ setOpenedConfirm }) {
   return (
-    <div className='border-[1px]  p-4 border-[#ff3333] rounded-md'>
+    <div className='border-[1px]  p-4 border-[#ff3333] rounded-lg'>
       <Stack>
         <Title order={2}>ลบบัญชีส่วนบุคคล</Title>
         <Text>
@@ -13,8 +13,7 @@ export default function DeleteAccount({ setOpenedConfirm }) {
         </Text>
         <Group>
           <Button
-            className='bg-[#ff3333] hover:bg-[#ff3333] hover:opacity-75'
-            size='xs'
+            className='bg-[#ff3333] rounded-lg hover:bg-[#ff3333] hover:opacity-75'
             onClick={() => setOpenedConfirm(true)}
           >
             ลบบัญชี

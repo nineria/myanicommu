@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 // Components
-import { Progress, Box, Text, Group, Paper, SimpleGrid } from "@mantine/core";
+import { Box, Card, Group, Progress, SimpleGrid, Text } from '@mantine/core';
 // Icons
-import { ArrowUpRight, DeviceAnalytics } from "tabler-icons-react";
+import { ArrowUpRight, DeviceAnalytics } from 'tabler-icons-react';
 // Tools
-import { kFormatter } from "utils/Calculator";
 import {
   commentColor,
   likeColor,
   postColor,
   starColor,
-} from "constants/StatsSegmentsColor";
+} from 'constants/StatsSegmentsColor';
+import { kFormatter } from 'utils/Calculator';
 
 export default function StatsSegments({ statistics }) {
   const total =
@@ -42,51 +42,51 @@ export default function StatsSegments({ statistics }) {
   ];
 
   return (
-    <Paper p="md" radius="sm" className="bg-foreground">
-      <Group position="apart">
-        <Group align="flex-end" spacing="xs">
-          <Text size="xl" weight={700}>
+    <Card className='bg-foreground rounded-lg'>
+      <Group position='apart'>
+        <Group align='flex-end' spacing='xs'>
+          <Text size='xl' weight={700}>
             ทั้งหมด {kFormatter(total)}
           </Text>
           <Text
-            color="teal"
-            className="flex items-center"
-            size="sm"
+            color='teal'
+            className='flex items-center'
+            size='sm'
             weight={700}
           >
             <span>{total}%</span>
             <ArrowUpRight size={16} style={{ marginBottom: 4 }} />
           </Text>
         </Group>
-        <DeviceAnalytics size={20} color="gray" />
+        <DeviceAnalytics size={20} color='gray' />
       </Group>
 
-      <Text color="dimmed" size="sm">
+      <Text color='dimmed' size='sm'>
         จำนวน ถูกใจ, ดาว, โพสต์, คอมเมนต์
       </Text>
 
       <Progress
         sections={segments}
         size={34}
-        classNames={{ label: "text-sm leading-none" }}
+        classNames={{ label: 'text-sm leading-none', root: 'rounded-full' }}
         mt={40}
       />
-      <SimpleGrid cols={4} breakpoints={[{ maxWidth: "xs", cols: 1 }]} mt="xl">
+      <SimpleGrid cols={4} breakpoints={[{ maxWidth: 'xs', cols: 1 }]} mt='xl'>
         <Box
           sx={{ borderBottomColor: likeColor }}
-          className="pb-[5px] border-b-[3px]"
+          className='pb-[5px] border-b-[3px]'
         >
-          <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
+          <Text transform='uppercase' size='sm' color='dimmed' weight={700}>
             ถูกใจ
           </Text>
 
-          <Group position="apart" align="flex-end" spacing={0}>
+          <Group position='apart' align='flex-end' spacing={0}>
             <Text weight={700}>{kFormatter(statistics.likes)}</Text>
             <Text
               color={likeColor}
               weight={700}
-              size="sm"
-              className="leading-4"
+              size='sm'
+              className='leading-4'
             >
               {statistics.likes}%
             </Text>
@@ -94,19 +94,19 @@ export default function StatsSegments({ statistics }) {
         </Box>
         <Box
           sx={{ borderBottomColor: starColor }}
-          className="pb-[5px] border-b-[3px]"
+          className='pb-[5px] border-b-[3px]'
         >
-          <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
+          <Text transform='uppercase' size='sm' color='dimmed' weight={700}>
             ดาว
           </Text>
 
-          <Group position="apart" align="flex-end" spacing={0}>
+          <Group position='apart' align='flex-end' spacing={0}>
             <Text weight={700}>{kFormatter(statistics.stars)}</Text>
             <Text
               color={starColor}
               weight={700}
-              size="sm"
-              className="leading-4"
+              size='sm'
+              className='leading-4'
             >
               {statistics.stars}%
             </Text>
@@ -114,19 +114,19 @@ export default function StatsSegments({ statistics }) {
         </Box>
         <Box
           sx={{ borderBottomColor: postColor }}
-          className="pb-[5px] border-b-[3px]"
+          className='pb-[5px] border-b-[3px]'
         >
-          <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
+          <Text transform='uppercase' size='sm' color='dimmed' weight={700}>
             โพสต์
           </Text>
 
-          <Group position="apart" align="flex-end" spacing={0}>
+          <Group position='apart' align='flex-end' spacing={0}>
             <Text weight={700}>{kFormatter(statistics.posts)}</Text>
             <Text
               color={postColor}
               weight={700}
-              size="sm"
-              className="leading-4"
+              size='sm'
+              className='leading-4'
             >
               {statistics.posts}%
             </Text>
@@ -134,25 +134,25 @@ export default function StatsSegments({ statistics }) {
         </Box>
         <Box
           sx={{ borderBottomColor: commentColor }}
-          className="pb-[5px] border-b-[3px]"
+          className='pb-[5px] border-b-[3px]'
         >
-          <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
+          <Text transform='uppercase' size='sm' color='dimmed' weight={700}>
             คอมเมนต์
           </Text>
 
-          <Group position="apart" align="flex-end" spacing={0}>
+          <Group position='apart' align='flex-end' spacing={0}>
             <Text weight={700}>{kFormatter(statistics.comments)}</Text>
             <Text
               color={commentColor}
               weight={700}
-              size="sm"
-              className="leading-4"
+              size='sm'
+              className='leading-4'
             >
               {statistics.comments}%
             </Text>
           </Group>
         </Box>
       </SimpleGrid>
-    </Paper>
+    </Card>
   );
 }

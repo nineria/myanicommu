@@ -52,8 +52,7 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
         <Stack size='xs'>
           <Group position='right'>
             <Button
-              className='bg-background text-title hover:bg-background hover:opacity-75'
-              size='xs'
+              className='bg-background rounded-lg text-title hover:bg-background hover:opacity-75'
               onClick={() => {
                 modals.closeModal(id);
                 setOpenedConfirm(false);
@@ -62,8 +61,7 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
               ยกเลิก
             </Button>
             <Button
-              className='bg-red-500 hover:bg-red-500 hover:opacity-75'
-              size='xs'
+              className='bg-red-500 rounded-lg hover:bg-red-500 hover:opacity-75'
               onClick={handleSignOut}
             >
               ออกจากระบบ
@@ -95,7 +93,7 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
       await auth.currentUser.delete();
       router.push('/');
     } catch (error) {
-      // console.log('ERROR => ', auth.currentUser.uid, error);
+      console.log('ERROR => ', auth.currentUser.uid, error);
       loginAgain();
     }
   };
@@ -143,16 +141,14 @@ export default function DeleteAccountForm({ user, setOpenedConfirm }) {
       <Stack size='xs'>
         <Group position='right'>
           <Button
-            className='bg-background text-title hover:bg-background hover:opacity-75'
-            size='xs'
+            className='bg-background rounded-lg text-title hover:bg-background hover:opacity-75'
             onClick={() => setOpenedConfirm(false)}
           >
             ยกเลิก
           </Button>
           <Button
             disabled={usernameValid && confirmValid ? false : true}
-            className='bg-[#ff3333] hover:bg-[#ff3333] hover:opacity-75'
-            size='xs'
+            className='bg-[#ff3333] rounded-lg hover:bg-[#ff3333] hover:opacity-75'
             onClick={() => deleteAccount()}
           >
             ลบบัญชี

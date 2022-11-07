@@ -1,16 +1,15 @@
-import Announcement from "components/Announcement";
-import AddAnnouncement from "components/Announcement/Add";
-import { firestore, postToJSON } from "lib/firebase";
-import { Card, InputWrapper, Stack, Title } from "@mantine/core";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import { Card, InputWrapper, Stack, Title } from '@mantine/core';
+import Announcement from 'components/Announcement';
+import AddAnnouncement from 'components/Announcement/Add';
+import { firestore, postToJSON } from 'lib/firebase';
+import React, { useEffect, useState } from 'react';
 
 export default function AnnouncementControl() {
   const [announcements, setAnnouncement] = useState();
 
   useEffect(() => {
     const getAnnouncement = async () => {
-      const announcementsQuery = firestore.collectionGroup("announcements");
+      const announcementsQuery = firestore.collectionGroup('announcements');
       const announcements = (await announcementsQuery.get()).docs.map(
         postToJSON
       );
@@ -33,16 +32,16 @@ export default function AnnouncementControl() {
     });
 
   return (
-    <Card p="md" radius="sm" className="bg-foreground">
+    <Card className='bg-foreground rounded-lg'>
       <Stack>
         <Title order={3}>จัดการประกาศ</Title>
         <AddAnnouncement />
         <InputWrapper
-          label="ประกาศที่กำลังเปิดใช้"
-          description="ประกาศทั้งหมดที่กำลังเปิดใช้จะถูกแสดงอยู่ที่นี่ - PUBLISHED"
+          label='ประกาศที่กำลังเปิดใช้'
+          description='ประกาศทั้งหมดที่กำลังเปิดใช้จะถูกแสดงอยู่ที่นี่ - PUBLISHED'
         >
-          <div className="bg-background px-4 py-2 ">
-            <Stack spacing="xs">
+          <div className='bg-background px-4 py-2 '>
+            <Stack spacing='xs'>
               {publicAnnouncement &&
                 publicAnnouncement.map((item, index) => (
                   <Announcement key={index} {...item} />
@@ -51,11 +50,11 @@ export default function AnnouncementControl() {
           </div>
         </InputWrapper>
         <InputWrapper
-          label="ประกาศที่ยังไม่เปิดใช้"
-          description="ประกาศที่ยังไม่เปิดใช้จะถูกแสดงอยู่ที่นี่ - ON HOLD"
+          label='ประกาศที่ยังไม่เปิดใช้'
+          description='ประกาศที่ยังไม่เปิดใช้จะถูกแสดงอยู่ที่นี่ - ON HOLD'
         >
-          <div className="bg-background px-4 py-2">
-            <Stack spacing="xs">
+          <div className='bg-background px-4 py-2'>
+            <Stack spacing='xs'>
               {privateAnnouncement &&
                 privateAnnouncement.map((item, index) => (
                   <Announcement key={index} {...item} />

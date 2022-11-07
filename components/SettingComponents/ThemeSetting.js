@@ -96,7 +96,7 @@ export default function ThemeSetting(props) {
 
   const ResultSample = ({ posts }) => (
     <div className='bg-foreground px-4 py-2'>
-      <div className='bg-background p-4 rounded-sm'>
+      <div className='bg-background p-4 rounded-lg'>
         <div className='flex flex-col gap-2'>
           {posts &&
             posts.map((item, index) => (
@@ -108,7 +108,7 @@ export default function ThemeSetting(props) {
   );
 
   return (
-    <div className='bg-foreground my-2 w-full rounded-sm shadow-md'>
+    <div className='my-2 w-full'>
       <div className='px-4 py-2 flex flex-col md:flex-row justify-between items-center'>
         <div className='text-title'>
           <Text className='font-bold '>การตั้งค่า</Text>

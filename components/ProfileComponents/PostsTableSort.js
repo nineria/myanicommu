@@ -144,7 +144,7 @@ export function TableSort({ user, posts, statistics }) {
   });
 
   return (
-    <Card p='md' radius='sm' className='bg-foreground'>
+    <Card className='bg-foreground rounded-lg'>
       <ScrollArea>
         {username === user.username ? (
           <Text size='xl' weight={700} mb='sm'>
@@ -162,7 +162,7 @@ export function TableSort({ user, posts, statistics }) {
           icon={<Search size={14} />}
           value={search}
           classNames={{
-            input: 'bg-accent bg-opacity-50',
+            input: 'bg-accent bg-opacity-50 rounded-full',
           }}
           onChange={handleSearchChange}
         />
