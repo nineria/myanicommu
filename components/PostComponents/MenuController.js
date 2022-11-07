@@ -41,7 +41,7 @@ export default function PostsMenuController({ layout, handleToggle }) {
       >
         <Add setOpened={setOpened} />
       </Modal>
-      <Group className='bg-foreground p-1 rounded-lg' spacing='xs'>
+      <Group spacing='xs'>
         <AuthCheck fallback={<></>}>
           {userData && userData.email === '' ? (
             <Verify>สร้างโพสต์ +</Verify>
@@ -63,7 +63,7 @@ export default function PostsMenuController({ layout, handleToggle }) {
               <Link href={`/${username}#announcementControl`}>
                 <Button
                   leftIcon={<Edit size={14} />}
-                  className='md:block hidden z-10 bg-background rounded-lg text-title hover:bg-background hover:opacity-75'
+                  className='md:block hidden z-10 bg-foreground rounded-lg text-title hover:bg-foreground hover:opacity-75'
                   variant='default'
                 >
                   จัดการประกาศ
