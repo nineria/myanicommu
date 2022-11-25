@@ -4,7 +4,6 @@ import {
   Group,
   PasswordInput,
   Stack,
-  Text,
   TextInput,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
@@ -13,7 +12,7 @@ import { firestore, serverTimestamp } from 'lib/firebase';
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/router';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { AlertTriangle, Mail } from 'tabler-icons-react';
+import { Mail } from 'tabler-icons-react';
 import { z } from 'zod';
 import { UsernameMessage } from '.';
 import PrivacyPolicy from '../PrivacyPolicy';
