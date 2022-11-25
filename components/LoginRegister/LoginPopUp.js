@@ -11,14 +11,13 @@ import {
   Image,
   PasswordInput,
   Stack,
-  Text,
   TextInput,
 } from '@mantine/core';
 // Icons
 import { showNotification } from '@mantine/notifications';
 import { UserContext } from 'lib/context';
 import { useRouter } from 'next/router';
-import { AlertTriangle, Mail, X } from 'tabler-icons-react';
+import { Mail, X } from 'tabler-icons-react';
 import { RegisterForm } from './RegisterForm';
 
 export function LoginPopUp({ setOpenedRegister, mobile = false }) {
@@ -89,7 +88,7 @@ export function LoginPopUp({ setOpenedRegister, mobile = false }) {
     <Stack>
       {!noUsername && (
         <>
-          <Group position='center'>
+          <Group position='center' noWrap>
             <Button
               size='sm'
               radius='lg'
@@ -154,7 +153,7 @@ export function LoginPopUp({ setOpenedRegister, mobile = false }) {
               เข้าสู่ระบบ
             </Button>
           </Link>
-          <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
+          {/* <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
             <AlertTriangle width={34} className='m-2 md:m-0' />
             <Text size='xs'>
               ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
@@ -164,7 +163,7 @@ export function LoginPopUp({ setOpenedRegister, mobile = false }) {
           <Text size='xs' className='mt-4 md:mt-0'>
             ผู้ใช้ที่ต้องการเข้าสู่ระบบโปรดลงชื่อเข้าใช้ด้วย Google หรือ
             Facebook
-          </Text>
+          </Text> */}
         </>
       )}
     </Stack>

@@ -259,7 +259,7 @@ export function RegisterForm() {
             label={<PrivacyPolicy />}
           />
         </Stack>
-        {!user && (
+        {/* {!user && (
           <>
             <Group noWrap className='text-white p-2 mt-4 md:mt-0 bg-[#ff3333]'>
               <AlertTriangle width={34} className='m-2 md:m-0' />
@@ -273,7 +273,7 @@ export function RegisterForm() {
               Facebook
             </Text>
           </>
-        )}
+        )} */}
         <Button
           size='sm'
           type='submit'
