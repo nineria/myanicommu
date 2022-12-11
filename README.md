@@ -38,6 +38,28 @@ $PROJECT_ROOT
 └── utils
 ```
 
+## How to dev
+We recommend using yarn for package managers.
+
+1. Install all dependencies using `yarn` or `npm`
+
+```
+yarn
+```
+or
+```
+npm install
+```
+
+2. Run the project
+```
+yarn dev
+```
+or
+```
+npm run dev
+```
+
 ## License
 
 GPL-3.0 license
