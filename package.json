@@ -13,7 +13,8 @@
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts",
+    "db:import-news": "tsx scripts/import-news.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.10.2",
