@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans_Thai, Prompt } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { AccentProvider } from "@/components/accent-provider";
+import { PreferencesProvider } from "@/components/preferences-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -89,13 +90,15 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <AccentProvider>
-                <a href="#main" className="skip-link">
-                  ข้ามไปยังเนื้อหาหลัก
-                </a>
-                <NuqsAdapter>
-                  <TooltipProvider>{children}</TooltipProvider>
-                </NuqsAdapter>
-                <Toaster />
+                <PreferencesProvider>
+                  <a href="#main" className="skip-link">
+                    ข้ามไปยังเนื้อหาหลัก
+                  </a>
+                  <NuqsAdapter>
+                    <TooltipProvider>{children}</TooltipProvider>
+                  </NuqsAdapter>
+                  <Toaster />
+                </PreferencesProvider>
               </AccentProvider>
             </ThemeProvider>
           </body>
