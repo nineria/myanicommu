@@ -103,6 +103,7 @@ function Status({
       <div className="flex items-center justify-between gap-2">
         <Link
           href={headerLink || "/"}
+          prefetch
           className="truncate font-semibold hover:underline"
         >
           {header}

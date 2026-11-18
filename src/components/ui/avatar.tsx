@@ -24,13 +24,23 @@ function Avatar({
   );
 }
 
+/** Route avatars through the Next.js image optimizer (resized, AVIF/WebP, cached). */
+function optimizeAvatar(src: string | Blob | undefined) {
+  if (typeof src !== "string" || !/^(https?:\/\/|\/(?!\/))/.test(src))
+    return src;
+  return `/_next/image?url=${encodeURIComponent(src)}&w=256&q=75`;
+}
+
 function AvatarImage({
   className,
+  src,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
   return (
     <AvatarPrimitive.Image
       data-slot="avatar-image"
+      src={optimizeAvatar(src)}
+      decoding="async"
       className={cn("aspect-square size-full", className)}
       {...props}
     />

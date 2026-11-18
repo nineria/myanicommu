@@ -24,11 +24,11 @@ export default async function HomePage() {
   const [homePosts, today, reviews, news, qnas, general, annNews] =
     await Promise.all([
       api.homePost.list(),
-      api.post.list({ take: 3 }),
+      api.post.list({ take: 4 }),
       api.post.topReviews(),
-      api.post.list({ kind: "NEWS", take: 3 }),
-      api.post.list({ kind: "QNA", take: 3 }),
-      api.post.list({ kind: "GENERAL", take: 3 }),
+      api.post.list({ kind: "NEWS", take: 4 }),
+      api.post.list({ kind: "QNA", take: 4 }),
+      api.post.list({ kind: "GENERAL", take: 4 }),
       getAnnNews(8),
     ]);
 

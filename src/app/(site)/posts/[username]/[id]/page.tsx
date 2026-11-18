@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { Clock, MessageCircle, Star, ThumbsUp, User } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CommentSection } from "@/components/comment/comment-section";
@@ -156,11 +157,14 @@ export default async function PostPage({ params }: Props) {
               />
             </div>
             <div className="min-w-0 flex-1 p-5 md:p-6">
-              {/* biome-ignore lint/performance/noImgElement: arbitrary remote post image */}
-              <img
+              <Image
                 src={post.image}
                 alt={post.title}
-                className="mx-auto mb-5 max-h-[28rem] rounded-lg object-contain"
+                width={800}
+                height={448}
+                sizes="(min-width:768px) 640px, 100vw"
+                priority
+                className="mx-auto mb-5 h-auto max-h-[28rem] w-auto rounded-lg object-contain"
               />
               <ExternalLinkGuard>
                 <div
