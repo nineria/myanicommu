@@ -1,7 +1,9 @@
 import { Suspense } from "react";
+import { CONTAINER_CLASS } from "@/components/layout/container";
 import { Footer, FooterSkeleton } from "@/components/layout/footer";
 import { MobileTabBar } from "@/components/layout/mobile-tab-bar";
 import { Navbar } from "@/components/layout/navbar";
+import { cn } from "@/lib/utils";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +20,7 @@ export default function SiteLayout({
     <HydrateClient>
       <div className="flex min-h-svh flex-col">
         <Navbar />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-6 sm:pt-6">
+        <main className={cn(CONTAINER_CLASS, "flex-1 pt-4 pb-6 sm:pt-6")}>
           {children}
         </main>
         <Suspense fallback={<FooterSkeleton />}>

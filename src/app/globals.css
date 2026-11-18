@@ -145,6 +145,23 @@
   }
 }
 
+/* Signature: oversized category word printed faintly behind card content. */
+@layer components {
+  .ghost-word {
+    position: absolute;
+    right: -0.05em;
+    bottom: -0.2em;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: currentColor;
+    opacity: 0.06;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
 /* Page enter: only the main content, once per navigation. */
 @keyframes page-in {
   from {
