@@ -33,12 +33,15 @@ MyAniCommu website purpose is to bring together people who like anime. They can 
 ## Getting started
 
 ```bash
-cp .env.example .env.local   # fill in Clerk, DB and S3 values
+cp .env.example .env.local   # fill in Clerk keys (use a Clerk *development* instance)
 bun install
-bunx prisma migrate dev
-bun run db:seed              # optional sample content
-bun run dev
+bun run db:setup             # starts Postgres (docker compose, port 54329), migrates, seeds
+bun run dev                  # or `bun run dev:all` for mprocs (db, web, studio, lint, seed, migrate)
 ```
+
+Local auth: either sign in through Clerk with your development keys, or set `DEV_AS_USER=hunter`
+in `.env.local` to act as a seeded user without signing in (`hunter` is ADMIN, `sakura` is MEMBER;
+only works under `next dev`). Leave `DEV_AS_USER` empty to test the real Clerk flow.
 
 Clerk dashboard: enable *Username*, Google/Facebook social login, and add a webhook to
 `/api/webhooks/clerk` (events `user.updated`, `user.deleted`).
