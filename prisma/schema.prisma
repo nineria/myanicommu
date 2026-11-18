@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  MEMBER
+  ADMIN
+}
+
+enum PostKind {
+  NEWS
+  REVIEW
+  QNA
+  GENERAL
+}
+
+enum AnnouncementType {
+  DANGER
+  WARNING
+  SUCCESS
+}
+
+model User {
+  id          String   @id @default(cuid())
+  clerkId     String   @unique
+  /// Firestore uid, kept only so the one-off migration can be re-run safely
+  legacyUid   String?  @unique
+  username    String   @unique
+  firstName   String   @default("")
+  lastName    String   @default("")
+  email       String   @default("")
+  avatar      String?
+  banner      String?
+  bio         String   @default("")
+  role        Role     @default(MEMBER)
+  website     String?
+  facebook    String?
+  twitter     String?
+  instagram   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ranks         UserRank[]
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  stars         Star[]
+  reports       Report[]
+  announcements Announcement[]
+  homePosts     HomePost[]
+  images        Image[]
+}
+
+model UserRank {
+  id        String @id @default(cuid())
+  userId    String
+  label     String
+  colorFrom String
+  colorTo   String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, label])
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  authorId  String
+  title     String
+  kind      PostKind @default(GENERAL)
+  /// [{ label, colorFrom, colorTo }] - mirrors the old Firestore `tag` array
+  tags      Json     @default("[]")
+  genres    String[]
+  image     String
+  content   String
+  credit    String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments Comment[]
+  likes    Like[]
+  stars    Star[]
+
+  @@index([createdAt])
+  @@index([kind, createdAt])
+  @@index([authorId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String
+  authorId  String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes  Like[]
+
+  @@index([postId, createdAt])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String?
+  commentId String?
+  createdAt DateTime @default(now())
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post    Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+}
+
+model Star {
+  id     String @id @default(cuid())
+  userId String
+  postId String
+  value  Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  reporterId String
+  title      String
+  from       String
+  detail     Json
+  resolved   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  reporter User @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+}
+
+model Announcement {
+  id        String           @id @default(cuid())
+  authorId  String
+  type      AnnouncementType @default(SUCCESS)
+  title     String
+  content   String
+  published Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([published, createdAt])
+}
+
+model HomePost {
+  id         String   @id @default(cuid())
+  authorId   String
+  title      String
+  titleLink  String   @default("")
+  header     String   @default("")
+  headerLink String   @default("")
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+}
+
+/// Uploaded images (post images, avatars, banners, inline editor images) stored in Postgres.
+model Image {
+  id          String   @id @default(cuid())
+  userId      String
+  kind        String
+  contentType String
+  size        Int
+  data        Bytes
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

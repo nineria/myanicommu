@@ -1,0 +1,34 @@
+import { AdSide } from "@/components/layout/ad-side";
+import { PageShell } from "@/components/layout/page-shell";
+import { AnnouncementBanner } from "@/components/post/announcement-banner";
+import { PostListView } from "@/components/post/post-list-view";
+import { getApi } from "@/trpc/caller";
+
+/** Shared by /posts, /news, /reviews and /qandas. */
+export async function PostListPage({
+  kind,
+}: {
+  kind?: "NEWS" | "REVIEW" | "QNA";
+}) {
+  const api = await getApi();
+  const [posts, announcements] = await Promise.all([
+    api.post.list({ kind, take: 100 }),
+    api.announcement.published(),
+  ]);
+
+  return (
+    <PageShell ads={<AdSide />}>
+      <div className="space-y-2">
+        {announcements.map((a) => (
+          <AnnouncementBanner
+            key={a.id}
+            type={a.type}
+            title={a.title}
+            content={a.content}
+          />
+        ))}
+        <PostListView posts={posts} />
+      </div>
+    </PageShell>
+  );
+}
