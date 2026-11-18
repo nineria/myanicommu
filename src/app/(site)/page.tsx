@@ -4,7 +4,6 @@ import {
   HomePostCard,
   TopReviews,
 } from "@/components/home/home-section";
-import { AdSide } from "@/components/layout/ad-side";
 import { WidePage } from "@/components/layout/page-shell";
 import { getApi } from "@/trpc/caller";
 
@@ -27,7 +26,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <AdSide />
       <WidePage className="space-y-8">
         {today.length > 0 && <HeroSection posts={today} />}
         <div className="grid items-start gap-4 lg:grid-cols-2">
