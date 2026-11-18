@@ -39,8 +39,16 @@ export function CommentSection({
   const refresh = () => qc.invalidateQueries({ queryKey: listOpts.queryKey });
 
   return (
-    <div className="space-y-2">
-      {isPending && <Skeleton className="h-24 w-full" />}
+    <div className="space-y-3">
+      <h2 className="pt-2 text-lg font-bold">
+        ความคิดเห็น{comments ? ` (${comments.length})` : ""}
+      </h2>
+      {isPending && (
+        <div className="space-y-3" aria-busy="true">
+          <Skeleton className="h-28 w-full rounded-2xl" />
+          <Skeleton className="h-28 w-full rounded-2xl" />
+        </div>
+      )}
       {comments?.map((c) => (
         <CommentItem
           key={c.id}
@@ -56,7 +64,7 @@ export function CommentSection({
       ))}
 
       {!mePending && !me && (
-        <div className="flex flex-col items-center gap-3 rounded-sm bg-card py-10 text-foreground">
+        <div className="flex flex-col items-center gap-3 rounded-2xl border bg-card py-10 text-foreground">
           <p className="text-center">เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ</p>
           <p className="mb-2 text-center">
             <Logo className="inline" /> และอื่น ๆ อีกมากมาย!
@@ -103,7 +111,7 @@ function AddComment({
   };
 
   return (
-    <div className="rounded-lg bg-card p-3">
+    <div className="rounded-2xl border bg-card p-3">
       <RichTextEditor
         key={key}
         value={value}
@@ -169,12 +177,12 @@ function CommentItem({
     <div
       id={comment.id}
       className={cn(
-        "rounded-lg bg-card",
-        active && "rounded-none border-2 border-[#ff3333]",
+        "overflow-hidden rounded-2xl border bg-card",
+        active && "border-2 border-destructive",
       )}
     >
       {active && (
-        <div className="bg-[#ff3333] text-center text-white">
+        <div className="bg-destructive text-center text-sm font-medium text-white">
           เนื้อหาที่ถูกรายงาน
         </div>
       )}

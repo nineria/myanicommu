@@ -1,7 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
-import type { Metadata } from "next";
-import { Prompt } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Anuphan } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { AccentProvider } from "@/components/accent-provider";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -28,11 +28,18 @@ const clerkLocalization = {
   },
 };
 
-const prompt = Prompt({
-  variable: "--font-prompt",
+const anuphan = Anuphan({
+  variable: "--font-anuphan",
   subsets: ["latin", "thai"],
-  weight: ["400", "600"],
+  display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0c0b12" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f4f7" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL ?? "http://localhost:3000"),
@@ -65,7 +72,7 @@ export default function RootLayout({
     >
       <TRPCReactProvider>
         <html lang="th" suppressHydrationWarning>
-          <body className={`${prompt.variable} font-sans antialiased`}>
+          <body className={`${anuphan.variable} font-sans antialiased`}>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"

@@ -1,8 +1,15 @@
 import { AdSide } from "@/components/layout/ad-side";
-import { PageShell } from "@/components/layout/page-shell";
+import { WidePage } from "@/components/layout/page-shell";
 import { AnnouncementBanner } from "@/components/post/announcement-banner";
 import { PostListView } from "@/components/post/post-list-view";
 import { getApi } from "@/trpc/caller";
+
+const TITLES = {
+  ALL: "โพสต์ทั้งหมด",
+  NEWS: "ข่าวสาร",
+  REVIEW: "รีวิว",
+  QNA: "ถามตอบ Q&A",
+} as const;
 
 /** Shared by /posts, /news, /reviews and /qandas. */
 export async function PostListPage({
@@ -17,8 +24,9 @@ export async function PostListPage({
   ]);
 
   return (
-    <PageShell ads={<AdSide />}>
-      <div className="space-y-2">
+    <>
+      <AdSide />
+      <WidePage className="space-y-4">
         {announcements.map((a) => (
           <AnnouncementBanner
             key={a.id}
@@ -27,8 +35,8 @@ export async function PostListPage({
             content={a.content}
           />
         ))}
-        <PostListView posts={posts} />
-      </div>
-    </PageShell>
+        <PostListView posts={posts} title={TITLES[kind ?? "ALL"]} />
+      </WidePage>
+    </>
   );
 }
