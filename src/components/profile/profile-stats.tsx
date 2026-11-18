@@ -8,10 +8,10 @@ import { kFormatter } from "@/lib/utils";
 import type { PostCard } from "@/trpc/routers/post";
 
 const KINDS = [
-  { key: "NEWS", label: "ข่าวสาร", color: "#f97316" },
-  { key: "REVIEW", label: "รีวิว", color: "#14b8a6" },
-  { key: "QNA", label: "คำถาม", color: "#6366f1" },
-  { key: "GENERAL", label: "ทั่วไป", color: "#9ca3af" },
+  { key: "NEWS", label: "ข่าวสาร", color: "var(--primary)" },
+  { key: "REVIEW", label: "รีวิว", color: "var(--foreground)" },
+  { key: "QNA", label: "คำถาม", color: "#737373" },
+  { key: "GENERAL", label: "ทั่วไป", color: "#a3a3a3" },
 ] as const;
 
 const MONTHS = 6;
@@ -76,22 +76,24 @@ export function ProfileStats({
   ];
 
   return (
-    <section
-      aria-labelledby="stats-title"
-      className="rounded-lg bg-card p-4 shadow-sm sm:p-6"
-    >
-      <h2 id="stats-title" className="text-lg font-bold text-foreground">
+    <section aria-labelledby="stats-title" className="bg-card p-4 sm:p-6">
+      <h2
+        id="stats-title"
+        className="font-display text-lg font-bold text-foreground"
+      >
         สถิติ
       </h2>
 
-      <dl className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {kpis.map((k) => (
-          <div key={k.label} className="rounded-md bg-muted/50 p-3">
-            <dd className="text-2xl font-bold leading-none text-foreground">
+          <div key={k.label} className="bg-muted p-3">
+            <dd className="font-display text-3xl leading-none font-bold text-foreground">
               {k.value}
             </dd>
-            <dt className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
-              {k.icon && <k.icon className="size-3 shrink-0" aria-hidden />}
+            <dt className="eyebrow mt-2 flex items-center gap-1 text-muted-foreground">
+              {k.icon && (
+                <k.icon className="size-3 shrink-0 text-primary" aria-hidden />
+              )}
               <span>{k.label}</span>
             </dt>
           </div>
@@ -100,9 +102,9 @@ export function ProfileStats({
 
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
         <figure>
-          <figcaption className="mb-2 text-sm font-medium text-foreground">
+          <figcaption className="eyebrow mb-2 text-foreground">
             โพสต์ต่อเดือน{" "}
-            <span className="font-normal text-muted-foreground">
+            <span className="font-medium tracking-normal text-muted-foreground normal-case">
               ({MONTHS} เดือนล่าสุด)
             </span>
           </figcaption>
@@ -112,7 +114,7 @@ export function ProfileStats({
         </figure>
 
         <figure>
-          <figcaption className="mb-2 text-sm font-medium text-foreground">
+          <figcaption className="eyebrow mb-2 text-foreground">
             ประเภทโพสต์
           </figcaption>
           {kinds.length === 0 ? (
@@ -133,14 +135,14 @@ export function ProfileStats({
       {top && top.likes > 0 && (
         <Link
           href={`/posts/${username}/${top.id}`}
-          className="mt-5 flex items-center gap-3 rounded-md bg-muted/50 p-3 transition-colors hover:bg-muted"
+          className="mt-5 flex items-center gap-3 bg-muted p-3 transition-colors hover:bg-accent"
         >
-          <Trophy className="size-5 shrink-0 text-amber-500" aria-hidden />
+          <Trophy className="size-5 shrink-0 text-primary" aria-hidden />
           <span className="min-w-0 flex-1">
-            <span className="block text-xs text-muted-foreground">
+            <span className="eyebrow block text-muted-foreground">
               โพสต์ยอดนิยม
             </span>
-            <span className="block truncate text-sm font-medium text-foreground">
+            <span className="block truncate font-display text-sm font-bold text-foreground">
               {top.title}
             </span>
           </span>

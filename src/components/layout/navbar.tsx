@@ -57,8 +57,8 @@ export function Navbar() {
                 key={item.path}
                 href={item.path}
                 className={cn(
-                  "rounded-full px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-                  pathname === item.path && "font-semibold text-primary",
+                  "eyebrow px-3 py-2 text-muted-foreground transition-colors hover:text-foreground",
+                  pathname === item.path && "text-primary",
                 )}
               >
                 {item.name}
@@ -67,7 +67,7 @@ export function Navbar() {
           ) : (
             <Link
               href="/search"
-              className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+              className="eyebrow px-3 py-2 text-muted-foreground hover:text-foreground"
             >
               ค้นหา
             </Link>
@@ -91,19 +91,19 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               href={`/${me.username}`}
-              className="hidden items-center gap-2 md:flex"
+              className="group hidden items-center gap-3 md:flex"
             >
-              <Avatar className="border border-foreground/40">
+              <Avatar className="size-9 border border-border">
                 <AvatarImage src={me.avatar ?? undefined} alt={me.username} />
                 <AvatarFallback>
                   {me.username.slice(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="max-w-40 leading-tight">
-                <div className="truncate text-sm font-bold text-muted-foreground">
+              <div className="max-w-44 leading-tight">
+                <div className="truncate font-display text-sm font-bold text-foreground group-hover:text-primary">
                   {me.username}
                 </div>
-                <div className="truncate text-xs text-muted-foreground">
+                <div className="truncate text-[0.6875rem] font-medium tracking-[0.04em] text-muted-foreground">
                   {me.email || "ยังไม่ได้ยืนยัน Email"}
                 </div>
               </div>

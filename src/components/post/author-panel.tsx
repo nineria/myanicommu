@@ -1,4 +1,3 @@
-import { CalendarDays, Star, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import { TagBadge } from "@/components/post/tag-badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -34,76 +33,72 @@ export function AuthorPanel({
   compact?: boolean;
 }) {
   return (
-    <div className="px-4 py-5">
-      <div className="flex flex-wrap items-center justify-around gap-3">
-        <Link href={`/${author.username}`}>
-          <Avatar
-            className={cn(
-              "border-2 border-foreground/50",
-              compact ? "size-14" : "size-20",
-            )}
-          >
-            <AvatarImage
-              src={author.avatar ?? undefined}
-              alt={author.username}
-            />
-            <AvatarFallback>
-              {author.username.slice(0, 2).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+    <div
+      className={cn(
+        "flex flex-col items-center gap-4 px-4 py-6 text-center",
+        !compact && "md:sticky md:top-20",
+      )}
+    >
+      <Link href={`/${author.username}`} className="shrink-0">
+        <Avatar className={compact ? "size-14" : "size-20 md:size-24"}>
+          <AvatarImage src={author.avatar ?? undefined} alt={author.username} />
+          <AvatarFallback>
+            {author.username.slice(0, 2).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+      </Link>
+      <div className="min-w-0 max-w-full">
+        <Link
+          href={`/${author.username}`}
+          className="block truncate font-display text-lg leading-tight font-bold text-foreground hover:text-primary"
+        >
+          {author.username}
         </Link>
-        <div className="flex flex-col">
-          <Link
-            href={`/${author.username}`}
-            className="font-semibold text-primary hover:underline"
-          >
-            {author.username}
-          </Link>
-          <p
-            className={cn(
-              "text-xs",
-              author.role === "ADMIN"
-                ? "font-medium text-amber-700 dark:text-amber-400"
-                : "text-muted-foreground",
-            )}
-          >
-            {author.role === "ADMIN" ? ADMIN_RANK_LABEL : "สมาชิก"}
-          </p>
-        </div>
-        {author.ranks.length > 0 && (
-          <div className="flex flex-col gap-1">
-            {author.ranks.map((r) => (
-              <TagBadge
-                key={r.id}
-                label={r.label}
-                from={r.colorFrom}
-                to={r.colorTo}
-                deg={35}
-                className="w-full justify-center"
-              />
-            ))}
-          </div>
-        )}
+        <p
+          className={cn(
+            "eyebrow mt-0.5",
+            author.role === "ADMIN" ? "text-primary" : "text-muted-foreground",
+          )}
+        >
+          {author.role === "ADMIN" ? ADMIN_RANK_LABEL : "สมาชิก"}
+        </p>
       </div>
+      {author.ranks.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-1.5">
+          {author.ranks.map((r) => (
+            <TagBadge
+              key={r.id}
+              label={r.label}
+              from={r.colorFrom}
+              to={r.colorTo}
+              deg={35}
+            />
+          ))}
+        </div>
+      )}
       {date !== undefined && (
-        <div className="mt-4 flex flex-wrap justify-around gap-x-3 gap-y-1 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <CalendarDays className="size-3.5" />
-            {fmt(date)}
-          </span>
+        <dl className="grid w-full grid-cols-2 gap-px bg-border text-sm">
+          <div className="col-span-2 bg-muted px-2 py-2">
+            <dt className="eyebrow text-muted-foreground">โพสต์เมื่อ</dt>
+            <dd className="text-foreground">{fmt(date)}</dd>
+          </div>
           {stars !== undefined && (
-            <span className="flex items-center gap-1">
-              <Star className="size-3.5" />
-              {stars} คะแนน
-            </span>
+            <div className="bg-muted px-2 py-2">
+              <dt className="eyebrow text-muted-foreground">คะแนน</dt>
+              <dd className="font-display font-bold text-foreground">
+                {stars.toFixed(1)}
+              </dd>
+            </div>
           )}
           {likes !== undefined && (
-            <span className="flex items-center gap-1">
-              <ThumbsUp className="size-3.5" />
-              {likes} คน
-            </span>
+            <div className="bg-muted px-2 py-2">
+              <dt className="eyebrow text-muted-foreground">ถูกใจ</dt>
+              <dd className="font-display font-bold text-foreground">
+                {likes}
+              </dd>
+            </div>
           )}
-        </div>
+        </dl>
       )}
     </div>
   );

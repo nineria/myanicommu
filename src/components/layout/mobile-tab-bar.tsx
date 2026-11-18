@@ -37,12 +37,15 @@ export function MobileTabBar() {
                 href={path}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex min-h-16 flex-col items-center justify-center gap-0.5 text-xs font-medium text-muted-foreground transition-colors",
+                  "flex min-h-16 flex-col items-center justify-center gap-0.5 text-[0.6875rem] font-bold tracking-[0.08em] text-muted-foreground uppercase transition-colors hover:text-foreground",
                   active && "text-primary",
                 )}
               >
                 <Icon
-                  className={cn("size-[22px]", active && "[&>*]:stroke-[2.4]")}
+                  className={cn(
+                    "size-[22px]",
+                    active && "text-primary [&>*]:stroke-[2.4]",
+                  )}
                 />
                 {name}
               </Link>

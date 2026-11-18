@@ -34,7 +34,7 @@ export function ProfileHeader({
   ].filter((l) => l.href);
 
   return (
-    <section className="overflow-hidden rounded-lg bg-card shadow-sm">
+    <section className="overflow-hidden rounded-lg bg-card">
       <div
         className="h-28 bg-gradient-to-br from-primary/70 to-opposite/70 bg-cover bg-center sm:h-48"
         style={

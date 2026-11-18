@@ -30,14 +30,14 @@ export function SectionHeading({
         <Heading
           id={id}
           className={cn(
-            "truncate font-bold tracking-tight text-foreground",
+            "truncate font-display font-bold tracking-tight text-foreground",
             Heading === "h1" ? "text-2xl" : "text-xl",
           )}
         >
           {title}
         </Heading>
         {badge && (
-          <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
+          <span className="bg-primary px-2 py-0.5 text-[0.6875rem] font-bold tracking-[0.08em] uppercase text-primary-foreground">
             {badge}
           </span>
         )}
@@ -49,4 +49,4 @@ export function SectionHeading({
 
 /** Trailing "see all" link used in section headings. */
 export const sectionLinkClass =
-  "inline-flex min-h-11 items-center text-sm font-medium text-primary hover:underline";
+  "inline-flex min-h-11 items-center eyebrow text-primary hover:underline";
