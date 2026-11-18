@@ -55,3 +55,4 @@ __pycache__
 # claude
 CLAUDE.md
 /src/generated/prisma
+.claude/
