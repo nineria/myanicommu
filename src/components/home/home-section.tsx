@@ -1,22 +1,16 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { AlertCircle, ChevronUp, Pencil } from "lucide-react";
+import { ChevronUp, Pencil } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   HomePostFormDialog,
   type HomePostValues,
 } from "@/components/home/home-post-form-dialog";
+import { AlertBox } from "@/components/post/announcement-banner";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
-
-const _fmt = (d: Date | string) =>
-  new Date(d).toLocaleDateString("th-TH", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
 
 export type ReviewItem = {
   id: string;
@@ -150,35 +144,32 @@ export function HomePostCard({ post }: { post: HomePostItem }) {
   const [editing, setEditing] = useState(false);
   return (
     <>
-      <div className="rounded-lg shadow-md" role="status">
-        <div className="flex flex-row items-center rounded-lg border-2 border-primary bg-primary">
-          <AlertCircle size={25} className="m-1 shrink-0 text-white" />
-          <div className="relative flex w-full flex-row rounded-r-lg bg-card px-2 py-2 text-foreground">
-            <div className="w-full pr-8">
-              <Link
-                href={post.headerLink || "/"}
-                className="text-sm font-bold hover:underline md:text-base"
-              >
-                {post.header || "หัวข้อย่อย"}
-              </Link>
-              <div
-                className="rich-text text-xs md:text-sm"
-                dangerouslySetInnerHTML={{ __html: post.body }}
-              />
-            </div>
-            {me?.role === "ADMIN" && (
-              <button
-                type="button"
-                onClick={() => setEditing(true)}
-                aria-label="แก้ไข"
-                className="absolute top-2 right-2 text-[#aaa] hover:opacity-75"
-              >
-                <Pencil size={18} />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+      <AlertBox
+        color="border-primary bg-primary"
+        action={
+          me?.role === "ADMIN" && (
+            <button
+              type="button"
+              onClick={() => setEditing(true)}
+              aria-label="แก้ไข"
+              className="absolute top-2 right-2 text-[#aaa] hover:opacity-75"
+            >
+              <Pencil size={18} />
+            </button>
+          )
+        }
+      >
+        <Link
+          href={post.headerLink || "/"}
+          className="text-sm font-bold hover:underline md:text-base"
+        >
+          {post.header || "หัวข้อย่อย"}
+        </Link>
+        <div
+          className="rich-text text-xs md:text-sm"
+          dangerouslySetInnerHTML={{ __html: post.body }}
+        />
+      </AlertBox>
       {editing && (
         <HomePostFormDialog
           open={editing}

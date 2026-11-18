@@ -1,50 +1,53 @@
-import { AlertTriangle, CheckCircle2, Megaphone } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const STYLE = {
-  DANGER: {
-    box: "border-red-500 bg-red-500/10",
-    icon: AlertTriangle,
-    color: "text-red-500",
-  },
-  WARNING: {
-    box: "border-yellow-500 bg-yellow-500/10",
-    icon: Megaphone,
-    color: "text-yellow-500",
-  },
-  SUCCESS: {
-    box: "border-teal-500 bg-teal-500/10",
-    icon: CheckCircle2,
-    color: "text-teal-500",
-  },
+const COLOR = {
+  DANGER: "border-red-500 bg-red-500",
+  WARNING: "border-orange-500 bg-orange-500",
+  SUCCESS: "border-green-500 bg-green-500",
 } as const;
+
+/** Old Mantine-era alert: coloured frame + icon strip around a flat card. */
+export function AlertBox({
+  color,
+  children,
+  action,
+}: {
+  color: string;
+  children: React.ReactNode;
+  action?: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-lg shadow-md" role="status">
+      <div
+        className={cn("flex flex-row items-center rounded-lg border-2", color)}
+      >
+        <AlertCircle size={25} className="m-1 shrink-0 text-white" />
+        <div className="relative flex w-full flex-row rounded-r-lg bg-card px-2 py-2 text-foreground">
+          <div className="w-full pr-8">{children}</div>
+          {action}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function AnnouncementBanner({
   type,
   title,
   content,
 }: {
-  type: keyof typeof STYLE;
+  type: keyof typeof COLOR;
   title: string;
   content: string;
 }) {
-  const s = STYLE[type];
-  const Icon = s.icon;
   return (
-    <div
-      className={cn(
-        "flex gap-3 rounded-lg border-l-4 p-3 text-foreground",
-        s.box,
-      )}
-    >
-      <Icon className={cn("mt-0.5 size-5 shrink-0", s.color)} />
-      <div className="min-w-0">
-        <p className="font-bold">{title}</p>
-        <div
-          className="rich-text text-sm"
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
-      </div>
-    </div>
+    <AlertBox color={COLOR[type]}>
+      <h1 className="text-sm font-bold md:text-base">{title}</h1>
+      <div
+        className="rich-text text-xs md:text-sm"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    </AlertBox>
   );
 }
