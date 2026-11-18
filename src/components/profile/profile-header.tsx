@@ -41,16 +41,16 @@ export function ProfileHeader({
   ];
 
   return (
-    <div className="overflow-hidden rounded-3xl border bg-card">
+    <div className="overflow-hidden rounded-lg bg-card shadow-md">
       <div
-        className="h-36 bg-gradient-to-br from-primary/60 to-opposite/50 bg-cover bg-center sm:h-52"
+        className="h-32 bg-gradient-to-r from-primary/60 to-opposite/60 bg-cover bg-center sm:h-44"
         style={
           user.banner ? { backgroundImage: `url(${user.banner})` } : undefined
         }
       />
-      <div className="px-5 pb-5">
+      <div className="px-4 pb-4">
         <div className="-mt-12 flex flex-wrap items-end justify-between gap-2">
-          <Avatar className="size-24 border-4 border-card shadow-lg">
+          <Avatar className="size-24 border-4 border-card">
             <AvatarImage src={user.avatar ?? undefined} alt={user.username} />
             <AvatarFallback className="text-2xl">
               {user.username.slice(0, 2).toUpperCase()}
@@ -71,7 +71,7 @@ export function ProfileHeader({
             />
           )}
         </div>
-        <h1 className="mt-3 text-2xl font-bold text-foreground">
+        <h1 className="mt-2 text-xl font-bold text-foreground">
           {user.username}
         </h1>
         <div className="mt-1 flex flex-wrap gap-1">
@@ -82,7 +82,7 @@ export function ProfileHeader({
               from={r.colorFrom}
               to={r.colorTo}
               deg={35}
-              className=""
+              className="rounded-none"
             />
           ))}
         </div>
@@ -92,13 +92,13 @@ export function ProfileHeader({
           </p>
         )}
         {links.length > 0 && (
-          <div className="mt-3 flex gap-2">
+          <div className="mt-3 flex gap-3">
             {links.map(({ href, icon: Icon, label }) => (
               <a
                 key={label}
                 href={`/external-link?external=${encodeURIComponent(href ?? "")}`}
                 aria-label={label}
-                className="grid size-9 place-items-center rounded-full bg-muted text-muted-foreground transition-colors hover:text-primary"
+                className="text-foreground/70 hover:text-primary"
               >
                 <Icon className="size-5" />
               </a>
@@ -107,8 +107,8 @@ export function ProfileHeader({
         )}
         <div className="mt-4 grid grid-cols-4 gap-2 text-center">
           {stats.map((s) => (
-            <div key={s.label} className="rounded-2xl bg-muted py-3">
-              <div className="text-xl font-bold text-foreground tabular-nums">
+            <div key={s.label} className="rounded-md bg-muted/50 py-2">
+              <div className="text-lg font-bold text-foreground">
                 {kFormatter(s.value)}
               </div>
               <div className="text-xs text-muted-foreground">{s.label}</div>

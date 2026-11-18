@@ -29,9 +29,9 @@ export default async function HomePage() {
   return (
     <>
       <AdSide />
-      <WidePage className="space-y-8">
+      <WidePage className="space-y-2">
         {today.length > 0 && <HeroSection posts={today} />}
-        <div className="grid items-start gap-4 lg:grid-cols-2">
+        <div className="grid items-start gap-2 lg:grid-cols-2">
           <TopReviews
             reviews={reviews.map((r) => ({
               id: r.id,
@@ -41,7 +41,7 @@ export default async function HomePage() {
               date: fmt(r.createdAt),
             }))}
           />
-          <div className="space-y-4">
+          <div className="space-y-2">
             {homePosts.map((p) => (
               <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
             ))}

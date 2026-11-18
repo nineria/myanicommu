@@ -27,11 +27,13 @@ export function SearchView() {
     debounced.length > 0 && (isFetching || q.trim() !== debounced);
 
   return (
-    <div className="page-in space-y-5">
-      <h1 className="text-2xl font-bold sm:text-3xl">ค้นหา</h1>
+    <div className="page-in space-y-2">
+      <h1 className="rounded-lg bg-card px-3 py-1 text-sm font-bold shadow-md md:text-base">
+        ค้นหา
+      </h1>
       <div className="flex items-center gap-3">
         <div className="relative flex-1">
-          <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             autoFocus
             type="search"
@@ -39,7 +41,7 @@ export function SearchView() {
             onChange={(e) => setQ(e.target.value || null)}
             placeholder="ค้นหาจากชื่อโพสต์"
             aria-label="ค้นหาจากชื่อโพสต์"
-            className="h-11 rounded-full bg-card pl-10 [&::-webkit-search-cancel-button]:hidden"
+            className="rounded-full bg-card pl-9 [&::-webkit-search-cancel-button]:hidden"
           />
         </div>
         <LayoutToggle layout={layout} onChange={setLayout} />

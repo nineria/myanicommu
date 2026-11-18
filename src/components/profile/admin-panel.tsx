@@ -30,7 +30,7 @@ import {
 import { RANKS, REPORT_REASONS } from "@/lib/constants";
 import { useTRPC } from "@/trpc/client";
 
-const card = "rounded-2xl border bg-card p-4";
+const card = "rounded-lg bg-card p-4 shadow-md";
 
 export function AdminPanel() {
   return (
@@ -63,7 +63,7 @@ function AdminStats() {
       {items.map((i) => (
         <div
           key={i.label}
-          className="rounded-2xl border bg-card p-3 text-center"
+          className="rounded-lg bg-card p-3 text-center shadow-md"
         >
           <div className="text-2xl font-bold text-foreground">
             {i.value ?? "-"}
