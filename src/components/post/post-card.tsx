@@ -13,14 +13,24 @@ const fmt = (d: Date | string) =>
     day: "numeric",
   });
 
+/**
+ * Home-page rows fetch 4 posts: only the 3-col desktop layout hides the 4th; phone (1 col) and
+ * tablet (2 cols) show all 4 so no cell is left empty.
+ */
+export const HOME_GRID_CLASS =
+  "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:[&>*:nth-child(n+4)]:hidden";
+
 export function PostCard({
   post,
   layout = "grid",
   priority,
+  prefetch,
 }: {
   post: PostCardData;
   layout?: "grid" | "list";
   priority?: boolean;
+  /** Fully prefetch the post page (data + RSC payload) so opening it is instant. */
+  prefetch?: boolean;
 }) {
   const href = `/posts/${post.author.username}/${post.id}`;
   const badges = post.tags.map((t) => (
@@ -54,7 +64,10 @@ export function PostCard({
             src={post.image}
             alt=""
             fill
-            sizes="350px"
+            sizes="64px"
+            quality={30}
+            loading="lazy"
+            aria-hidden
             className="scale-110 object-cover blur-[3px]"
           />
           <Image
@@ -85,6 +98,7 @@ export function PostCard({
   return (
     <Link
       href={href}
+      prefetch={prefetch}
       className={cn(
         "group relative flex h-full flex-col overflow-hidden bg-card transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
       )}
@@ -94,7 +108,10 @@ export function PostCard({
           src={post.image}
           alt=""
           fill
-          sizes="(min-width:768px) 33vw, 100vw"
+          sizes="64px"
+          quality={30}
+          loading="lazy"
+          aria-hidden
           className="scale-110 object-cover blur-[3px]"
         />
         <Image

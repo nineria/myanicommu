@@ -39,6 +39,7 @@ const plexThai = IBM_Plex_Sans_Thai({
   variable: "--font-plex-thai",
   subsets: ["latin", "thai"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const archivo = Archivo_Black({
@@ -55,7 +56,9 @@ const workSans = Work_Sans({
 const prompt = Prompt({
   variable: "--font-prompt",
   subsets: ["latin", "thai"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+  preload: false,
 });
 
 export const viewport: Viewport = {

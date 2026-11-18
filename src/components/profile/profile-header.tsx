@@ -1,4 +1,5 @@
 import { CalendarDays, Globe } from "lucide-react";
+import Image from "next/image";
 import { FaFacebook, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { TagBadge } from "@/components/post/tag-badge";
 import { EditProfileButton } from "@/components/profile/edit-profile-dialog";
@@ -35,15 +36,18 @@ export function ProfileHeader({
 
   return (
     <section className="overflow-hidden rounded-lg bg-card">
-      <div
-        className="h-28 bg-gradient-to-br from-primary/70 to-opposite/70 bg-cover bg-center sm:h-48"
-        style={
-          user.banner ? { backgroundImage: `url(${user.banner})` } : undefined
-        }
-        role="img"
-        aria-label={user.banner ? `ภาพปกของ ${user.username}` : undefined}
-        aria-hidden={user.banner ? undefined : true}
-      />
+      <div className="relative h-28 overflow-hidden bg-gradient-to-br from-primary/70 to-opposite/70 sm:h-48">
+        {user.banner && (
+          <Image
+            src={user.banner}
+            alt={`ภาพปกของ ${user.username}`}
+            fill
+            priority
+            sizes="(min-width:1024px) 1024px, 100vw"
+            className="object-cover"
+          />
+        )}
+      </div>
 
       <div className="px-4 pb-5 sm:px-6">
         <div className="-mt-12 flex items-end justify-between gap-3 sm:-mt-14">
