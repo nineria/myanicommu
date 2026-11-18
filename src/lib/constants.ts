@@ -16,15 +16,36 @@ export const POST_TAGS: TagValue[] = [
   { label: "ปัญหา", colorFrom: "#000000", colorTo: "#434343" },
 ];
 
+/**
+ * User ranks an admin can hand out. Grouped: starter -> contributor -> specialist -> staff -> legend.
+ * `label` is the identity (unique per user), so renaming one does not migrate existing rows.
+ */
 export const RANKS: TagValue[] = [
-  { label: "ผู้กล้า", colorFrom: "#393E46", colorTo: "#393E46" },
-  { label: "นายทุน", colorFrom: "#E1D89F", colorTo: "#D89216" },
-  { label: "สมาชิกใหม่", colorFrom: "#5C3D2E", colorTo: "#5C3D2E" },
-  { label: "ผู้ดูแลระบบ", colorFrom: "#FF004D", colorTo: "#9D0B28" },
+  // starter
+  { label: "มือใหม่หัดดู", colorFrom: "#6B7280", colorTo: "#4B5563" },
+  { label: "โอตาคุตัวยง", colorFrom: "#8B5CF6", colorTo: "#6D28D9" },
+  // contributor
   { label: "นักเขียนรีวิวมือหนึ่ง", colorFrom: "#237A57", colorTo: "#093028" },
+  { label: "นักข่าวสายด่วน", colorFrom: "#F97316", colorTo: "#DC2626" },
+  { label: "ผู้ตอบคำถามดีเด่น", colorFrom: "#4C6EF5", colorTo: "#15AABF" },
+  { label: "ศิลปินแฟนอาร์ต", colorFrom: "#EC4899", colorTo: "#F59E0B" },
+  // specialist
+  { label: "เซียนอนิเมะ", colorFrom: "#0EA5E9", colorTo: "#1E3A8A" },
+  { label: "นักล่ามังงะ", colorFrom: "#14B8A6", colorTo: "#0F766E" },
+  { label: "ผู้กล้าแห่งชุมชน", colorFrom: "#393E46", colorTo: "#111827" },
+  // supporters & staff
+  { label: "ผู้สนับสนุน", colorFrom: "#E1D89F", colorTo: "#D89216" },
+  { label: "ผู้ช่วยดูแล", colorFrom: "#2563EB", colorTo: "#1D4ED8" },
+  { label: ADMIN_RANK_LABEL, colorFrom: "#FF004D", colorTo: "#9D0B28" },
+  // legend
+  { label: "ตำนานแห่งชุมชน", colorFrom: "#FDE047", colorTo: "#B45309" },
 ];
 
-export const DEFAULT_RANK = RANKS[2];
+export const DEFAULT_RANK: TagValue = {
+  label: "มือใหม่หัดดู",
+  colorFrom: "#6B7280",
+  colorTo: "#4B5563",
+};
 
 export const KIND_BY_TAG: Record<string, "NEWS" | "REVIEW" | "QNA"> = {
   ข่าวสาร: "NEWS",

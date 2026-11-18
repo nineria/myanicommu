@@ -50,6 +50,7 @@
     "react-dropzone": "^20.2.0",
     "react-hook-form": "^7.92.0",
     "react-icons": "^5.7.0",
+    "recharts": "3.8.0",
     "sanitize-html": "^2.18.2",
     "server-only": "^0.0.1",
     "sonner": "^2.0.8",
