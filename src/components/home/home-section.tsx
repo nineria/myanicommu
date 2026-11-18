@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChevronUp, Megaphone, Pencil } from "lucide-react";
+import { AlertCircle, ChevronUp, Pencil } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 
-const fmt = (d: Date | string) =>
+const _fmt = (d: Date | string) =>
   new Date(d).toLocaleDateString("th-TH", {
     year: "numeric",
     month: "short",
@@ -150,46 +150,33 @@ export function HomePostCard({ post }: { post: HomePostItem }) {
   const [editing, setEditing] = useState(false);
   return (
     <>
-      <div
-        role="status"
-        className="flex gap-3 rounded-lg border-l-4 border-l-primary bg-card p-3 text-foreground shadow-md"
-      >
-        <Megaphone className="mt-0.5 size-5 shrink-0 text-primary" />
-        <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <Link
-                href={post.titleLink || "/"}
-                className="text-xs text-foreground/60 hover:underline"
-              >
-                {post.title || "ประกาศ"}
-              </Link>
+      <div className="rounded-lg shadow-md" role="status">
+        <div className="flex flex-row items-center rounded-lg border-2 border-primary bg-primary">
+          <AlertCircle size={25} className="m-1 shrink-0 text-white" />
+          <div className="relative flex w-full flex-row rounded-r-lg bg-card px-2 py-2 text-foreground">
+            <div className="w-full pr-8">
               <Link
                 href={post.headerLink || "/"}
-                className="block font-bold hover:underline"
+                className="text-sm font-bold hover:underline md:text-base"
               >
                 {post.header || "หัวข้อย่อย"}
               </Link>
+              <div
+                className="rich-text text-xs md:text-sm"
+                dangerouslySetInnerHTML={{ __html: post.body }}
+              />
             </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <span className="text-xs text-muted-foreground">
-                {fmt(post.updatedAt)}
-              </span>
-              {me?.role === "ADMIN" && (
-                <button
-                  type="button"
-                  onClick={() => setEditing(true)}
-                  aria-label="แก้ไข"
-                >
-                  <Pencil className="size-4 hover:opacity-75" />
-                </button>
-              )}
-            </div>
+            {me?.role === "ADMIN" && (
+              <button
+                type="button"
+                onClick={() => setEditing(true)}
+                aria-label="แก้ไข"
+                className="absolute top-2 right-2 text-[#aaa] hover:opacity-75"
+              >
+                <Pencil size={18} />
+              </button>
+            )}
           </div>
-          <div
-            className="rich-text mt-1 text-sm opacity-80"
-            dangerouslySetInnerHTML={{ __html: post.body }}
-          />
         </div>
       </div>
       {editing && (
