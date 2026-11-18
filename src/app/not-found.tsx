@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 text-center">
       <Logo />
-      <div className="grid size-16 place-items-center rounded-2xl bg-muted text-muted-foreground">
+      <div className="grid size-16 place-items-center rounded-xl bg-muted text-muted-foreground">
         <Compass className="size-8" />
       </div>
       <div className="max-w-sm space-y-2">

@@ -45,8 +45,8 @@ export function CommentSection({
       </h2>
       {isPending && (
         <div className="space-y-3" aria-busy="true">
-          <Skeleton className="h-28 w-full rounded-2xl" />
-          <Skeleton className="h-28 w-full rounded-2xl" />
+          <Skeleton className="h-28 w-full rounded-xl" />
+          <Skeleton className="h-28 w-full rounded-xl" />
         </div>
       )}
       {comments?.map((c) => (
@@ -64,7 +64,7 @@ export function CommentSection({
       ))}
 
       {!mePending && !me && (
-        <div className="flex flex-col items-center gap-3 rounded-2xl border bg-card py-10 text-foreground">
+        <div className="flex flex-col items-center gap-3 rounded-xl border bg-card py-10 text-foreground">
           <p className="text-center">เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ</p>
           <p className="mb-2 text-center">
             <Logo className="inline" /> และอื่น ๆ อีกมากมาย!
@@ -111,7 +111,7 @@ function AddComment({
   };
 
   return (
-    <div className="rounded-2xl border bg-card p-3">
+    <div className="rounded-xl border bg-card p-3">
       <RichTextEditor
         key={key}
         value={value}
@@ -177,7 +177,7 @@ function CommentItem({
     <div
       id={comment.id}
       className={cn(
-        "overflow-hidden rounded-2xl border bg-card",
+        "overflow-hidden rounded-xl border bg-card",
         active && "border-2 border-destructive",
       )}
     >

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChevronUp, Pencil, Plus } from "lucide-react";
+import { ChevronUp, Megaphone, Pencil, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -53,11 +53,11 @@ function Collapsible({
     } catch {}
   };
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
+    <section className="overflow-hidden rounded-xl border bg-card">
       <div className="flex items-center justify-between gap-2 px-4 py-3">
         <Link
           href={titleLink || "/"}
-          className="truncate text-lg font-bold hover:text-primary"
+          className="truncate text-lg font-semibold hover:text-primary"
         >
           {title}
         </Link>
@@ -159,36 +159,56 @@ export type HomePostItem = HomePostValues & {
   updatedAt: Date | string;
 };
 
+/** Admin announcement shown as an alert strip at the top of the home page. */
 export function HomePostCard({ post }: { post: HomePostItem }) {
   const trpc = useTRPC();
   const { data: me } = useQuery(trpc.user.me.queryOptions());
   const [editing, setEditing] = useState(false);
   return (
     <>
-      <Collapsible
-        title={post.title || "หัวข้อหลัก"}
-        titleLink={post.titleLink}
-        edit={
-          me?.role === "ADMIN" && (
-            <button
-              type="button"
-              onClick={() => setEditing(true)}
-              aria-label="แก้ไข"
-              className="grid size-8 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-            >
-              <Pencil className="size-4" />
-            </button>
-          )
-        }
+      <div
+        role="status"
+        className="flex gap-3 rounded-xl border border-l-4 border-l-primary bg-card p-3.5 sm:p-4"
       >
-        <Status
-          html
-          header={post.header || "หัวข้อย่อย"}
-          headerLink={post.headerLink || "/"}
-          body={post.body}
-          date={fmt(post.updatedAt)}
-        />
-      </Collapsible>
+        <Megaphone className="mt-0.5 size-5 shrink-0 text-primary" />
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-2">
+            <div className="min-w-0">
+              <Link
+                href={post.titleLink || "/"}
+                className="text-xs font-medium text-muted-foreground hover:text-foreground"
+              >
+                {post.title || "ประกาศ"}
+              </Link>
+              <Link
+                href={post.headerLink || "/"}
+                className="block font-semibold hover:text-primary"
+              >
+                {post.header || "หัวข้อย่อย"}
+              </Link>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              <span className="text-xs text-muted-foreground">
+                {fmt(post.updatedAt)}
+              </span>
+              {me?.role === "ADMIN" && (
+                <button
+                  type="button"
+                  onClick={() => setEditing(true)}
+                  aria-label="แก้ไข"
+                  className="grid size-7 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  <Pencil className="size-4" />
+                </button>
+              )}
+            </div>
+          </div>
+          <div
+            className="rich-text mt-1 text-sm text-muted-foreground"
+            dangerouslySetInnerHTML={{ __html: post.body }}
+          />
+        </div>
+      </div>
       {editing && (
         <HomePostFormDialog
           open={editing}

@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "ค้นหา" };
 
 export default function Page() {
   return (
-    <div className="mx-auto w-full max-w-5xl">
+    <div className="w-full">
       <Suspense>
         <SearchView />
       </Suspense>
