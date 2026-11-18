@@ -8,14 +8,14 @@ export function HeroSection({ posts }: { posts: PostCardData[] }) {
   return (
     <section className="relative" aria-labelledby="hero-title">
       <div className="mb-4 flex items-end justify-between">
-        <h1 id="hero-title" className="text-2xl font-bold sm:text-3xl">
+        <h1 id="hero-title" className="text-xl font-semibold">
           โพสต์ใหม่ที่น่าสนใจ
         </h1>
         <Link
           href="/posts"
-          className="text-sm font-medium text-primary hover:underline"
+          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          ดูทั้งหมด
+          ดูทั้งหมด →
         </Link>
       </div>
       <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">

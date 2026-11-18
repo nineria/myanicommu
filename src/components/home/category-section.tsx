@@ -18,14 +18,14 @@ export function CategorySection({
   return (
     <section aria-labelledby={id}>
       <div className="mb-4 flex items-end justify-between">
-        <h2 id={id} className="text-xl font-bold sm:text-2xl">
+        <h2 id={id} className="text-xl font-semibold">
           {title}
         </h2>
         <Link
           href={href}
-          className="text-sm font-medium text-primary hover:underline"
+          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          ดูทั้งหมด
+          ดูทั้งหมด →
         </Link>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

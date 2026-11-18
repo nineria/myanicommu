@@ -101,7 +101,7 @@ export default async function PostPage({ params }: Props) {
           </div>
         </header>
 
-        <div className="relative overflow-hidden rounded-3xl bg-muted">
+        <div className="relative overflow-hidden rounded-xl bg-muted">
           {/* biome-ignore lint/performance/noImgElement: arbitrary remote post image */}
           <img
             src={post.image}
@@ -110,7 +110,7 @@ export default async function PostPage({ params }: Props) {
           />
         </div>
 
-        <div className="overflow-hidden rounded-2xl border bg-card">
+        <div className="overflow-hidden rounded-xl border bg-card">
           <div className="flex flex-col md:flex-row">
             <div className="border-b md:w-56 md:shrink-0 md:border-r md:border-b-0">
               <AuthorPanel

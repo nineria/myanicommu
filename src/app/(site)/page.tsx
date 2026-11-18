@@ -35,8 +35,15 @@ export default async function HomePage() {
   return (
     <>
       <WidePage className="space-y-8">
+        {homePosts.length > 0 && (
+          <div className="space-y-3">
+            {homePosts.map((p) => (
+              <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
+            ))}
+          </div>
+        )}
         {today.length > 0 && <HeroSection posts={today} />}
-        <div className="grid items-start gap-4 lg:grid-cols-2">
+        <div>
           <TopReviews
             reviews={reviews.map((r) => ({
               id: r.id,
@@ -46,11 +53,6 @@ export default async function HomePage() {
               date: fmt(r.createdAt),
             }))}
           />
-          <div className="space-y-4">
-            {homePosts.map((p) => (
-              <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
-            ))}
-          </div>
         </div>
         <CategorySection
           id="cat-news"

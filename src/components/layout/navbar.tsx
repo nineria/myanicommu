@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { CONTAINER_CLASS } from "@/components/layout/container";
 import { Logo } from "@/components/layout/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,7 @@ export function Navbar() {
 
   return (
     <header className="glass sticky top-0 z-50 border-b border-border/70">
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center gap-2 px-4">
+      <div className={cn(CONTAINER_CLASS, "flex h-14 items-center gap-2")}>
         <Logo className="mr-2" />
 
         <nav
@@ -54,8 +55,9 @@ export function Navbar() {
                 href={item.path}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "rounded-full px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
-                  active && "bg-accent text-foreground",
+                  "relative rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
+                  active &&
+                    "text-foreground after:absolute after:inset-x-3 after:-bottom-[11px] after:h-0.5 after:bg-primary",
                 )}
               >
                 {item.name}

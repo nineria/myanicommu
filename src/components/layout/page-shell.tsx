@@ -13,9 +13,7 @@ export function PageShell({
   return (
     <>
       {ads}
-      <div className={cn("page-in mx-auto w-full max-w-3xl", className)}>
-        {children}
-      </div>
+      <div className={cn("page-in w-full", className)}>{children}</div>
     </>
   );
 }

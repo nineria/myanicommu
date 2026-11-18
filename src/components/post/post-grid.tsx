@@ -56,7 +56,7 @@ export function LayoutToggle({
 
 export function EmptyState({ title, hint }: { title: string; hint?: string }) {
   return (
-    <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed py-14 text-center">
+    <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed py-14 text-center">
       <SearchX className="size-8 text-muted-foreground" />
       <p className="font-semibold">{title}</p>
       {hint && <p className="text-sm text-muted-foreground">{hint}</p>}
@@ -75,7 +75,7 @@ export function PostGridSkeleton({
   return layout === "grid" ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((i) => (
-        <div key={i} className="overflow-hidden rounded-2xl border bg-card">
+        <div key={i} className="overflow-hidden rounded-xl border bg-card">
           <Skeleton className="aspect-[16/10] rounded-none" />
           <div className="space-y-2 p-3.5">
             <Skeleton className="h-4 w-11/12" />
@@ -88,7 +88,7 @@ export function PostGridSkeleton({
   ) : (
     <div className="flex flex-col gap-3">
       {items.map((i) => (
-        <div key={i} className="flex gap-4 rounded-2xl border bg-card p-2.5">
+        <div key={i} className="flex gap-4 rounded-xl border bg-card p-2.5">
           <Skeleton className="aspect-[16/10] w-32 shrink-0 sm:w-52" />
           <div className="flex-1 space-y-2 py-1">
             <Skeleton className="h-4 w-1/4" />

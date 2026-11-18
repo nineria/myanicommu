@@ -10,7 +10,7 @@ export function ExternalNews({ items }: { items: ExternalNewsItem[] }) {
   return (
     <section
       aria-labelledby="external-news-title"
-      className="overflow-hidden rounded-2xl border bg-card"
+      className="overflow-hidden rounded-xl border bg-card"
     >
       <div className="flex items-baseline justify-between gap-2 px-4 py-3">
         <h2 id="external-news-title" className="text-lg font-bold">
