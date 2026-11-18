@@ -1,5 +1,6 @@
 {
   "github": {
     "silent": true
-  }
+  },
+  "crons": [{ "path": "/api/cron/import-news", "schedule": "0 3 * * *" }]
 }
