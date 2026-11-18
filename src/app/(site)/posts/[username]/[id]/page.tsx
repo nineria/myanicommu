@@ -164,6 +164,8 @@ export default async function PostPage({ params }: Props) {
                 height={448}
                 sizes="(min-width:768px) 640px, 100vw"
                 priority
+                placeholder={post.imageBlur ? "blur" : "empty"}
+                blurDataURL={post.imageBlur ?? undefined}
                 className="mx-auto mb-5 h-auto max-h-[28rem] w-auto rounded-lg object-contain"
               />
               <ExternalLinkGuard>

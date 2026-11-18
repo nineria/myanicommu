@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { getBlur } from "@/lib/blur";
 import { RESERVED_USERNAMES, USERNAME_REGEX } from "@/lib/constants";
 import { prisma } from "@/lib/db";
 import {
@@ -41,6 +42,7 @@ export const userRouter = createTRPCRouter({
         username: user.username,
         avatar: user.avatar,
         banner: user.banner,
+        bannerBlur: await getBlur(user.banner),
         bio: user.bio,
         role: user.role,
         website: user.website,

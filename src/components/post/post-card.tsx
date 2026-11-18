@@ -13,6 +13,11 @@ const fmt = (d: Date | string) =>
     day: "numeric",
   });
 
+/** The stored ~16px thumbnail, stretched to fill the frame: shows blurred while the real image loads and fills letterbox bars. */
+function blurBg(blur: string | null): React.CSSProperties | undefined {
+  return blur ? { backgroundImage: `url("${blur}")` } : undefined;
+}
+
 /**
  * Home-page rows fetch 4 posts: only the 3-col desktop layout hides the 4th; phone (1 col) and
  * tablet (2 cols) show all 4 so no cell is left empty.
@@ -59,17 +64,10 @@ export function PostCard({
         href={href}
         className="group relative flex w-full overflow-hidden bg-card transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <div className="relative hidden h-[120px] w-[350px] shrink-0 overflow-hidden sm:block">
-          <Image
-            src={post.image}
-            alt=""
-            fill
-            sizes="64px"
-            quality={30}
-            loading="lazy"
-            aria-hidden
-            className="scale-110 object-cover blur-[3px]"
-          />
+        <div
+          className="relative hidden h-[120px] w-[350px] shrink-0 overflow-hidden bg-muted bg-cover bg-center sm:block"
+          style={blurBg(post.blur)}
+        >
           <Image
             src={post.image}
             alt={post.title}
@@ -103,17 +101,10 @@ export function PostCard({
         "group relative flex h-full flex-col overflow-hidden bg-card transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
       )}
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden">
-        <Image
-          src={post.image}
-          alt=""
-          fill
-          sizes="64px"
-          quality={30}
-          loading="lazy"
-          aria-hidden
-          className="scale-110 object-cover blur-[3px]"
-        />
+      <div
+        className="relative aspect-[16/9] w-full overflow-hidden bg-muted bg-cover bg-center"
+        style={blurBg(post.blur)}
+      >
         <Image
           src={post.image}
           alt={post.title}
