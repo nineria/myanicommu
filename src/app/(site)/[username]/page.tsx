@@ -31,7 +31,7 @@ export default async function ProfilePage({ params }: Props) {
 
   return (
     <PageShell>
-      <div className="space-y-3">
+      <div className="space-y-4">
         <ProfileHeader user={user} isOwner={isOwner} />
         {posts.length > 0 && <PostsTable posts={posts} username={username} />}
         {isOwner && me?.role === "ADMIN" && <AdminPanel />}

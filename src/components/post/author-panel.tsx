@@ -34,12 +34,12 @@ export function AuthorPanel({
   compact?: boolean;
 }) {
   return (
-    <div className="px-2 py-4">
-      <div className="flex flex-wrap items-center justify-around gap-2">
+    <div className="px-4 py-5">
+      <div className="flex flex-row items-center gap-3 md:flex-col md:text-center">
         <Link href={`/${author.username}`}>
           <Avatar
             className={cn(
-              "border-2 border-foreground/50",
+              "ring-2 ring-border",
               compact ? "size-14" : "size-20",
             )}
           >
@@ -52,24 +52,26 @@ export function AuthorPanel({
             </AvatarFallback>
           </Avatar>
         </Link>
-        <div className="flex flex-col">
+        <div className="flex flex-col md:items-center">
           <Link
             href={`/${author.username}`}
-            className="text-red-500 hover:underline"
+            className="font-semibold text-primary hover:underline"
           >
             {author.username}
           </Link>
           <p
             className={cn(
               "text-xs",
-              author.role === "ADMIN" ? "text-yellow-400" : "text-foreground",
+              author.role === "ADMIN"
+                ? "font-medium text-amber-500"
+                : "text-muted-foreground",
             )}
           >
             {author.role === "ADMIN" ? ADMIN_RANK_LABEL : "สมาชิก"}
           </p>
         </div>
         {author.ranks.length > 0 && (
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-wrap gap-1 md:justify-center">
             {author.ranks.map((r) => (
               <TagBadge
                 key={r.id}
@@ -77,14 +79,14 @@ export function AuthorPanel({
                 from={r.colorFrom}
                 to={r.colorTo}
                 deg={35}
-                className="w-full justify-center rounded-none"
+                className="justify-center"
               />
             ))}
           </div>
         )}
       </div>
       {date !== undefined && (
-        <div className="mt-4 flex justify-around text-xs text-foreground/80">
+        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground md:flex-col md:items-center">
           <span className="flex items-center gap-1">
             <CalendarDays className="size-3.5" />
             {fmt(date)}

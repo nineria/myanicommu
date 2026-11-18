@@ -6,7 +6,7 @@ import {
   TopReviews,
 } from "@/components/home/home-section";
 import { AdSide } from "@/components/layout/ad-side";
-import { PageShell } from "@/components/layout/page-shell";
+import { WidePage } from "@/components/layout/page-shell";
 import { getApi } from "@/trpc/caller";
 
 export const dynamic = "force-dynamic";
@@ -27,26 +27,29 @@ export default async function HomePage() {
   ]);
 
   return (
-    <PageShell ads={<AdSide />}>
-      <div className="space-y-2">
+    <>
+      <AdSide />
+      <WidePage className="space-y-8">
         {today.length > 0 && <HeroSection posts={today} />}
-        <TopReviews
-          reviews={reviews.map((r) => ({
-            id: r.id,
-            title: r.title,
-            href: `/posts/${r.username}/${r.id}`,
-            excerpt: r.excerpt,
-            date: fmt(r.createdAt),
-          }))}
-        />
-        <div className="space-y-2">
-          {homePosts.map((p) => (
-            <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
-          ))}
+        <div className="grid items-start gap-4 lg:grid-cols-2">
+          <TopReviews
+            reviews={reviews.map((r) => ({
+              id: r.id,
+              title: r.title,
+              href: `/posts/${r.username}/${r.id}`,
+              excerpt: r.excerpt,
+              date: fmt(r.createdAt),
+            }))}
+          />
+          <div className="space-y-4">
+            {homePosts.map((p) => (
+              <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
+            ))}
+          </div>
         </div>
         <Advertisement />
         <CreateHomePostButton />
-      </div>
-    </PageShell>
+      </WidePage>
+    </>
   );
 }
