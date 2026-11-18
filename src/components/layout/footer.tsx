@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { FaFacebook, FaGithub, FaInstagram, FaXTwitter } from "react-icons/fa6";
-import { CONTAINER_CLASS } from "@/components/layout/container";
-import { Logo } from "@/components/layout/logo";
+import { ResponsiveLogo } from "@/components/layout/logo";
 import { SignOutLink } from "@/components/layout/sign-out-link";
+import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getCurrentUser } from "@/lib/auth";
-import { cn } from "@/lib/utils";
 import { getApi } from "@/trpc/caller";
 
 const SOCIAL = [
@@ -28,11 +27,7 @@ const SOCIAL = [
 ];
 
 export function FooterSkeleton() {
-  return (
-    <div className={cn(CONTAINER_CLASS, "mt-6 pb-28 lg:pb-8")}>
-      <Skeleton className="h-40 w-full rounded-xl" />
-    </div>
-  );
+  return <Skeleton className="mt-10 h-56 w-full rounded-none" />;
 }
 
 export async function Footer() {
@@ -45,7 +40,7 @@ export async function Footer() {
 
   const groups = [
     {
-      title: "สำรวจ",
+      title: "ชุมชนคนรักอนิเมะ",
       links: [
         { label: "โพสต์ใหม่", href: "/posts" },
         { label: "ข่าวสาร", href: "/news" },
@@ -54,64 +49,68 @@ export async function Footer() {
       ],
     },
     {
-      title: "บัญชี",
+      title: "จัดการข้อมูล",
       links: [
         ...(username ? [{ label: "โปรไฟล์", href: `/${username}` }] : []),
         ...(username ? [{ label: "ตั้งค่า", href: "/setting" }] : []),
         { label: "คำถามที่พบบ่อย", href: "/faq" },
       ],
     },
+    {
+      title: "ข้อมูลเว็บไซต์",
+      links: [
+        { label: `จำนวนโพสต์ : ${stats.posts}`, href: "" },
+        { label: `จำนวนสมาชิก : ${stats.members}`, href: "" },
+      ],
+    },
   ];
 
   return (
-    <footer className={cn(CONTAINER_CLASS, "mt-6 pb-28 lg:pb-8")}>
-      <div className="rounded-xl border bg-card p-6 md:p-8">
-        <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div className="max-w-sm">
-            <Logo />
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              ศูนย์กลางในการพูดคุย รีวิว และถามตอบเรื่องอนิเมะ เพื่อให้ทุกคนหาเรื่องใหม่ๆ
-              มาดูได้ไม่รู้จบ
-            </p>
-            <p className="mt-4 text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">
-                {stats.posts.toLocaleString("th-TH")}
-              </span>{" "}
-              โพสต์ ·{" "}
-              <span className="font-semibold text-foreground">
-                {stats.members.toLocaleString("th-TH")}
-              </span>{" "}
-              สมาชิก
-            </p>
-          </div>
+    <footer className="mt-10 border-t-2 border-primary bg-card pt-4 pb-20 md:pt-8 lg:pb-4">
+      <div className="mx-auto flex w-full max-w-4xl justify-center px-4 md:justify-between">
+        <div className="w-[250px] text-center md:text-left">
+          <ResponsiveLogo />
+          <p className="my-2 text-sm text-foreground/80">
+            ศูนย์กลางในการพูดคุย รีวิว และโพสต์ถามตอบคำถามต่างๆ ที่เกี่ยวกับอนิเมะ โปรโมทอนิเมะ
+            และแนะนำเนื้อหาของอนิเมะเพื่อส่งเสริมให้ผู้คนดูอนิเมะมากขึ้น
+          </p>
+        </div>
+        <div className="hidden gap-6 md:flex">
           {groups.map((g) => (
-            <div key={g.title}>
-              <p className="mb-2 text-sm font-semibold">{g.title}</p>
-              <ul className="space-y-1.5">
-                {g.links.map((l) => (
-                  <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-                {g.title === "บัญชี" && username && (
-                  <li>
-                    <SignOutLink />
-                  </li>
-                )}
-              </ul>
+            <div key={g.title} className="w-[150px] lg:w-[200px]">
+              <p className="text-right text-base font-bold text-foreground/80">
+                {g.title}
+              </p>
+              {g.links.map((l) =>
+                l.href ? (
+                  <Link
+                    key={l.label}
+                    href={l.href}
+                    className="mt-1 block text-right text-sm text-foreground/50 hover:underline"
+                  >
+                    {l.label}
+                  </Link>
+                ) : (
+                  <p
+                    key={l.label}
+                    className="mt-1 text-right text-sm text-foreground/50"
+                  >
+                    {l.label}
+                  </p>
+                ),
+              )}
+              {g.title === "จัดการข้อมูล" && username && <SignOutLink />}
             </div>
           ))}
         </div>
-        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t pt-4 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} MyAniCommu
+      </div>
+      <div className="mx-auto w-full max-w-4xl px-4">
+        <Separator className="my-2" />
+        <div className="flex flex-col items-center md:flex-row md:justify-between">
+          <p className="text-sm text-foreground/80">
+            &copy; {new Date().getFullYear()} MyAniCommu. All rights reserved.
           </p>
-          <div className="flex gap-1">
+          <div className="flex">
             {SOCIAL.map(({ href, icon: Icon, label }) => (
               <a
                 key={href}
@@ -119,7 +118,7 @@ export async function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                className="p-2 text-foreground hover:text-primary"
               >
                 <Icon className="size-[18px]" />
               </a>

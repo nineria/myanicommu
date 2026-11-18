@@ -10,7 +10,7 @@ export function SignOutLink() {
     <button
       type="button"
       onClick={() => signOut(() => router.push("/"))}
-      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+      className="mt-1 block w-full text-right text-sm text-foreground/50 hover:underline"
     >
       ออกจากระบบ
     </button>

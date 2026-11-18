@@ -116,11 +116,11 @@ export function PostActions({
             type="button"
             onClick={() => setStar(n)}
             aria-label={`${n} ดาว`}
-            className="rounded p-1 transition-transform hover:scale-110 active:scale-95"
+            className="p-0.5"
           >
             <Star
               className={cn(
-                "size-5",
+                "size-4",
                 n <= myStar
                   ? "fill-yellow-400 text-yellow-400"
                   : "text-muted-foreground",

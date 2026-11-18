@@ -17,18 +17,18 @@ export function CategorySection({
   if (posts.length === 0) return null;
   return (
     <section aria-labelledby={id}>
-      <div className="mb-4 flex items-end justify-between">
-        <h2 id={id} className="text-xl font-semibold">
+      <div className="flex items-center justify-between rounded-lg bg-card px-3 py-1 text-sm font-bold shadow md:text-base">
+        <h2 id={id} className="truncate">
           {title}
         </h2>
         <Link
           href={href}
-          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="text-xs font-normal text-foreground/60 hover:underline"
         >
           ดูทั้งหมด →
         </Link>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-0.5 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
         {posts.map((p) => (
           <PostCard key={p.id} post={p} layout="grid" />
         ))}

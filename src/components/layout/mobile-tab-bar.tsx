@@ -25,7 +25,7 @@ export function MobileTabBar() {
   return (
     <nav
       aria-label="เมนูหลัก"
-      className="glass fixed inset-x-0 bottom-0 z-50 border-t border-border/70 pb-[env(safe-area-inset-bottom)] lg:hidden"
+      className="glass fixed inset-x-0 bottom-0 z-50 border-t-2 border-primary pb-[env(safe-area-inset-bottom)] lg:hidden"
     >
       <ul className="mx-auto flex max-w-md">
         {TABS.map(({ name, path, icon: Icon }) => {

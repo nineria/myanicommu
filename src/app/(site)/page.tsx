@@ -33,48 +33,41 @@ export default async function HomePage() {
     ]);
 
   return (
-    <>
-      <WidePage className="space-y-8">
-        {homePosts.length > 0 && (
-          <div className="space-y-3">
-            {homePosts.map((p) => (
-              <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
-            ))}
-          </div>
-        )}
-        {today.length > 0 && <HeroSection posts={today} />}
-        <div>
-          <TopReviews
-            reviews={reviews.map((r) => ({
-              id: r.id,
-              title: r.title,
-              href: `/posts/${r.username}/${r.id}`,
-              excerpt: r.excerpt,
-              date: fmt(r.createdAt),
-            }))}
-          />
+    <WidePage className="space-y-2">
+      {homePosts.length > 0 && (
+        <div className="space-y-2">
+          {homePosts.map((p) => (
+            <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
+          ))}
         </div>
-        <CategorySection
-          id="cat-news"
-          title="ข่าวสาร"
-          href="/news"
-          posts={news}
+      )}
+      {today.length > 0 && <HeroSection posts={today} />}
+      <div>
+        <TopReviews
+          reviews={reviews.map((r) => ({
+            id: r.id,
+            title: r.title,
+            href: `/posts/${r.username}/${r.id}`,
+            excerpt: r.excerpt,
+            date: fmt(r.createdAt),
+          }))}
         />
-        <ExternalNews items={annNews} />
-        <CategorySection
-          id="cat-qna"
-          title="Q&A ถาม-ตอบ"
-          href="/qandas"
-          posts={qnas}
-        />
-        <CategorySection
-          id="cat-general"
-          title="โพสต์ทั่วไป"
-          href="/posts"
-          posts={general}
-        />
-        <CreateHomePostButton />
-      </WidePage>
-    </>
+      </div>
+      <CategorySection id="cat-news" title="ข่าวสาร" href="/news" posts={news} />
+      <ExternalNews items={annNews} />
+      <CategorySection
+        id="cat-qna"
+        title="Q&A ถาม-ตอบ"
+        href="/qandas"
+        posts={qnas}
+      />
+      <CategorySection
+        id="cat-general"
+        title="โพสต์ทั่วไป"
+        href="/posts"
+        posts={general}
+      />
+      <CreateHomePostButton />
+    </WidePage>
   );
 }
