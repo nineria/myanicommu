@@ -46,18 +46,18 @@ export function Navbar() {
   const { data: me, isPending } = useQuery(trpc.user.me.queryOptions());
 
   return (
-    <header className="sticky top-0 z-50 mb-2 bg-card/80 py-2 shadow-md backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-5xl items-end justify-between gap-4 px-4">
+    <header className="sticky top-0 z-50 glass border-b border-border py-2">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
         <ResponsiveLogo />
 
-        <nav className="hidden flex-1 items-center pl-10 lg:flex">
+        <nav className="hidden flex-1 items-center pl-8 lg:flex">
           {me ? (
             NAV_LINKS.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
                 className={cn(
-                  "rounded-md px-3 py-1.5 text-sm text-foreground/70 transition-colors hover:text-primary",
+                  "rounded-full px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
                   pathname === item.path && "font-semibold text-primary",
                 )}
               >
@@ -67,7 +67,7 @@ export function Navbar() {
           ) : (
             <Link
               href="/search"
-              className="rounded-md px-3 py-1.5 text-sm text-foreground/70 hover:text-primary"
+              className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground"
             >
               ค้นหา
             </Link>
@@ -100,7 +100,7 @@ export function Navbar() {
                 </AvatarFallback>
               </Avatar>
               <div className="max-w-40 leading-tight">
-                <div className="truncate text-sm font-bold text-foreground/80">
+                <div className="truncate text-sm font-bold text-muted-foreground">
                   {me.username}
                 </div>
                 <div className="truncate text-xs text-muted-foreground">

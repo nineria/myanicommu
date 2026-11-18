@@ -23,7 +23,7 @@ export async function PostListPage({
   ]);
 
   return (
-    <WidePage className="space-y-4">
+    <WidePage className="space-y-6">
       {announcements.map((a) => (
         <AnnouncementBanner
           key={a.id}

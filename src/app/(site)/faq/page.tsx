@@ -23,7 +23,7 @@ function FaqGroup({ group, id }: { group: Group; id: string }) {
         {group.description.map((item, i) => (
           <AccordionItem key={`${id}-${i}`} value={`${id}-${i}`}>
             <AccordionTrigger>{item.label}</AccordionTrigger>
-            <AccordionContent className="text-foreground/80">
+            <AccordionContent className="text-muted-foreground">
               {item.content}
             </AccordionContent>
           </AccordionItem>

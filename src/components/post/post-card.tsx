@@ -27,18 +27,18 @@ export function PostCard({
     <TagBadge key={t.label} label={t.label} from={t.colorFrom} to={t.colorTo} />
   ));
   const meta = (
-    <div className="flex items-center gap-4 text-sm">
+    <div className="flex items-center gap-4 text-sm text-muted-foreground">
       <span className="flex items-center gap-1">
         <Clock className="size-3.5 text-primary" />
-        <span className="opacity-80">{fmt(post.createdAt)}</span>
+        <span className="text-muted-foreground">{fmt(post.createdAt)}</span>
       </span>
       <span className="flex items-center gap-1">
         <ThumbsUp className="size-3.5 text-primary" />
-        <span className="opacity-80">{kFormatter(post.likes)}</span>
+        <span className="text-muted-foreground">{kFormatter(post.likes)}</span>
       </span>
       <span className="flex items-center gap-1">
         <Star className="size-3.5 text-primary" />
-        <span className="opacity-80">{post.stars}</span>
+        <span className="text-muted-foreground">{post.stars}</span>
       </span>
     </div>
   );
@@ -47,7 +47,7 @@ export function PostCard({
     return (
       <Link
         href={href}
-        className="relative flex w-full overflow-hidden rounded-lg shadow-md hover:brightness-90"
+        className="relative flex w-full overflow-hidden rounded-lg shadow-sm transition-[filter] hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring dark:hover:brightness-90"
       >
         <div className="relative hidden h-[120px] w-[350px] shrink-0 overflow-hidden sm:block">
           <Image
@@ -65,15 +65,18 @@ export function PostCard({
             className="object-contain"
           />
         </div>
-        <div className="relative flex min-h-[120px] flex-1 flex-col justify-between gap-2 bg-card px-3 py-2 text-foreground">
-          <div className="flex flex-wrap gap-1 text-sm">{badges}</div>
-          <h2 className="truncate text-base font-bold" title={post.title}>
+        <div className="@container relative flex min-h-[120px] flex-1 flex-col justify-between gap-2 overflow-hidden bg-card px-4 py-3 text-foreground">
+          <Watermark kind={post.kind} />
+          <div className="relative z-10 flex flex-wrap gap-1 text-sm">
+            {badges}
+          </div>
+          <h2
+            className="relative z-10 truncate text-base font-bold"
+            title={post.title}
+          >
             {post.title}
           </h2>
-          {meta}
-          <span className="pointer-events-none absolute right-2 bottom-2 text-6xl font-bold tracking-tighter uppercase opacity-5">
-            {KIND_WATERMARK[post.kind]}
-          </span>
+          <div className="relative z-10">{meta}</div>
         </div>
       </Link>
     );
@@ -83,7 +86,7 @@ export function PostCard({
     <Link
       href={href}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-lg bg-card shadow-md hover:brightness-90",
+        "group relative flex h-full flex-col overflow-hidden rounded-lg bg-card shadow-sm transition-[filter] hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring dark:hover:brightness-90",
       )}
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden">
@@ -102,19 +105,39 @@ export function PostCard({
           sizes="(min-width:768px) 33vw, 100vw"
           className="object-contain"
         />
-        <div className="absolute top-2 left-2 z-10 flex flex-wrap gap-1 text-sm">
+        <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-1 text-sm">
           {badges}
         </div>
       </div>
-      <div className="relative flex flex-1 flex-col gap-2 p-3 text-foreground">
-        <h2 className="line-clamp-2 text-base font-bold" title={post.title}>
+      <div className="@container relative flex flex-1 flex-col gap-3 overflow-hidden p-4 text-foreground">
+        <Watermark kind={post.kind} />
+        <h2
+          className="relative z-10 line-clamp-2 text-base leading-snug font-bold"
+          title={post.title}
+        >
           {post.title}
         </h2>
-        <div className="mt-auto">{meta}</div>
-        <span className="pointer-events-none absolute right-2 bottom-1 text-5xl font-bold tracking-tighter uppercase opacity-5">
-          {KIND_WATERMARK[post.kind]}
-        </span>
+        <div className="relative z-10 mt-auto">{meta}</div>
       </div>
     </Link>
+  );
+}
+
+/**
+ * Signature background word (REVIEW / NEWS / QUESTION). Decorative, sits behind the text.
+ * Sized from the card's own width so every word spans ~90% of it, capped to fit the text area height.
+ */
+function Watermark({ kind }: { kind: string }) {
+  const word = KIND_WATERMARK[kind] ?? "";
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute right-3 bottom-1 z-0 font-bold leading-none tracking-tighter uppercase opacity-[0.07] select-none"
+      style={{
+        fontSize: `min(calc(90cqw / ${(word.length * 0.62).toFixed(2)}), 5.5rem)`,
+      }}
+    >
+      {word}
+    </span>
   );
 }

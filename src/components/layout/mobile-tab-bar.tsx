@@ -25,7 +25,7 @@ export function MobileTabBar() {
   return (
     <nav
       aria-label="เมนูหลัก"
-      className="glass fixed inset-x-0 bottom-0 z-50 border-t-2 border-primary pb-[env(safe-area-inset-bottom)] lg:hidden"
+      className="glass fixed inset-x-0 bottom-0 z-50 border-t border-border pb-[env(safe-area-inset-bottom)] lg:hidden"
     >
       <ul className="mx-auto flex max-w-md">
         {TABS.map(({ name, path, icon: Icon }) => {
@@ -37,7 +37,7 @@ export function MobileTabBar() {
                 href={path}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex min-h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-medium text-muted-foreground transition-colors",
+                  "flex min-h-16 flex-col items-center justify-center gap-0.5 text-xs font-medium text-muted-foreground transition-colors",
                   active && "text-primary",
                 )}
               >

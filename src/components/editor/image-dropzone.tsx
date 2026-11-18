@@ -38,7 +38,7 @@ export function ImageDropzone({
   if (value) {
     return (
       <div
-        className={cn("relative overflow-hidden rounded-md border", className)}
+        className={cn("relative overflow-hidden rounded-lg border", className)}
       >
         {/* biome-ignore lint/performance/noImgElement: user supplied remote url preview */}
         <img src={value} alt="" className="max-h-64 w-full object-contain" />
@@ -60,7 +60,7 @@ export function ImageDropzone({
     <div
       {...getRootProps()}
       className={cn(
-        "flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed p-6 text-sm text-muted-foreground transition-colors hover:border-primary",
+        "flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-6 text-sm text-muted-foreground transition-colors hover:border-primary",
         isDragActive && "border-primary bg-primary/5",
         className,
       )}

@@ -34,8 +34,8 @@ export function AuthorPanel({
   compact?: boolean;
 }) {
   return (
-    <div className="px-2 py-4">
-      <div className="flex flex-wrap items-center justify-around gap-2">
+    <div className="px-4 py-5">
+      <div className="flex flex-wrap items-center justify-around gap-3">
         <Link href={`/${author.username}`}>
           <Avatar
             className={cn(
@@ -55,14 +55,16 @@ export function AuthorPanel({
         <div className="flex flex-col">
           <Link
             href={`/${author.username}`}
-            className="text-red-500 hover:underline"
+            className="font-semibold text-primary hover:underline"
           >
             {author.username}
           </Link>
           <p
             className={cn(
               "text-xs",
-              author.role === "ADMIN" ? "text-yellow-400" : "text-foreground",
+              author.role === "ADMIN"
+                ? "font-medium text-amber-700 dark:text-amber-400"
+                : "text-muted-foreground",
             )}
           >
             {author.role === "ADMIN" ? ADMIN_RANK_LABEL : "สมาชิก"}
@@ -77,14 +79,14 @@ export function AuthorPanel({
                 from={r.colorFrom}
                 to={r.colorTo}
                 deg={35}
-                className="w-full justify-center rounded-none"
+                className="w-full justify-center"
               />
             ))}
           </div>
         )}
       </div>
       {date !== undefined && (
-        <div className="mt-4 flex justify-around text-xs text-foreground/80">
+        <div className="mt-4 flex flex-wrap justify-around gap-x-3 gap-y-1 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <CalendarDays className="size-3.5" />
             {fmt(date)}

@@ -52,7 +52,7 @@ export function RichTextEditor({
   });
 
   if (!editor)
-    return <div className={cn("min-h-40 rounded-md border", className)} />;
+    return <div className={cn("min-h-40 rounded-lg border", className)} />;
 
   const btn = (
     label: string,
@@ -92,7 +92,7 @@ export function RichTextEditor({
   };
 
   return (
-    <div className={cn("rounded-md border bg-input/40", className)}>
+    <div className={cn("rounded-lg border bg-input/40", className)}>
       <div className="flex flex-wrap gap-0.5 border-b p-1">
         {btn(
           "Bold",

@@ -41,7 +41,7 @@ export function ProfileHeader({
   ];
 
   return (
-    <div className="overflow-hidden rounded-lg bg-card shadow-md">
+    <div className="overflow-hidden rounded-lg bg-card shadow-sm">
       <div
         className="h-32 bg-gradient-to-r from-primary/60 to-opposite/60 bg-cover bg-center sm:h-44"
         style={
@@ -87,7 +87,7 @@ export function ProfileHeader({
           ))}
         </div>
         {user.bio && (
-          <p className="mt-3 whitespace-pre-line text-sm text-foreground/80">
+          <p className="mt-3 whitespace-pre-line text-sm text-muted-foreground">
             {user.bio}
           </p>
         )}
@@ -98,7 +98,7 @@ export function ProfileHeader({
                 key={label}
                 href={`/external-link?external=${encodeURIComponent(href ?? "")}`}
                 aria-label={label}
-                className="text-foreground/70 hover:text-primary"
+                className="text-muted-foreground hover:text-primary"
               >
                 <Icon className="size-5" />
               </a>
@@ -107,7 +107,7 @@ export function ProfileHeader({
         )}
         <div className="mt-4 grid grid-cols-4 gap-2 text-center">
           {stats.map((s) => (
-            <div key={s.label} className="rounded-md bg-muted/50 py-2">
+            <div key={s.label} className="rounded-lg bg-muted/50 py-3">
               <div className="text-lg font-bold text-foreground">
                 {kFormatter(s.value)}
               </div>

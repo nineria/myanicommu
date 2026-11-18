@@ -39,7 +39,7 @@ export function CommentSection({
   const refresh = () => qc.invalidateQueries({ queryKey: listOpts.queryKey });
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       {isPending && (
         <div className="space-y-2" aria-busy="true">
           <Skeleton className="h-24 w-full" />
@@ -61,7 +61,7 @@ export function CommentSection({
       ))}
 
       {!mePending && !me && (
-        <div className="flex flex-col items-center gap-3 rounded-sm bg-card py-10 text-foreground">
+        <div className="flex flex-col items-center gap-3 rounded-lg bg-card py-10 shadow-sm text-foreground">
           <p className="text-center">เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ</p>
           <p className="mb-2 text-center">
             <Logo className="inline" /> และอื่น ๆ อีกมากมาย!
@@ -108,7 +108,7 @@ function AddComment({
   };
 
   return (
-    <div className="rounded-lg bg-card p-3">
+    <div className="rounded-lg bg-card p-4 shadow-sm">
       <RichTextEditor
         key={key}
         value={value}
@@ -174,12 +174,12 @@ function CommentItem({
     <div
       id={comment.id}
       className={cn(
-        "rounded-lg bg-card",
-        active && "rounded-none border-2 border-[#ff3333]",
+        "overflow-hidden rounded-lg bg-card shadow-sm",
+        active && "border-2 border-destructive",
       )}
     >
       {active && (
-        <div className="bg-[#ff3333] text-center text-white">
+        <div className="bg-destructive py-1 text-center text-sm text-white">
           เนื้อหาที่ถูกรายงาน
         </div>
       )}
@@ -191,7 +191,7 @@ function CommentItem({
             compact
           />
         </div>
-        <div className="min-w-0 flex-1 border-t p-3 md:border-t-0">
+        <div className="min-w-0 flex-1 border-t p-4 md:border-t-0">
           {editing ? (
             <>
               <RichTextEditor value={draft} onChange={setDraft} />

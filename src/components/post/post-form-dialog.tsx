@@ -149,7 +149,7 @@ export function PostFormDialog({
             <p className="text-xs text-muted-foreground">
               เช่น Action, Comedy, Romance, Drama - กด Enter เพื่อเพิ่มประเภทของเนื้อหา
             </p>
-            <div className="flex flex-wrap items-center gap-1 rounded-md border px-2 py-1">
+            <div className="flex flex-wrap items-center gap-1 rounded-lg border px-3 py-2">
               {v.genres.map((g) => (
                 <Badge key={g} variant="outline" className="gap-1 pr-1">
                   {g}
