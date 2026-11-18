@@ -2,8 +2,13 @@
   "name": "myanicommu",
   "version": "1.0.0",
   "private": true,
-  "license": "GPL-3.0 license",
-  "author": "Nineria",
+  "license": "MIT",
+  "author": "Nineria (https://github.com/nineria)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nineria/myanicommu.git"
+  },
+  "homepage": "https://myanimecommunity.vercel.app",
   "scripts": {
     "postinstall": "prisma generate",
     "dev": "next dev",
@@ -12,7 +17,10 @@
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "format": "biome format --write",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
     "db:migrate": "prisma migrate dev",
+    "db:setup": "bun run db:up && prisma migrate deploy && bun run db:seed",
     "db:seed": "tsx scripts/seed.ts",
     "db:backfill-blur": "tsx scripts/backfill-blur.ts",
     "db:import-news": "tsx scripts/import-news.ts"
