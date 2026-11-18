@@ -16,14 +16,14 @@ import "./globals.css";
 const clerkLocalization = {
   signIn: {
     start: {
-      title: "Sign in to MyAnimeCommunity",
-      titleCombined: "Sign in to MyAnimeCommunity",
+      title: "Sign in to MyAniCommu",
+      titleCombined: "Sign in to MyAniCommu",
     },
   },
   signUp: {
     start: {
-      title: "Create your MyAnimeCommunity account",
-      titleCombined: "Create your MyAnimeCommunity account",
+      title: "Create your MyAniCommu account",
+      titleCombined: "Create your MyAniCommu account",
     },
   },
 };

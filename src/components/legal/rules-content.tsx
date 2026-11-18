@@ -50,7 +50,7 @@ export function RulesContent() {
         </div>
         <div className="space-y-3">
           <h4 className="mb-2 font-semibold">
-            เว็บไซต์ MyAnimeCommunity ขอสงวนสิทธิดังต่อไปนี้
+            เว็บไซต์ MyAniCommu ขอสงวนสิทธิดังต่อไปนี้
           </h4>
           <ol className="list-outside list-decimal space-y-2 pl-6">
             <li>

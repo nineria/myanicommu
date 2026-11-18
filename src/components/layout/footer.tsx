@@ -100,8 +100,7 @@ export async function Footer({ username }: { username?: string | null }) {
         <Separator className="my-2" />
         <div className="flex flex-col items-center md:flex-row md:justify-between">
           <p className="text-sm text-foreground/80">
-            &copy; {new Date().getFullYear()} MyAnimeCommunity. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} MyAniCommu. All rights reserved.
           </p>
           <div className="flex">
             {SOCIAL.map(({ href, icon: Icon, label }) => (

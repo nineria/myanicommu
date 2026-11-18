@@ -1,30 +1,17 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export function Logo({
-  className,
-  short,
-}: {
-  className?: string;
-  short?: boolean;
-}) {
+/** MyAniCommu wordmark: "My" blue, "A" accent, "niCommu" neutral. */
+export function Logo({ className }: { className?: string }) {
   return (
     <Link href="/" className={cn("font-display font-semibold", className)}>
       <span className="text-[#4C6EF5]">My</span>
       <span className="text-primary">A</span>
-      <span className="text-foreground opacity-80">
-        {short ? "niCommu" : "nimeCommunity"}
-      </span>
+      <span className="text-foreground opacity-80">niCommu</span>
     </Link>
   );
 }
 
-/** Navbar logo: full name on md+, short name below. */
 export function ResponsiveLogo() {
-  return (
-    <>
-      <Logo className="hidden text-3xl md:block" />
-      <Logo className="block text-3xl md:hidden" short />
-    </>
-  );
+  return <Logo className="text-3xl" />;
 }
