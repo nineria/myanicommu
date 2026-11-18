@@ -2,7 +2,7 @@
  * One-off backfill of ANN posts (news / review / general) into whatever DATABASE_URL points at.
  *   bun run db:import-news
  */
-import "dotenv/config";
+import "./load-env";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { importAnnPosts } from "../src/lib/news-import";

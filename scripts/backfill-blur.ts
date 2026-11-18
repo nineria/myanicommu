@@ -2,7 +2,7 @@
  * Generates blur placeholders for images uploaded before the `blur` column existed.
  *   bun run db:backfill-blur
  */
-import "dotenv/config";
+import "./load-env";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { makeBlurDataURL } from "../src/lib/blur-encode";
