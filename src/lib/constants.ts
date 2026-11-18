@@ -1,5 +1,5 @@
-export const SITE_NAME = "MyAnimeCommunity";
-export const DEFAULT_TITLE = "ยินดีต้อนรับสู่ My Anime Community!";
+export const SITE_NAME = "MyAniCommu";
+export const DEFAULT_TITLE = "ยินดีต้อนรับสู่ MyAniCommu!";
 export const DEFAULT_DESCRIPTION =
   "รวมพลคนรักอนิเมะ พูดคุยแลกเปลี่ยนความรู้เกี่ยวกับ อนิเมะ มังงะ ไลท์โนเวล และอื่นๆ อีกมากมาย!";
 

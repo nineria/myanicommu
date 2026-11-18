@@ -1,5 +1,5 @@
 /**
- * One-off Firestore -> Postgres migration for the old MyAnimeCommunity data.
+ * One-off Firestore -> Postgres migration for the old MyAniCommu data.
  *
  *   GOOGLE_APPLICATION_CREDENTIALS=./service-account.json \
  *   DATABASE_URL=postgres://... \

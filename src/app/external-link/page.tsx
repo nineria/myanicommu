@@ -27,9 +27,7 @@ export default async function ExternalLinkPage({ searchParams }: Props) {
     <div className="flex min-h-svh flex-col items-center justify-center gap-5 p-4">
       <Logo />
       <div className="max-w-full space-y-4 rounded-md bg-card px-10 py-5 text-center text-foreground">
-        <h4 className="text-lg font-semibold">
-          คุณกำลังออกจากเว็ปไซต์ MyAnimeCommunity
-        </h4>
+        <h4 className="text-lg font-semibold">คุณกำลังออกจากเว็ปไซต์ MyAniCommu</h4>
         {url ? (
           <>
             <a
