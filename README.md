@@ -18,7 +18,7 @@ My Anime Community website purpose is to bring together people who like anime. T
 - [tRPC 11](https://trpc.io/) + TanStack Query, superjson
 - Tailwind CSS 4 + shadcn/ui (Radix), lucide-react, sonner
 - Tiptap rich text editor (HTML storage, sanitized with sanitize-html)
-- S3 / Cloudflare R2 presigned image uploads
+- Images stored in Postgres (`Image` table, served from `/api/images/[id]`)
 - Biome (lint + format), bun as package manager
 
 ## Getting started
