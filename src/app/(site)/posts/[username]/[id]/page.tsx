@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { User } from "lucide-react";
+import { ChevronRight, User } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -53,20 +53,22 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <PageShell>
-      <div className="space-y-2">
-        <nav className="flex items-center gap-2 truncate text-sm text-muted-foreground">
-          <Link href="/" className="hover:underline">
+      <article className="space-y-4">
+        <nav
+          aria-label="breadcrumb"
+          className="flex items-center gap-1.5 truncate text-sm text-muted-foreground"
+        >
+          <Link href="/" className="hover:text-foreground">
             หน้าหลัก
           </Link>
-          →
-          <Link href="/posts" className="hover:underline">
+          <ChevronRight className="size-3.5 shrink-0" />
+          <Link href="/posts" className="hover:text-foreground">
             โพสต์ทั้งหมด
           </Link>
-          →<span className="truncate">{id}</span>
         </nav>
 
-        <div className="text-foreground">
-          <div className="my-1 flex flex-wrap items-center gap-1">
+        <header className="space-y-3">
+          <div className="flex flex-wrap items-center gap-1.5">
             {post.tags.map((t) => (
               <TagBadge
                 key={t.label}
@@ -75,30 +77,42 @@ export default async function PostPage({ params }: Props) {
                 to={t.colorTo}
               />
             ))}
-            <h1 className="ml-1 text-base font-semibold sm:text-lg">
-              {post.title}
-            </h1>
           </div>
-          <div className="my-1 flex flex-wrap items-center gap-1 text-sm">
-            <span className="mr-1 flex items-center gap-0.5">
+          <h1 className="text-2xl leading-snug font-bold sm:text-3xl">
+            {post.title}
+          </h1>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <Link
+              href={`/${post.author.username}`}
+              className="flex items-center gap-1 font-medium text-foreground hover:text-primary"
+            >
               <User className="size-3.5" />
               {post.author.username}
-            </span>
+            </Link>
             {post.genres.map((g) => (
               <Badge
                 key={g}
                 variant="secondary"
-                className="rounded-sm text-[10px]"
+                className="rounded-md text-[11px]"
               >
                 {g}
               </Badge>
             ))}
           </div>
+        </header>
+
+        <div className="relative overflow-hidden rounded-3xl bg-muted">
+          {/* biome-ignore lint/performance/noImgElement: arbitrary remote post image */}
+          <img
+            src={post.image}
+            alt={post.title}
+            className="mx-auto max-h-[28rem] w-full object-contain"
+          />
         </div>
 
-        <div className="rounded-lg bg-card">
+        <div className="overflow-hidden rounded-2xl border bg-card">
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-56 md:shrink-0 md:border-r">
+            <div className="border-b md:w-56 md:shrink-0 md:border-r md:border-b-0">
               <AuthorPanel
                 author={post.author}
                 date={post.createdAt}
@@ -106,13 +120,7 @@ export default async function PostPage({ params }: Props) {
                 likes={post.likeCount}
               />
             </div>
-            <div className="min-w-0 flex-1 border-t p-4 md:border-t-0">
-              {/* biome-ignore lint/performance/noImgElement: arbitrary remote post image */}
-              <img
-                src={post.image}
-                alt={post.title}
-                className="mx-auto mb-4 max-h-96 rounded-md object-contain"
-              />
+            <div className="min-w-0 flex-1 p-5">
               <ExternalLinkGuard>
                 <div
                   className="rich-text text-foreground"
@@ -155,7 +163,7 @@ export default async function PostPage({ params }: Props) {
             postPath={path}
           />
         </ExternalLinkGuard>
-      </div>
+      </article>
     </PageShell>
   );
 }

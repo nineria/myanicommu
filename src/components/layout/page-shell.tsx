@@ -1,9 +1,7 @@
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/layout/navbar";
-import { getCurrentUser } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
-export async function PageShell({
+/** Content wrapper for a page. The chrome (navbar, footer) lives in the (site) layout. */
+export function PageShell({
   children,
   className,
   ads,
@@ -12,17 +10,23 @@ export async function PageShell({
   className?: string;
   ads?: React.ReactNode;
 }) {
-  const user = await getCurrentUser().catch(() => null);
   return (
-    <div className="flex min-h-svh flex-col">
-      <Navbar />
+    <>
       {ads}
-      <main
-        className={cn("mx-auto w-full max-w-3xl flex-1 px-4 pb-10", className)}
-      >
+      <div className={cn("page-in mx-auto w-full max-w-3xl", className)}>
         {children}
-      </main>
-      <Footer username={user?.username} />
-    </div>
+      </div>
+    </>
   );
+}
+
+/** Wider canvas for listing pages. */
+export function WidePage({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={cn("page-in w-full", className)}>{children}</div>;
 }

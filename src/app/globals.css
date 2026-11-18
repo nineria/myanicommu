@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-prompt);
+  --font-sans: var(--font-anuphan), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-anuphan), ui-sans-serif, system-ui, sans-serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -30,92 +30,135 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 10px);
+  --color-glass: var(--glass);
 }
 
 /*
- * Colour model (ported from the old Mantine/CSS-variable themes):
- *   old `background` -> --background   old `foreground` -> --card
- *   old `title`      -> --foreground   old `accent`     -> --input / --muted
- *   old `content`    -> --primary      old `opposite`   -> --opposite
- * Light/dark comes from next-themes (`.dark` class); the accent colour
- * (red | ocean | pinky | neon) comes from `data-accent` on <html>.
+ * Colour model: `background` is the canvas, `card` the raised surface,
+ * `muted` the quiet fill inside a card, `primary` the accent (red | ocean |
+ * pinky | neon via `data-accent`), `opposite` a secondary accent.
+ * Light/dark comes from next-themes (`.dark`). Every accent has a light and a
+ * dark value so text on it keeps at least 4.5:1.
  */
 :root {
-  --radius: 0.5rem;
-  --background: rgb(211 211 211);
-  --foreground: rgb(50 50 50);
+  --radius: 0.875rem;
+  --background: rgb(244 244 247);
+  --foreground: rgb(26 26 32);
   --card: rgb(255 255 255);
-  --card-foreground: rgb(50 50 50);
+  --card-foreground: rgb(26 26 32);
   --popover: rgb(255 255 255);
-  --popover-foreground: rgb(50 50 50);
-  --primary: rgb(255 92 141);
+  --popover-foreground: rgb(26 26 32);
+  --primary: rgb(214 36 100);
   --primary-foreground: rgb(255 255 255);
-  --secondary: rgb(244 244 244);
-  --secondary-foreground: rgb(50 50 50);
-  --muted: rgb(244 244 244);
-  --muted-foreground: rgb(110 110 110);
-  --accent: rgb(244 244 244);
-  --accent-foreground: rgb(50 50 50);
-  --destructive: rgb(220 38 38);
-  --border: rgb(0 0 0 / 0.12);
-  --input: rgb(244 244 244);
+  --secondary: rgb(236 236 242);
+  --secondary-foreground: rgb(26 26 32);
+  --muted: rgb(238 238 244);
+  --muted-foreground: rgb(98 98 112);
+  --accent: rgb(236 236 242);
+  --accent-foreground: rgb(26 26 32);
+  --destructive: rgb(207 34 46);
+  --border: rgb(20 20 40 / 0.1);
+  --input: rgb(20 20 40 / 0.12);
   --ring: var(--primary);
-  --opposite: rgb(56 178 172);
+  --opposite: rgb(13 148 136);
+  --glass: rgb(255 255 255 / 0.72);
 }
 
 .dark {
-  --background: rgb(24 26 29);
-  --foreground: rgb(244 244 244);
-  --card: rgb(36 38 41);
-  --card-foreground: rgb(244 244 244);
-  --popover: rgb(36 38 41);
-  --popover-foreground: rgb(244 244 244);
-  --secondary: rgb(50 50 50);
-  --secondary-foreground: rgb(244 244 244);
-  --muted: rgb(50 50 50);
-  --muted-foreground: rgb(160 160 160);
-  --accent: rgb(50 50 50);
-  --accent-foreground: rgb(244 244 244);
-  --border: rgb(255 255 255 / 0.14);
-  --input: rgb(50 50 50);
+  --background: rgb(12 11 18);
+  --foreground: rgb(244 243 250);
+  --card: rgb(22 21 31);
+  --card-foreground: rgb(244 243 250);
+  --popover: rgb(26 25 36);
+  --popover-foreground: rgb(244 243 250);
+  --primary: rgb(255 107 154);
+  --primary-foreground: rgb(36 6 18);
+  --secondary: rgb(36 35 50);
+  --secondary-foreground: rgb(244 243 250);
+  --muted: rgb(32 31 44);
+  --muted-foreground: rgb(166 164 184);
+  --accent: rgb(40 39 56);
+  --accent-foreground: rgb(244 243 250);
+  --destructive: rgb(255 110 118);
+  --border: rgb(255 255 255 / 0.09);
+  --input: rgb(255 255 255 / 0.14);
+  --opposite: rgb(45 212 191);
+  --glass: rgb(12 11 18 / 0.72);
 }
 
 [data-accent="red"] {
-  --primary: rgb(236 85 85);
-  --opposite: rgb(237 100 166);
+  --primary: rgb(200 38 52);
 }
 [data-accent="ocean"] {
-  --primary: rgb(51 130 184);
-  --opposite: rgb(237 100 166);
+  --primary: rgb(24 96 168);
 }
 [data-accent="pinky"] {
-  --primary: rgb(255 92 141);
-  --opposite: rgb(56 178 172);
+  --primary: rgb(214 36 100);
 }
 [data-accent="neon"] {
-  --primary: rgb(0 173 181);
-  --opposite: rgb(56 178 172);
+  --primary: rgb(0 120 128);
+}
+.dark[data-accent="red"] {
+  --primary: rgb(255 112 112);
 }
 .dark[data-accent="ocean"] {
-  --primary: rgb(95 133 219);
+  --primary: rgb(120 172 255);
+}
+.dark[data-accent="pinky"] {
+  --primary: rgb(255 107 154);
+}
+.dark[data-accent="neon"] {
+  --primary: rgb(45 212 222);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-padding-top: 5rem;
+  }
   body {
     @apply bg-background text-foreground antialiased;
+    line-height: 1.6;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 35%, transparent);
   }
 }
 
-.clip-image-text {
-  font-weight: 800;
-  background-image: url(https://data.whicdn.com/images/354483230/original.jpg);
-  background-size: cover;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+/* Frosted bar: the one floating layer (nav, tab bar). Falls back to solid. */
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(1.6) blur(22px);
+  backdrop-filter: saturate(1.6) blur(22px);
+}
+/* biome-ignore lint/correctness/noUnknownMediaFeatureName: valid, newer media feature */
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--card);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Page enter: only the main content, once per navigation. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.page-in {
+  animation: page-in 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-in {
+    animation: none;
+  }
 }
 
 /* Rich text rendered from stored HTML */

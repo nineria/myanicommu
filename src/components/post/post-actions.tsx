@@ -54,19 +54,39 @@ export function PostActions({
 
   const canEdit = me && (me.id === post.authorId || me.role === "ADMIN");
 
+  // Optimistic: update the UI first, roll back if the request fails.
   const toggleLike = async () => {
     if (!me) return toast.error("เข้าสู่ระบบเพื่อกดถูกใจ");
-    const res = await like.mutateAsync({ id: post.id });
-    setLiked(res.liked);
-    setLikeCount((c) => c + (res.liked ? 1 : -1));
+    const prev = { liked, likeCount };
+    setLiked(!liked);
+    setLikeCount((c) => c + (liked ? -1 : 1));
+    try {
+      const res = await like.mutateAsync({ id: post.id });
+      if (res.liked !== !prev.liked) {
+        setLiked(res.liked);
+        setLikeCount(
+          prev.likeCount + (res.liked ? 1 : 0) - (prev.liked ? 1 : 0),
+        );
+      }
+    } catch {
+      setLiked(prev.liked);
+      setLikeCount(prev.likeCount);
+      toast.error("มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง");
+    }
   };
 
   const setStar = async (value: number) => {
     if (!me) return toast.error("เข้าสู่ระบบเพื่อให้คะแนน");
-    await rate.mutateAsync({ id: post.id, value });
+    const prev = myStar;
     setMyStar(value);
-    toast.success(`คุณได้ให้คะแนนโพสต์นี้ ${value} ดาว`);
-    router.refresh();
+    try {
+      await rate.mutateAsync({ id: post.id, value });
+      toast.success(`คุณได้ให้คะแนนโพสต์นี้ ${value} ดาว`);
+      router.refresh();
+    } catch {
+      setMyStar(prev);
+      toast.error("มีข้อผิดพลาดเกิดขึ้นโปรดลองอีกครั้งภายหลัง");
+    }
   };
 
   const remove = async () => {
@@ -81,14 +101,13 @@ export function PostActions({
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-1 border-t px-3 py-2">
+    <div className="flex flex-wrap items-center gap-1 border-t px-3 py-2.5">
       <Button
         variant={liked ? "default" : "ghost"}
         size="sm"
         onClick={toggleLike}
-        disabled={like.isPending}
       >
-        <ThumbsUp /> {likeCount}
+        <ThumbsUp className={cn(liked && "fill-current")} /> {likeCount}
       </Button>
       <div className="flex items-center" role="group" aria-label="ให้คะแนน">
         {[1, 2, 3, 4, 5].map((n) => (
@@ -97,11 +116,11 @@ export function PostActions({
             type="button"
             onClick={() => setStar(n)}
             aria-label={`${n} ดาว`}
-            className="p-0.5"
+            className="rounded p-1 transition-transform hover:scale-110 active:scale-95"
           >
             <Star
               className={cn(
-                "size-4",
+                "size-5",
                 n <= myStar
                   ? "fill-yellow-400 text-yellow-400"
                   : "text-muted-foreground",
