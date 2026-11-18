@@ -43,8 +43,7 @@ currently fails `next build` for this Next version.
 PRs go against `develop`. When CI passes and there is no conflict, the PR is squash-merged automatically.
 `main` is released by a PR from `develop` that you merge by hand.
 
-Notifications go to Telegram (`.github/workflows/telegram.yml`): add repo secrets `TELEGRAM_BOT_TOKEN` and
-`TELEGRAM_CHAT_ID`. CI results, merged PRs and Vercel deploys are posted there.
+Notifications (CI, merged PRs, deploys) go to Telegram through the shared `nineria/telegram-notify` relay via a repo webhook.
 
 ## Migrating old Firestore data
 
