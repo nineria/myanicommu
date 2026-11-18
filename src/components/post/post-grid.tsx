@@ -1,31 +1,22 @@
 "use client";
 
 import { LayoutGrid, List, SearchX } from "lucide-react";
-import { useEffect, useState } from "react";
 import { PostCard } from "@/components/post/post-card";
+import {
+  type PostLayout,
+  usePreferences,
+} from "@/components/preferences-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import type { PostCard as PostCardData } from "@/trpc/routers/post";
 
-type Layout = "grid" | "list";
-const KEY = "post-layout";
+type Layout = PostLayout;
 
-/** Remembers the grid/list choice in localStorage. */
+/** The grid/list choice lives in the shared site preferences (Settings page). */
 export function useLayout() {
-  const [layout, setLayoutState] = useState<Layout>("grid");
-  useEffect(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(KEY) ?? "null");
-      if (saved === "grid" || saved === "list") setLayoutState(saved);
-    } catch {}
-  }, []);
-  const setLayout = (l: Layout) => {
-    setLayoutState(l);
-    try {
-      localStorage.setItem(KEY, JSON.stringify(l));
-    } catch {}
-  };
-  return [layout, setLayout] as const;
+  const { prefs, setPref } = usePreferences();
+  const setLayout = (l: Layout) => setPref("layout", l);
+  return [prefs.layout, setLayout] as const;
 }
 
 export function LayoutToggle({
@@ -103,13 +94,19 @@ export function PostGridSkeleton({
   );
 }
 
+export const SPOILER_TAG = "สปอย";
+
 export function PostGrid({
-  posts,
+  posts: allPosts,
   layout,
 }: {
   posts: PostCardData[];
   layout: Layout;
 }) {
+  const { prefs } = usePreferences();
+  const posts = prefs.hideSpoilers
+    ? allPosts.filter((p) => !p.tags.some((t) => t.label === SPOILER_TAG))
+    : allPosts;
   if (posts.length < 1) {
     return <EmptyState title="ยังไม่มีโพสต์" hint="เป็นคนแรกที่เริ่มต้นบทสนทนาได้เลย" />;
   }
