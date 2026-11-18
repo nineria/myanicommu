@@ -10,27 +10,27 @@ export function ExternalNews({ items }: { items: ExternalNewsItem[] }) {
   return (
     <section
       aria-labelledby="external-news-title"
-      className="overflow-hidden rounded-xl border bg-card"
+      className="rounded-lg bg-card shadow-md"
     >
-      <div className="flex items-baseline justify-between gap-2 px-4 py-3">
-        <h2 id="external-news-title" className="text-lg font-bold">
+      <div className="flex items-baseline justify-between gap-2 border-primary/30 border-b-2 px-3 py-1">
+        <h2 id="external-news-title" className="text-sm font-bold md:text-base">
           ข่าวอนิเมะจากทั่วโลก
         </h2>
         <span className="text-xs text-muted-foreground">
           via Anime News Network
         </span>
       </div>
-      <ul className="divide-y border-t">
+      <ul className="flex flex-col gap-[3px] bg-background pb-0">
         {items.map((n) => (
           <li key={n.link}>
             <a
               href={n.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start justify-between gap-3 px-4 py-3 transition-colors hover:bg-accent/50"
+              className="group flex items-start justify-between gap-3 bg-card px-3 py-2 hover:brightness-95"
             >
               <span className="min-w-0">
-                <span className="block font-semibold group-hover:text-primary">
+                <span className="block font-semibold group-hover:underline">
                   {n.title}
                 </span>
                 {n.summary && (
@@ -41,7 +41,7 @@ export function ExternalNews({ items }: { items: ExternalNewsItem[] }) {
               </span>
               <span className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
                 {n.category && (
-                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-primary">
+                  <span className="rounded-sm bg-primary px-1 text-white">
                     {n.category}
                   </span>
                 )}

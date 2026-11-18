@@ -23,18 +23,16 @@ export async function PostListPage({
   ]);
 
   return (
-    <>
-      <WidePage className="space-y-4">
-        {announcements.map((a) => (
-          <AnnouncementBanner
-            key={a.id}
-            type={a.type}
-            title={a.title}
-            content={a.content}
-          />
-        ))}
-        <PostListView posts={posts} title={TITLES[kind ?? "ALL"]} />
-      </WidePage>
-    </>
+    <WidePage className="space-y-4">
+      {announcements.map((a) => (
+        <AnnouncementBanner
+          key={a.id}
+          type={a.type}
+          title={a.title}
+          content={a.content}
+        />
+      ))}
+      <PostListView posts={posts} title={TITLES[kind ?? "ALL"]} />
+    </WidePage>
   );
 }

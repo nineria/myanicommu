@@ -24,7 +24,7 @@ export function ThemeSetting() {
               type="button"
               onClick={() => setAccent(t.value)}
               className={cn(
-                "flex items-center gap-2 rounded-xl border p-3 text-sm transition",
+                "flex items-center gap-2 rounded-md border p-2 text-sm transition",
                 accent === t.value
                   ? "border-primary ring-2 ring-primary"
                   : "hover:border-primary/60",
@@ -41,7 +41,7 @@ export function ThemeSetting() {
       </div>
       <div>
         <p className="mb-2 font-semibold">โหมดสี</p>
-        <div className="inline-flex rounded-xl border p-1">
+        <div className="inline-flex rounded-md border p-1">
           {(
             [
               { value: "dark", label: "มืด", icon: Moon },
@@ -53,7 +53,7 @@ export function ThemeSetting() {
               type="button"
               onClick={() => setTheme(value)}
               className={cn(
-                "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm",
+                "flex items-center gap-1 rounded px-3 py-1.5 text-sm",
                 mounted && resolvedTheme === value
                   ? "bg-primary text-primary-foreground"
                   : "text-foreground/70",

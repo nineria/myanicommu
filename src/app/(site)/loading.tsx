@@ -4,25 +4,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Loading() {
   return (
     <div
-      className="space-y-8"
+      className="space-y-2"
       role="status"
       aria-busy="true"
       aria-label="กำลังโหลด"
     >
-      <div>
-        <Skeleton className="mb-4 h-8 w-56" />
-        <div className="grid gap-4 lg:grid-cols-[1.6fr_1fr]">
-          <Skeleton className="min-h-72 rounded-xl" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-            <Skeleton className="h-28 rounded-xl" />
-            <Skeleton className="h-28 rounded-xl" />
-          </div>
-        </div>
+      <Skeleton className="h-16 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+        <Skeleton className="aspect-[16/9] sm:aspect-[4/3]" />
+        <Skeleton className="hidden aspect-[4/3] sm:block" />
+        <Skeleton className="hidden aspect-[4/3] sm:block" />
       </div>
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Skeleton className="h-64 rounded-xl" />
-        <Skeleton className="h-64 rounded-xl" />
-      </div>
+      <Skeleton className="h-64 w-full" />
     </div>
   );
 }
