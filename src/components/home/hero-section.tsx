@@ -13,7 +13,7 @@ export function HeroSection({ posts }: { posts: PostCardData[] }) {
     <section className="relative isolate" aria-labelledby="hero-title">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-24 -z-10 h-[34rem] overflow-hidden opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent)] dark:opacity-30"
+        className="pointer-events-none absolute -inset-x-24 top-0 -z-10 h-[30rem] overflow-hidden opacity-40 [mask-image:radial-gradient(ellipse_at_50%_30%,black,transparent_70%)] dark:opacity-30"
       >
         <Image
           src={lead.image}

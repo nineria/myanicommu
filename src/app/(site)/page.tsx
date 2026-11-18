@@ -1,4 +1,3 @@
-import { Advertisement } from "@/components/home/advertisement";
 import { HeroSection } from "@/components/home/hero-section";
 import {
   CreateHomePostButton,
@@ -47,7 +46,6 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
-        <Advertisement />
         <CreateHomePostButton />
       </WidePage>
     </>
