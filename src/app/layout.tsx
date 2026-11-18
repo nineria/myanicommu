@@ -1,7 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
 import type { Metadata, Viewport } from "next";
-import { Prompt } from "next/font/google";
+import { IBM_Plex_Sans_Thai, Prompt } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { AccentProvider } from "@/components/accent-provider";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -27,6 +27,12 @@ const clerkLocalization = {
     },
   },
 };
+
+const plexThai = IBM_Plex_Sans_Thai({
+  variable: "--font-plex-thai",
+  subsets: ["latin", "thai"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const prompt = Prompt({
   variable: "--font-prompt",
@@ -73,7 +79,9 @@ export default function RootLayout({
     >
       <TRPCReactProvider>
         <html lang="th" suppressHydrationWarning>
-          <body className={`${prompt.variable} font-sans antialiased`}>
+          <body
+            className={`${plexThai.variable} ${prompt.variable} font-sans antialiased`}
+          >
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"

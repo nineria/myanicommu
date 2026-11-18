@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-plex-thai), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-prompt);
   --color-ring: var(--ring);
   --color-input: var(--input);
