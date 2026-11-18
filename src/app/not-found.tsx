@@ -3,25 +3,22 @@ import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-background p-4">
-      <h1 className="clip-image-text text-[43vw] leading-none md:text-[20vw]">
+    <div className="mx-auto flex min-h-[70svh] w-full max-w-xl flex-col items-center justify-center gap-6 px-4 py-12 text-center">
+      <p
+        aria-hidden
+        className="font-display text-[8rem] leading-none font-bold tracking-tighter text-primary select-none sm:text-[12rem]"
+      >
         404
+      </p>
+      <h1 className="font-display text-xl font-bold text-foreground sm:text-2xl">
+        อ๊ะ! ไม่พบหน้าเว็บไซต์ที่ร้องขอ
       </h1>
-      <div className="rounded-lg bg-card p-4 lg:p-8">
-        <blockquote className="border-l-4 border-primary pl-4">
-          <p className="text-sm text-foreground md:text-xl">
-            การเดินทางนับพันไมล์ เริ่มต้นได้ด้วยก้าวเดียวเสมอ
-          </p>
-          <cite className="text-sm text-muted-foreground not-italic">
-            – อ๊ะ! ไม่พบหน้าเว็บไซต์ที่ร้องขอ
-          </cite>
-        </blockquote>
-        <div className="mt-4 flex justify-center">
-          <Button asChild>
-            <Link href="/">กลับหน้าหลัก</Link>
-          </Button>
-        </div>
-      </div>
+      <p className="text-muted-foreground">
+        การเดินทางนับพันไมล์ เริ่มต้นได้ด้วยก้าวเดียวเสมอ
+      </p>
+      <Button asChild>
+        <Link href="/">กลับหน้าหลัก</Link>
+      </Button>
     </div>
   );
 }

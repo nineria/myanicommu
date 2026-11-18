@@ -35,15 +35,15 @@ export function PostsTable({
   );
 
   return (
-    <section className="rounded-lg bg-card p-4 shadow-sm sm:p-6">
+    <section className="bg-card p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-bold text-foreground">
+        <h2 className="font-display text-lg font-bold text-foreground">
           โพสต์ <span className="text-muted-foreground">({posts.length})</span>
         </h2>
         <div
           role="radiogroup"
           aria-label="เรียงโพสต์"
-          className="flex gap-1 rounded-full bg-muted p-1"
+          className="flex gap-1 rounded-none bg-muted p-1"
         >
           {SORTS.map((s) => (
             <button
@@ -53,8 +53,8 @@ export function PostsTable({
               aria-checked={key === s.key}
               onClick={() => setKey(s.key)}
               className={cn(
-                "min-h-9 rounded-full px-3 text-xs font-medium text-muted-foreground transition-colors",
-                key === s.key && "bg-card text-primary shadow-sm",
+                "min-h-9 rounded-none px-3 text-xs font-medium text-muted-foreground transition-colors",
+                key === s.key && "bg-card text-primary",
               )}
             >
               {s.label}

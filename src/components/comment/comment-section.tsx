@@ -61,7 +61,7 @@ export function CommentSection({
       ))}
 
       {!mePending && !me && (
-        <div className="flex flex-col items-center gap-3 rounded-lg bg-card py-10 shadow-sm text-foreground">
+        <div className="flex flex-col items-center gap-3 bg-card py-10 text-foreground">
           <p className="text-center">เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ</p>
           <p className="mb-2 text-center">
             <Logo className="inline" /> และอื่น ๆ อีกมากมาย!
@@ -108,7 +108,7 @@ function AddComment({
   };
 
   return (
-    <div className="rounded-lg bg-card p-4 shadow-sm">
+    <div className="bg-card p-4">
       <RichTextEditor
         key={key}
         value={value}
@@ -174,7 +174,7 @@ function CommentItem({
     <div
       id={comment.id}
       className={cn(
-        "overflow-hidden rounded-lg bg-card shadow-sm",
+        "overflow-hidden bg-card",
         active && "border-2 border-destructive",
       )}
     >
@@ -184,14 +184,14 @@ function CommentItem({
         </div>
       )}
       <div className="flex flex-col md:flex-row">
-        <div className="md:w-56 md:shrink-0 md:border-r">
+        <div className="bg-muted/40 md:w-56 md:shrink-0">
           <AuthorPanel
             author={comment.author}
             date={comment.createdAt}
             compact
           />
         </div>
-        <div className="min-w-0 flex-1 border-t p-4 md:border-t-0">
+        <div className="min-w-0 flex-1 p-4">
           {editing ? (
             <>
               <RichTextEditor value={draft} onChange={setDraft} />

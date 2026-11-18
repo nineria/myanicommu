@@ -46,7 +46,7 @@ export default async function ProfilePage({ params }: Props) {
         {posts.length > 0 ? (
           <PostsTable posts={posts} username={username} />
         ) : (
-          <p className="rounded-lg bg-card p-8 text-center text-sm text-muted-foreground shadow-sm">
+          <p className="bg-card p-8 text-center text-sm text-muted-foreground">
             {isOwner ? "คุณยังไม่มีโพสต์" : "ยังไม่มีโพสต์"}
           </p>
         )}

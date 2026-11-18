@@ -1,16 +1,18 @@
 import { TRPCError } from "@trpc/server";
-import { User } from "lucide-react";
+import { Clock, MessageCircle, Star, ThumbsUp, User } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CommentSection } from "@/components/comment/comment-section";
 import { PageShell } from "@/components/layout/page-shell";
+import { SectionHeading } from "@/components/layout/section-heading";
 import { AuthorPanel } from "@/components/post/author-panel";
 import { ExternalLinkGuard } from "@/components/post/external-link-guard";
 import { PostActions } from "@/components/post/post-actions";
+import { PostCard } from "@/components/post/post-card";
 import { TagBadge } from "@/components/post/tag-badge";
 import { Badge } from "@/components/ui/badge";
-import { stripHtml } from "@/lib/utils";
+import { kFormatter, stripHtml } from "@/lib/utils";
 import { getApi } from "@/trpc/caller";
 
 export const dynamic = "force-dynamic";
@@ -50,6 +52,28 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   const path = `/posts/${username}/${id}`;
+  const api = await getApi();
+  const [byAuthor, sameKind] = await Promise.all([
+    api.post.byAuthor({ username }),
+    api.post.list({ kind: post.kind, take: 8 }),
+  ]);
+  const moreFromAuthor = byAuthor.filter((p) => p.id !== post.id).slice(0, 3);
+  const shown = new Set([post.id, ...moreFromAuthor.map((p) => p.id)]);
+  const related = sameKind.filter((p) => !shown.has(p.id)).slice(0, 3);
+
+  // ~900 characters a minute for mixed Thai/English text.
+  const readMinutes = Math.max(
+    1,
+    Math.round(stripHtml(post.content).length / 900),
+  );
+  const edited =
+    post.updatedAt.getTime() - post.createdAt.getTime() > 60 * 60 * 1000;
+  const fmt = (d: Date) =>
+    d.toLocaleDateString("th-TH", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
 
   return (
     <PageShell>
@@ -90,9 +114,40 @@ export default async function PostPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-lg bg-card shadow-sm">
+        <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <Clock className="size-3.5" aria-hidden />
+            <dt className="sr-only">เผยแพร่</dt>
+            <dd>
+              {fmt(post.createdAt)}
+              {edited && ` · แก้ไข ${fmt(post.updatedAt)}`} · อ่าน {readMinutes}{" "}
+              นาที
+            </dd>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <ThumbsUp className="size-3.5" aria-hidden />
+            <dt className="sr-only">ถูกใจ</dt>
+            <dd>{kFormatter(post.likeCount)} ถูกใจ</dd>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Star className="size-3.5" aria-hidden />
+            <dt className="sr-only">คะแนน</dt>
+            <dd>
+              {post.starCount
+                ? `${(Math.round(post.starAverage * 10) / 10).toFixed(1)} (${post.starCount} คน)`
+                : "ยังไม่มีคะแนน"}
+            </dd>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <MessageCircle className="size-3.5" aria-hidden />
+            <dt className="sr-only">ความคิดเห็น</dt>
+            <dd>{kFormatter(post._count.comments)} ความคิดเห็น</dd>
+          </div>
+        </dl>
+
+        <div className="overflow-hidden rounded-lg bg-card">
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-56 md:shrink-0 md:border-r">
+            <div className="bg-muted/40 md:w-56 md:shrink-0">
               <AuthorPanel
                 author={post.author}
                 date={post.createdAt}
@@ -100,7 +155,7 @@ export default async function PostPage({ params }: Props) {
                 likes={post.likeCount}
               />
             </div>
-            <div className="min-w-0 flex-1 border-t p-5 md:border-t-0 md:p-6">
+            <div className="min-w-0 flex-1 p-5 md:p-6">
               {/* biome-ignore lint/performance/noImgElement: arbitrary remote post image */}
               <img
                 src={post.image}
@@ -149,6 +204,39 @@ export default async function PostPage({ params }: Props) {
             postPath={path}
           />
         </ExternalLinkGuard>
+
+        {moreFromAuthor.length > 0 && (
+          <section aria-labelledby="more-author" className="pt-4">
+            <SectionHeading
+              id="more-author"
+              title={`โพสต์อื่นจาก ${post.author.username}`}
+              action={
+                <Link
+                  href={`/${post.author.username}`}
+                  className="eyebrow text-primary hover:underline"
+                >
+                  ดูทั้งหมด ({post.author._count.posts})
+                </Link>
+              }
+            />
+            <div className="grid gap-4 sm:grid-cols-3">
+              {moreFromAuthor.map((p) => (
+                <PostCard key={p.id} post={p} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {related.length > 0 && (
+          <section aria-labelledby="related" className="pt-4">
+            <SectionHeading id="related" title="โพสต์ที่เกี่ยวข้อง" />
+            <div className="grid gap-4 sm:grid-cols-3">
+              {related.map((p) => (
+                <PostCard key={p.id} post={p} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </PageShell>
   );
