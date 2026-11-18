@@ -1,31 +1,22 @@
 "use client";
 
 import { LayoutGrid, List, SearchX } from "lucide-react";
-import { useEffect, useState } from "react";
 import { PostCard } from "@/components/post/post-card";
+import {
+  type PostLayout,
+  usePreferences,
+} from "@/components/preferences-provider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import type { PostCard as PostCardData } from "@/trpc/routers/post";
 
-type Layout = "grid" | "list";
-const KEY = "post-layout";
+type Layout = PostLayout;
 
-/** Remembers the grid/list choice in localStorage. */
+/** The grid/list choice lives in the shared site preferences (Settings page). */
 export function useLayout() {
-  const [layout, setLayoutState] = useState<Layout>("grid");
-  useEffect(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(KEY) ?? "null");
-      if (saved === "grid" || saved === "list") setLayoutState(saved);
-    } catch {}
-  }, []);
-  const setLayout = (l: Layout) => {
-    setLayoutState(l);
-    try {
-      localStorage.setItem(KEY, JSON.stringify(l));
-    } catch {}
-  };
-  return [layout, setLayout] as const;
+  const { prefs, setPref } = usePreferences();
+  const setLayout = (l: Layout) => setPref("layout", l);
+  return [prefs.layout, setLayout] as const;
 }
 
 export function LayoutToggle({
@@ -41,7 +32,6 @@ export function LayoutToggle({
       value={layout}
       onValueChange={(v) => v && onChange(v as Layout)}
       variant="outline"
-      size="sm"
       aria-label="รูปแบบการแสดงผล"
     >
       <ToggleGroupItem value="grid" aria-label="แบบตาราง">
@@ -56,7 +46,7 @@ export function LayoutToggle({
 
 export function EmptyState({ title, hint }: { title: string; hint?: string }) {
   return (
-    <div className="flex flex-col items-center gap-2 rounded-lg bg-card py-14 shadow-md text-center">
+    <div className="flex flex-col items-center gap-3 rounded-lg bg-card py-16 text-center shadow-sm">
       <SearchX className="size-8 text-muted-foreground" />
       <p className="font-semibold">{title}</p>
       {hint && <p className="text-sm text-muted-foreground">{hint}</p>}
@@ -73,9 +63,9 @@ export function PostGridSkeleton({
 }) {
   const items = Array.from({ length: count }, (_, i) => i);
   return layout === "grid" ? (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((i) => (
-        <div key={i} className="overflow-hidden rounded-lg bg-card shadow-md">
+        <div key={i} className="overflow-hidden rounded-lg bg-card shadow-sm">
           <Skeleton className="aspect-[16/10] rounded-none" />
           <div className="space-y-2 p-3.5">
             <Skeleton className="h-4 w-11/12" />
@@ -86,9 +76,12 @@ export function PostGridSkeleton({
       ))}
     </div>
   ) : (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       {items.map((i) => (
-        <div key={i} className="flex gap-2 rounded-lg bg-card shadow-md">
+        <div
+          key={i}
+          className="flex gap-3 overflow-hidden rounded-lg bg-card shadow-sm"
+        >
           <Skeleton className="aspect-[16/10] w-32 shrink-0 sm:w-52" />
           <div className="flex-1 space-y-2 py-1">
             <Skeleton className="h-4 w-1/4" />
@@ -101,24 +94,30 @@ export function PostGridSkeleton({
   );
 }
 
+export const SPOILER_TAG = "สปอย";
+
 export function PostGrid({
-  posts,
+  posts: allPosts,
   layout,
 }: {
   posts: PostCardData[];
   layout: Layout;
 }) {
+  const { prefs } = usePreferences();
+  const posts = prefs.hideSpoilers
+    ? allPosts.filter((p) => !p.tags.some((t) => t.label === SPOILER_TAG))
+    : allPosts;
   if (posts.length < 1) {
     return <EmptyState title="ยังไม่มีโพสต์" hint="เป็นคนแรกที่เริ่มต้นบทสนทนาได้เลย" />;
   }
   return layout === "grid" ? (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {posts.map((p, i) => (
         <PostCard key={p.id} post={p} layout="grid" priority={i < 3} />
       ))}
     </div>
   ) : (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       {posts.map((p) => (
         <PostCard key={p.id} post={p} layout="list" />
       ))}

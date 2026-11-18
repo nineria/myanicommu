@@ -13,17 +13,22 @@ const TITLES = {
 /** Shared by /posts, /news, /reviews and /qandas. */
 export async function PostListPage({
   kind,
+  searchParams,
 }: {
   kind?: "NEWS" | "REVIEW" | "QNA";
+  searchParams: Promise<{ page?: string; q?: string }>;
 }) {
+  const sp = await searchParams;
+  const page = Math.max(1, Number.parseInt(sp.page ?? "1", 10) || 1);
+  const q = (sp.q ?? "").trim().slice(0, 120);
   const api = await getApi();
-  const [posts, announcements] = await Promise.all([
-    api.post.list({ kind, take: 100 }),
+  const [result, announcements] = await Promise.all([
+    api.post.listPage({ kind, q, page }),
     api.announcement.published(),
   ]);
 
   return (
-    <WidePage className="space-y-4">
+    <WidePage className="space-y-6">
       {announcements.map((a) => (
         <AnnouncementBanner
           key={a.id}
@@ -32,7 +37,13 @@ export async function PostListPage({
           content={a.content}
         />
       ))}
-      <PostListView posts={posts} title={TITLES[kind ?? "ALL"]} />
+      <PostListView
+        posts={result.items}
+        page={result.page}
+        pageCount={result.pageCount}
+        q={q}
+        title={TITLES[kind ?? "ALL"]}
+      />
     </WidePage>
   );
 }

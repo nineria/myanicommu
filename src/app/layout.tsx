@@ -1,9 +1,10 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
 import type { Metadata, Viewport } from "next";
-import { Prompt } from "next/font/google";
+import { IBM_Plex_Sans_Thai, Prompt } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { AccentProvider } from "@/components/accent-provider";
+import { PreferencesProvider } from "@/components/preferences-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,16 +29,23 @@ const clerkLocalization = {
   },
 };
 
+const plexThai = IBM_Plex_Sans_Thai({
+  variable: "--font-plex-thai",
+  subsets: ["latin", "thai"],
+  weight: ["400", "500", "600", "700"],
+});
+
 const prompt = Prompt({
   variable: "--font-prompt",
   subsets: ["latin", "thai"],
-  weight: ["400", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#181a1d" },
-    { media: "(prefers-color-scheme: light)", color: "#d3d3d3" },
+    { media: "(prefers-color-scheme: light)", color: "#f2f2f7" },
   ],
 };
 
@@ -72,7 +80,9 @@ export default function RootLayout({
     >
       <TRPCReactProvider>
         <html lang="th" suppressHydrationWarning>
-          <body className={`${prompt.variable} font-sans antialiased`}>
+          <body
+            className={`${plexThai.variable} ${prompt.variable} font-sans antialiased`}
+          >
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
@@ -80,10 +90,15 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <AccentProvider>
-                <NuqsAdapter>
-                  <TooltipProvider>{children}</TooltipProvider>
-                </NuqsAdapter>
-                <Toaster />
+                <PreferencesProvider>
+                  <a href="#main" className="skip-link">
+                    ข้ามไปยังเนื้อหาหลัก
+                  </a>
+                  <NuqsAdapter>
+                    <TooltipProvider>{children}</TooltipProvider>
+                  </NuqsAdapter>
+                  <Toaster />
+                </PreferencesProvider>
               </AccentProvider>
             </ThemeProvider>
           </body>

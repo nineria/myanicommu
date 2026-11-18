@@ -110,6 +110,35 @@ export const postRouter = createTRPCRouter({
       return rows.map(toPostCard);
     }),
 
+  listPage: baseProcedure
+    .input(
+      z.object({
+        kind: z.enum(["NEWS", "REVIEW", "QNA", "GENERAL"]).optional(),
+        q: z.string().trim().max(120).optional(),
+        page: z.number().int().min(1).default(1),
+        pageSize: z.number().int().min(1).max(60).default(12),
+      }),
+    )
+    .query(async ({ input }) => {
+      const where: Prisma.PostWhereInput = {
+        ...(input.kind ? { kind: input.kind } : {}),
+        ...(input.q
+          ? { title: { contains: input.q, mode: "insensitive" } }
+          : {}),
+      };
+      const total = await prisma.post.count({ where });
+      const pageCount = Math.max(1, Math.ceil(total / input.pageSize));
+      const page = Math.min(input.page, pageCount);
+      const rows = await prisma.post.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        skip: (page - 1) * input.pageSize,
+        take: input.pageSize,
+        select: postCardSelect,
+      });
+      return { items: rows.map(toPostCard), total, page, pageCount };
+    }),
+
   byAuthor: baseProcedure
     .input(z.object({ username: z.string() }))
     .query(async ({ input }) => {

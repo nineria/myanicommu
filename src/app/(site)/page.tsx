@@ -33,9 +33,9 @@ export default async function HomePage() {
     ]);
 
   return (
-    <WidePage className="space-y-2">
+    <WidePage className="space-y-10">
       {homePosts.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {homePosts.map((p) => (
             <HomePostCard key={p.id} post={{ ...p, body: p.body }} />
           ))}

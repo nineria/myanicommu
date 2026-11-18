@@ -46,25 +46,32 @@ function Collapsible({
     } catch {}
   };
   return (
-    <div className={cn("rounded-lg bg-card shadow-md", open ? "pb-2" : "pb-0")}>
+    <section className="overflow-hidden rounded-lg bg-card shadow-sm">
       <div
         className={cn(
-          "flex items-center justify-between border-primary/30 px-3 py-1 text-sm font-bold text-foreground md:text-base",
-          open ? "rounded-t-lg border-b-2" : "rounded-lg",
+          "flex min-h-12 items-center justify-between gap-3 px-4 text-base font-bold text-foreground md:text-lg",
+          open && "border-b",
         )}
       >
         <Link
           href={titleLink || "/"}
-          className="max-w-[600px] truncate hover:underline"
+          className="min-w-0 truncate hover:underline"
         >
           {title}
         </Link>
         <div className="flex items-center gap-2">
           {edit}
-          <button type="button" onClick={toggle} aria-label="toggle">
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={open ? `ย่อ ${title}` : `ขยาย ${title}`}
+            aria-expanded={open}
+            className="-mr-2 flex size-11 items-center justify-center rounded-md"
+          >
             <ChevronUp
+              aria-hidden
               className={cn(
-                "size-5 transition-all hover:opacity-75",
+                "size-5 transition-transform hover:opacity-75",
                 !open && "rotate-180",
               )}
             />
@@ -72,9 +79,9 @@ function Collapsible({
         </div>
       </div>
       {open && (
-        <div className="flex flex-col gap-[3px] bg-background">{children}</div>
+        <div className="flex flex-col divide-y divide-border">{children}</div>
       )}
-    </div>
+    </section>
   );
 }
 
@@ -92,7 +99,7 @@ function Status({
   html?: boolean;
 }) {
   return (
-    <div className="bg-card px-3 py-2 text-foreground">
+    <div className="px-4 py-3 text-foreground">
       <div className="flex items-center justify-between gap-2">
         <Link
           href={headerLink || "/"}
@@ -106,11 +113,13 @@ function Status({
       </div>
       {html ? (
         <div
-          className="rich-text line-clamp-4 text-sm opacity-80"
+          className="rich-text line-clamp-4 mt-1 text-sm text-muted-foreground"
           dangerouslySetInnerHTML={{ __html: body }}
         />
       ) : (
-        <p className="line-clamp-2 text-sm opacity-80">{body}</p>
+        <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+          {body}
+        </p>
       )}
     </div>
   );
@@ -152,7 +161,7 @@ export function HomePostCard({ post }: { post: HomePostItem }) {
               type="button"
               onClick={() => setEditing(true)}
               aria-label="แก้ไข"
-              className="absolute top-2 right-2 text-[#aaa] hover:opacity-75"
+              className="absolute top-2 right-2 text-muted-foreground hover:opacity-75"
             >
               <Pencil size={18} />
             </button>
@@ -161,12 +170,12 @@ export function HomePostCard({ post }: { post: HomePostItem }) {
       >
         <Link
           href={post.headerLink || "/"}
-          className="text-sm font-bold hover:underline md:text-base"
+          className="text-base font-bold hover:underline"
         >
           {post.header || "หัวข้อย่อย"}
         </Link>
         <div
-          className="rich-text text-xs md:text-sm"
+          className="rich-text text-sm"
           dangerouslySetInnerHTML={{ __html: post.body }}
         />
       </AlertBox>
@@ -194,11 +203,11 @@ export function CreateHomePostButton() {
   const [open, setOpen] = useState(false);
   if (me?.role !== "ADMIN") return null;
   return (
-    <div className="my-2 flex justify-center">
+    <div className="flex justify-center">
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-75"
+        className="h-11 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-primary/90"
       >
         สร้างโพสต์ +
       </button>

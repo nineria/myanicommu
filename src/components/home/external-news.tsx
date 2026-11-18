@@ -10,24 +10,24 @@ export function ExternalNews({ items }: { items: ExternalNewsItem[] }) {
   return (
     <section
       aria-labelledby="external-news-title"
-      className="rounded-lg bg-card shadow-md"
+      className="overflow-hidden rounded-lg bg-card shadow-sm"
     >
-      <div className="flex items-baseline justify-between gap-2 border-primary/30 border-b-2 px-3 py-1">
-        <h2 id="external-news-title" className="text-sm font-bold md:text-base">
+      <div className="flex min-h-12 items-center justify-between gap-3 border-b px-4">
+        <h2 id="external-news-title" className="text-base font-bold md:text-lg">
           ข่าวอนิเมะจากทั่วโลก
         </h2>
         <span className="text-xs text-muted-foreground">
           via Anime News Network
         </span>
       </div>
-      <ul className="flex flex-col gap-[3px] bg-background pb-0">
+      <ul className="flex flex-col divide-y divide-border">
         {items.map((n) => (
           <li key={n.link}>
             <a
               href={n.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start justify-between gap-3 bg-card px-3 py-2 hover:brightness-95"
+              className="group flex items-start justify-between gap-3 px-4 py-3 hover:bg-accent"
             >
               <span className="min-w-0">
                 <span className="block font-semibold group-hover:underline">
@@ -41,7 +41,7 @@ export function ExternalNews({ items }: { items: ExternalNewsItem[] }) {
               </span>
               <span className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
                 {n.category && (
-                  <span className="rounded-sm bg-primary px-1 text-white">
+                  <span className="rounded-full bg-primary px-2 py-0.5 text-primary-foreground">
                     {n.category}
                   </span>
                 )}

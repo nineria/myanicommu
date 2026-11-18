@@ -9,7 +9,7 @@ export default function Loading() {
       aria-busy="true"
       aria-label="กำลังโหลด"
     >
-      <Skeleton className="h-10 w-48" />
+      <Skeleton className="h-9 w-48" />
       <Skeleton className="h-11 w-full rounded-full" />
       <PostGridSkeleton />
     </div>

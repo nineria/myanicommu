@@ -1,20 +1,19 @@
 "use client";
 
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { TagBadge } from "@/components/post/tag-badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import type { PostCard } from "@/trpc/routers/post";
 
-type SortKey = "title" | "createdAt" | "likes" | "stars";
+type SortKey = "createdAt" | "likes" | "stars";
+
+const SORTS: { key: SortKey; label: string }[] = [
+  { key: "createdAt", label: "ล่าสุด" },
+  { key: "likes", label: "ถูกใจมากสุด" },
+  { key: "stars", label: "ดาวมากสุด" },
+];
 
 export function PostsTable({
   posts,
@@ -24,69 +23,58 @@ export function PostsTable({
   username: string;
 }) {
   const [key, setKey] = useState<SortKey>("createdAt");
-  const [dir, setDir] = useState<1 | -1>(-1);
 
   const sorted = useMemo(
     () =>
-      [...posts].sort((a, b) => {
-        const av =
-          key === "createdAt" ? new Date(a.createdAt).getTime() : a[key];
-        const bv =
-          key === "createdAt" ? new Date(b.createdAt).getTime() : b[key];
-        return (av > bv ? 1 : av < bv ? -1 : 0) * dir;
-      }),
-    [posts, key, dir],
-  );
-
-  const head = (k: SortKey, label: string) => (
-    <TableHead>
-      <button
-        type="button"
-        className="flex items-center gap-1"
-        onClick={() => {
-          if (k === key) setDir((d) => (d === 1 ? -1 : 1));
-          else {
-            setKey(k);
-            setDir(-1);
-          }
-        }}
-      >
-        {label}
-        {k === key &&
-          (dir === 1 ? (
-            <ArrowUp className="size-3" />
-          ) : (
-            <ArrowDown className="size-3" />
-          ))}
-      </button>
-    </TableHead>
+      [...posts].sort((a, b) =>
+        key === "createdAt"
+          ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          : b[key] - a[key],
+      ),
+    [posts, key],
   );
 
   return (
-    <div className="rounded-lg bg-card p-2 shadow-md">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {head("title", "หัวข้อ")}
-            <TableHead>ประเภท</TableHead>
-            {head("createdAt", "วันที่")}
-            {head("likes", "ถูกใจ")}
-            {head("stars", "ดาว")}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sorted.map((p) => (
-            <TableRow key={p.id}>
-              <TableCell className="max-w-64 truncate">
-                <Link
-                  href={`/posts/${username}/${p.id}`}
-                  className="hover:text-primary hover:underline"
-                >
-                  {p.title}
-                </Link>
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-1">
+    <section className="rounded-lg bg-card p-4 shadow-sm sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className="text-lg font-bold text-foreground">
+          โพสต์ <span className="text-muted-foreground">({posts.length})</span>
+        </h2>
+        <div
+          role="radiogroup"
+          aria-label="เรียงโพสต์"
+          className="flex gap-1 rounded-full bg-muted p-1"
+        >
+          {SORTS.map((s) => (
+            <button
+              key={s.key}
+              type="button"
+              role="radio"
+              aria-checked={key === s.key}
+              onClick={() => setKey(s.key)}
+              className={cn(
+                "min-h-9 rounded-full px-3 text-xs font-medium text-muted-foreground transition-colors",
+                key === s.key && "bg-card text-primary shadow-sm",
+              )}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <ul className="mt-3 divide-y divide-border">
+        {sorted.map((p) => (
+          <li key={p.id}>
+            <Link
+              href={`/posts/${username}/${p.id}`}
+              className="-mx-2 flex flex-col gap-1.5 rounded-md px-2 py-3 transition-colors hover:bg-muted/60"
+            >
+              <span className="line-clamp-2 font-medium text-foreground">
+                {p.title}
+              </span>
+              <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted-foreground">
+                <span className="flex gap-1">
                   {p.tags.slice(0, 2).map((t) => (
                     <TagBadge
                       key={t.label}
@@ -95,19 +83,23 @@ export function PostsTable({
                       to={t.colorTo}
                     />
                   ))}
-                </div>
-              </TableCell>
-              <TableCell>
-                {new Date(p.createdAt).toLocaleDateString("th-TH", {
-                  dateStyle: "medium",
-                })}
-              </TableCell>
-              <TableCell>{p.likes}</TableCell>
-              <TableCell>{p.stars}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+                </span>
+                <time dateTime={new Date(p.createdAt).toISOString()}>
+                  {new Date(p.createdAt).toLocaleDateString("th-TH", {
+                    dateStyle: "medium",
+                  })}
+                </time>
+                <span className="flex items-center gap-1">
+                  <Heart className="size-3" aria-hidden /> {p.likes}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Star className="size-3" aria-hidden /> {p.stars}
+                </span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
