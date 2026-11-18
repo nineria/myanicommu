@@ -116,13 +116,13 @@ export function PostActions({
             type="button"
             onClick={() => setStar(n)}
             aria-label={`${n} ดาว`}
-            className="p-0.5"
+            className="flex size-8 items-center justify-center pointer-coarse:size-11"
           >
             <Star
               className={cn(
-                "size-4",
+                "size-5",
                 n <= myStar
-                  ? "fill-yellow-400 text-yellow-400"
+                  ? "fill-amber-500 text-amber-600"
                   : "text-muted-foreground",
               )}
             />

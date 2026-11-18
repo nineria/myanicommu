@@ -63,7 +63,7 @@ export function PostsTable({
   );
 
   return (
-    <div className="rounded-lg bg-card p-2 shadow-md">
+    <div className="rounded-lg bg-card p-2 shadow-sm">
       <Table>
         <TableHeader>
           <TableRow>

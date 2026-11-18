@@ -31,13 +31,14 @@ const clerkLocalization = {
 const prompt = Prompt({
   variable: "--font-prompt",
   subsets: ["latin", "thai"],
-  weight: ["400", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#181a1d" },
-    { media: "(prefers-color-scheme: light)", color: "#d3d3d3" },
+    { media: "(prefers-color-scheme: light)", color: "#f2f2f7" },
   ],
 };
 
@@ -80,6 +81,9 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <AccentProvider>
+                <a href="#main" className="skip-link">
+                  ข้ามไปยังเนื้อหาหลัก
+                </a>
                 <NuqsAdapter>
                   <TooltipProvider>{children}</TooltipProvider>
                 </NuqsAdapter>

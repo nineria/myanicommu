@@ -8,7 +8,7 @@ export default function Loading() {
       aria-busy="true"
       aria-label="กำลังโหลด"
     >
-      <Skeleton className="h-12 w-full rounded-full" />
+      <Skeleton className="h-11 w-full rounded-full" />
     </div>
   );
 }

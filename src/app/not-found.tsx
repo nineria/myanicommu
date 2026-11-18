@@ -7,7 +7,7 @@ export default function NotFound() {
       <h1 className="clip-image-text text-[43vw] leading-none md:text-[20vw]">
         404
       </h1>
-      <div className="rounded-sm bg-card p-4 lg:p-8">
+      <div className="rounded-lg bg-card p-4 lg:p-8">
         <blockquote className="border-l-4 border-primary pl-4">
           <p className="text-sm text-foreground md:text-xl">
             การเดินทางนับพันไมล์ เริ่มต้นได้ด้วยก้าวเดียวเสมอ

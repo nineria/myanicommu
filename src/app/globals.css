@@ -26,10 +26,25 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-opposite: var(--opposite);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Radius scale: chips 8 · controls 12 · cards 16 · dialogs/sheets 20. Buttons and search are capsules. */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+
+  /* Fluid type: grows smoothly from a 360px phone to a 1024px+ desktop. Thai-friendly line heights. */
+  --text-xs: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --text-xs--line-height: 1.5;
+  --text-sm: clamp(0.9375rem, 0.91rem + 0.12vw, 1rem);
+  --text-sm--line-height: 1.55;
+  --text-base: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  --text-base--line-height: 1.6;
+  --text-lg: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-lg--line-height: 1.5;
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-xl--line-height: 1.4;
+  --text-2xl: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --text-2xl--line-height: 1.3;
 }
 
 /*
@@ -41,19 +56,19 @@
  * (red | ocean | pinky | neon) comes from `data-accent` on <html>.
  */
 :root {
-  --radius: 0.5rem;
-  --background: rgb(211 211 211);
+  --radius: 1rem;
+  --background: rgb(242 242 247);
   --foreground: rgb(50 50 50);
   --card: rgb(255 255 255);
   --card-foreground: rgb(50 50 50);
   --popover: rgb(255 255 255);
   --popover-foreground: rgb(50 50 50);
-  --primary: rgb(255 92 141);
+  --primary: rgb(205 35 90);
   --primary-foreground: rgb(255 255 255);
   --secondary: rgb(244 244 244);
   --secondary-foreground: rgb(50 50 50);
   --muted: rgb(244 244 244);
-  --muted-foreground: rgb(110 110 110);
+  --muted-foreground: rgb(99 99 105);
   --accent: rgb(244 244 244);
   --accent-foreground: rgb(50 50 50);
   --destructive: rgb(220 38 38);
@@ -73,31 +88,46 @@
   --secondary: rgb(50 50 50);
   --secondary-foreground: rgb(244 244 244);
   --muted: rgb(50 50 50);
-  --muted-foreground: rgb(160 160 160);
+  --muted-foreground: rgb(176 176 182);
   --accent: rgb(50 50 50);
   --accent-foreground: rgb(244 244 244);
+  --primary: rgb(255 92 141);
+  --primary-foreground: rgb(24 26 29);
   --border: rgb(255 255 255 / 0.14);
   --input: rgb(50 50 50);
 }
 
+/*
+ * Accents. Light values are darkened so white-on-accent and accent-on-white text
+ * both clear 4.5:1; dark values stay bright and take dark label text instead.
+ */
 [data-accent="red"] {
-  --primary: rgb(236 85 85);
+  --primary: rgb(200 40 40);
   --opposite: rgb(237 100 166);
 }
 [data-accent="ocean"] {
-  --primary: rgb(51 130 184);
+  --primary: rgb(38 108 160);
   --opposite: rgb(237 100 166);
 }
 [data-accent="pinky"] {
-  --primary: rgb(255 92 141);
+  --primary: rgb(205 35 90);
   --opposite: rgb(56 178 172);
 }
 [data-accent="neon"] {
-  --primary: rgb(0 173 181);
+  --primary: rgb(0 120 128);
   --opposite: rgb(56 178 172);
+}
+.dark[data-accent="red"] {
+  --primary: rgb(236 85 85);
 }
 .dark[data-accent="ocean"] {
   --primary: rgb(95 133 219);
+}
+.dark[data-accent="pinky"] {
+  --primary: rgb(255 92 141);
+}
+.dark[data-accent="neon"] {
+  --primary: rgb(0 173 181);
 }
 
 @layer base {
@@ -106,6 +136,14 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    line-height: 1.6;
+    text-wrap: pretty;
+    -webkit-text-size-adjust: 100%;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
   }
 }
 
@@ -199,9 +237,65 @@
   }
 }
 
-/* Solid-ish bar used by the nav and mobile tab bar (old design: translucent card + blur). */
+/* Functional layer (nav + tab bar): translucent material, hairline edge. */
 .glass {
-  background: color-mix(in srgb, var(--card) 80%, transparent);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--card) 78%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  backdrop-filter: blur(20px) saturate(1.6);
+}
+/* biome-ignore lint/correctness/noUnknownMediaFeatureName: newer media feature */
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--card);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+@media (prefers-contrast: more) {
+  :root {
+    --border: rgb(0 0 0 / 0.45);
+    --muted-foreground: rgb(60 60 67);
+  }
+  .dark {
+    --border: rgb(255 255 255 / 0.5);
+    --muted-foreground: rgb(210 210 215);
+  }
+}
+
+/* Touch devices: controls reach the 44pt default target size. */
+@media (pointer: coarse) {
+  [data-slot="button"],
+  [data-slot="input"],
+  [data-slot="select-trigger"] {
+    min-height: 44px;
+  }
+  [data-slot="button"][data-size^="icon"] {
+    min-width: 44px;
+  }
+}
+
+/* Visible keyboard focus on every link and custom control. */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.25);
+}
+.skip-link:focus {
+  transform: none;
 }

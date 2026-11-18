@@ -53,7 +53,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <PageShell>
-      <div className="space-y-2">
+      <div className="mx-auto max-w-4xl space-y-4">
         <nav className="flex items-center gap-2 truncate text-sm text-muted-foreground">
           <Link href="/" className="hover:underline">
             หน้าหลัก
@@ -66,7 +66,7 @@ export default async function PostPage({ params }: Props) {
         </nav>
 
         <div className="text-foreground">
-          <div className="my-1 flex flex-wrap items-center gap-1">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
             {post.tags.map((t) => (
               <TagBadge
                 key={t.label}
@@ -75,28 +75,22 @@ export default async function PostPage({ params }: Props) {
                 to={t.colorTo}
               />
             ))}
-            <h1 className="ml-1 text-base font-semibold sm:text-lg">
-              {post.title}
-            </h1>
+            <h1 className="ml-1 text-xl font-bold sm:text-2xl">{post.title}</h1>
           </div>
-          <div className="my-1 flex flex-wrap items-center gap-1 text-sm">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <span className="mr-1 flex items-center gap-0.5">
               <User className="size-3.5" />
               {post.author.username}
             </span>
             {post.genres.map((g) => (
-              <Badge
-                key={g}
-                variant="secondary"
-                className="rounded-sm text-[10px]"
-              >
+              <Badge key={g} variant="secondary" className="text-xs">
                 {g}
               </Badge>
             ))}
           </div>
         </div>
 
-        <div className="rounded-lg bg-card">
+        <div className="overflow-hidden rounded-lg bg-card shadow-sm">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-56 md:shrink-0 md:border-r">
               <AuthorPanel
@@ -106,12 +100,12 @@ export default async function PostPage({ params }: Props) {
                 likes={post.likeCount}
               />
             </div>
-            <div className="min-w-0 flex-1 border-t p-4 md:border-t-0">
+            <div className="min-w-0 flex-1 border-t p-5 md:border-t-0 md:p-6">
               {/* biome-ignore lint/performance/noImgElement: arbitrary remote post image */}
               <img
                 src={post.image}
                 alt={post.title}
-                className="mx-auto mb-4 max-h-96 rounded-md object-contain"
+                className="mx-auto mb-5 max-h-[28rem] rounded-lg object-contain"
               />
               <ExternalLinkGuard>
                 <div
@@ -120,7 +114,7 @@ export default async function PostPage({ params }: Props) {
                 />
               </ExternalLinkGuard>
               {post.credit && (
-                <p className="mt-4 text-xs text-muted-foreground">
+                <p className="mt-5 text-sm text-muted-foreground">
                   เครดิต : {post.credit}
                 </p>
               )}

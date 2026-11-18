@@ -66,19 +66,19 @@ export async function Footer() {
   ];
 
   return (
-    <footer className="mt-10 border-t-2 border-primary bg-card pt-4 pb-20 md:pt-8 lg:pb-4">
-      <div className="mx-auto flex w-full max-w-4xl justify-center px-4 md:justify-between">
+    <footer className="mt-4 border-t border-border bg-card pt-8 pb-24 md:pt-10 lg:pb-4">
+      <div className="mx-auto flex w-full max-w-5xl justify-center px-4 sm:px-6 md:justify-between">
         <div className="w-[250px] text-center md:text-left">
           <ResponsiveLogo />
-          <p className="my-2 text-sm text-foreground/80">
+          <p className="my-3 text-sm text-muted-foreground">
             ศูนย์กลางในการพูดคุย รีวิว และโพสต์ถามตอบคำถามต่างๆ ที่เกี่ยวกับอนิเมะ โปรโมทอนิเมะ
             และแนะนำเนื้อหาของอนิเมะเพื่อส่งเสริมให้ผู้คนดูอนิเมะมากขึ้น
           </p>
         </div>
-        <div className="hidden gap-6 md:flex">
+        <div className="hidden gap-8 md:flex">
           {groups.map((g) => (
             <div key={g.title} className="w-[150px] lg:w-[200px]">
-              <p className="text-right text-base font-bold text-foreground/80">
+              <p className="text-right text-base font-bold text-muted-foreground">
                 {g.title}
               </p>
               {g.links.map((l) =>
@@ -86,14 +86,14 @@ export async function Footer() {
                   <Link
                     key={l.label}
                     href={l.href}
-                    className="mt-1 block text-right text-sm text-foreground/50 hover:underline"
+                    className="mt-2 block text-right text-sm text-muted-foreground hover:underline"
                   >
                     {l.label}
                   </Link>
                 ) : (
                   <p
                     key={l.label}
-                    className="mt-1 text-right text-sm text-foreground/50"
+                    className="mt-2 text-right text-sm text-muted-foreground"
                   >
                     {l.label}
                   </p>
@@ -104,10 +104,10 @@ export async function Footer() {
           ))}
         </div>
       </div>
-      <div className="mx-auto w-full max-w-4xl px-4">
-        <Separator className="my-2" />
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
+        <Separator className="my-4" />
         <div className="flex flex-col items-center md:flex-row md:justify-between">
-          <p className="text-sm text-foreground/80">
+          <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} MyAniCommu. All rights reserved.
           </p>
           <div className="flex">
@@ -118,7 +118,7 @@ export async function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="p-2 text-foreground hover:text-primary"
+                className="flex size-11 items-center justify-center text-foreground hover:text-primary"
               >
                 <Icon className="size-[18px]" />
               </a>

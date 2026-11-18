@@ -30,7 +30,7 @@ import {
 import { RANKS, REPORT_REASONS } from "@/lib/constants";
 import { useTRPC } from "@/trpc/client";
 
-const card = "rounded-lg bg-card p-4 shadow-md";
+const card = "rounded-lg bg-card p-4 shadow-sm";
 
 export function AdminPanel() {
   return (
@@ -63,7 +63,7 @@ function AdminStats() {
       {items.map((i) => (
         <div
           key={i.label}
-          className="rounded-lg bg-card p-3 text-center shadow-md"
+          className="rounded-lg bg-card p-3 text-center shadow-sm"
         >
           <div className="text-2xl font-bold text-foreground">
             {i.value ?? "-"}
@@ -220,7 +220,7 @@ function AnnouncementControl() {
       .map((a) => (
         <div
           key={a.id}
-          className="flex items-center justify-between gap-2 rounded-md border p-2"
+          className="flex items-center justify-between gap-2 rounded-lg border p-3"
         >
           <div className="min-w-0">
             <Badge variant="outline" className="mr-2">
@@ -328,7 +328,7 @@ function Reports() {
         {data?.map((r) => (
           <div
             key={r.id}
-            className="flex items-center justify-between gap-2 rounded-md border p-2"
+            className="flex items-center justify-between gap-2 rounded-lg border p-3"
           >
             <div className="min-w-0 text-sm">
               <span className="font-medium">{r.reporter.username}</span>{" "}
