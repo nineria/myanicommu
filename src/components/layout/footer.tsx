@@ -27,7 +27,7 @@ const SOCIAL = [
 ];
 
 export function FooterSkeleton() {
-  return <Skeleton className="mt-10 h-56 w-full rounded-none" />;
+  return <Skeleton className="mt-10 h-72 w-full rounded-none" />;
 }
 
 export async function Footer() {
@@ -40,73 +40,78 @@ export async function Footer() {
 
   const groups = [
     {
-      title: "ชุมชนคนรักอนิเมะ",
+      title: "เมนูหลัก",
       links: [
-        { label: "โพสต์ใหม่", href: "/posts" },
-        { label: "ข่าวสาร", href: "/news" },
-        { label: "รีวิว", href: "/reviews" },
-        { label: "Q&A", href: "/qandas" },
+        { label: "กระทู้ล่าสุด", href: "/posts" },
+        { label: "ข่าวสารอนิเมะ", href: "/news" },
+        { label: "บทวิจารณ์", href: "/reviews" },
+        { label: "ถามตอบ", href: "/qandas" },
       ],
     },
     {
-      title: "จัดการข้อมูล",
+      title: "บัญชีและการสนับสนุน",
       links: [
-        ...(username ? [{ label: "โปรไฟล์", href: `/${username}` }] : []),
-        ...(username ? [{ label: "ตั้งค่า", href: "/setting" }] : []),
+        ...(username ? [{ label: "โปรไฟล์ส่วนตัว", href: `/${username}` }] : []),
+        ...(username ? [{ label: "การตั้งค่าบัญชี", href: "/setting" }] : []),
         { label: "คำถามที่พบบ่อย", href: "/faq" },
-      ],
-    },
-    {
-      title: "ข้อมูลเว็บไซต์",
-      links: [
-        { label: `จำนวนโพสต์ : ${stats.posts}`, href: "" },
-        { label: `จำนวนสมาชิก : ${stats.members}`, href: "" },
       ],
     },
   ];
 
+  const numberFormat = new Intl.NumberFormat("th-TH");
+
   return (
-    <footer className="mt-4 border-t border-border bg-card pt-8 pb-24 md:pt-10 lg:pb-4">
-      <div className="mx-auto flex w-full max-w-5xl justify-center px-4 sm:px-6 md:justify-between">
-        <div className="w-[250px] text-center md:text-left">
+    <footer className="mt-4 border-t border-border bg-card pt-10 pb-24 lg:pb-6">
+      <div className="mx-auto grid w-full max-w-5xl gap-10 px-4 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="space-y-4">
           <ResponsiveLogo />
-          <p className="my-3 text-sm text-muted-foreground">
-            ศูนย์กลางในการพูดคุย รีวิว และโพสต์ถามตอบคำถามต่างๆ ที่เกี่ยวกับอนิเมะ โปรโมทอนิเมะ
-            และแนะนำเนื้อหาของอนิเมะเพื่อส่งเสริมให้ผู้คนดูอนิเมะมากขึ้น
+          <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+            ชุมชนออนไลน์สำหรับผู้ชื่นชอบอนิเมะ เปิดพื้นที่ให้สมาชิกแลกเปลี่ยนความคิดเห็น
+            เผยแพร่บทวิจารณ์ และสอบถามข้อมูลเกี่ยวกับอนิเมะ
           </p>
+          <dl className="flex gap-6">
+            <div>
+              <dt className="text-xs text-muted-foreground">จำนวนโพสต์</dt>
+              <dd className="text-lg font-semibold tabular-nums">
+                {numberFormat.format(stats.posts)}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs text-muted-foreground">จำนวนสมาชิก</dt>
+              <dd className="text-lg font-semibold tabular-nums">
+                {numberFormat.format(stats.members)}
+              </dd>
+            </div>
+          </dl>
         </div>
-        <div className="hidden gap-8 md:flex">
-          {groups.map((g) => (
-            <div key={g.title} className="w-[150px] lg:w-[200px]">
-              <p className="text-right text-base font-bold text-muted-foreground">
-                {g.title}
-              </p>
-              {g.links.map((l) =>
-                l.href ? (
+        {groups.map((g) => (
+          <nav key={g.title} aria-label={g.title}>
+            <p className="mb-2 text-sm font-semibold text-foreground">
+              {g.title}
+            </p>
+            <ul>
+              {g.links.map((l) => (
+                <li key={l.href}>
                   <Link
-                    key={l.label}
                     href={l.href}
-                    className="mt-2 block text-right text-sm text-muted-foreground hover:underline"
+                    className="block py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {l.label}
                   </Link>
-                ) : (
-                  <p
-                    key={l.label}
-                    className="mt-2 text-right text-sm text-muted-foreground"
-                  >
-                    {l.label}
-                  </p>
-                ),
+                </li>
+              ))}
+              {g.title === "บัญชีและการสนับสนุน" && username && (
+                <li>
+                  <SignOutLink />
+                </li>
               )}
-              {g.title === "จัดการข้อมูล" && username && <SignOutLink />}
-            </div>
-          ))}
-        </div>
+            </ul>
+          </nav>
+        ))}
       </div>
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
-        <Separator className="my-4" />
-        <div className="flex flex-col items-center md:flex-row md:justify-between">
+        <Separator className="my-6" />
+        <div className="flex flex-col items-center gap-2 md:flex-row md:justify-between">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} MyAniCommu. All rights reserved.
           </p>
@@ -118,7 +123,7 @@ export async function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="flex size-11 items-center justify-center text-foreground hover:text-primary"
+                className="flex size-11 items-center justify-center text-muted-foreground transition-colors hover:text-primary"
               >
                 <Icon className="size-[18px]" />
               </a>
