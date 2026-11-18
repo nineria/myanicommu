@@ -1,4 +1,3 @@
-import { clerkClient } from "@clerk/nextjs/server";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { RESERVED_USERNAMES, USERNAME_REGEX } from "@/lib/constants";
@@ -113,12 +112,12 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
+  /**
+   * Deletes this app's data only. The Clerk identity is shared with other apps on the same
+   * Clerk instance, so it is deliberately NOT deleted here.
+   */
   deleteAccount: authProcedure.mutation(async ({ ctx }) => {
     await prisma.user.delete({ where: { id: ctx.user.id } });
-    if (!ctx.user.clerkId.startsWith("legacy_")) {
-      const client = await clerkClient();
-      await client.users.deleteUser(ctx.user.clerkId);
-    }
     return { ok: true };
   }),
 
