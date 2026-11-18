@@ -53,6 +53,7 @@ model User {
   reports       Report[]
   announcements Announcement[]
   homePosts     HomePost[]
+  images        Image[]
 }
 
 model UserRank {
@@ -175,4 +176,19 @@ model HomePost {
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@index([createdAt])
+}
+
+/// Uploaded images (post images, avatars, banners, inline editor images) stored in Postgres.
+model Image {
+  id          String   @id @default(cuid())
+  userId      String
+  kind        String
+  contentType String
+  size        Int
+  data        Bytes
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
