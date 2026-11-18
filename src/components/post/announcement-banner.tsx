@@ -25,12 +25,10 @@ export function AlertBox({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-lg shadow-sm" role="status">
-      <div
-        className={cn("flex flex-row items-center rounded-lg border-2", color)}
-      >
-        <Icon size={26} className="m-2 shrink-0 shadow-sm-sm" />
-        <div className="relative flex w-full flex-row rounded-r-[14px] bg-card px-4 py-3 text-foreground">
+    <div role="status">
+      <div className={cn("flex flex-row items-center border-2", color)}>
+        <Icon size={26} className="m-2 shrink-0 " />
+        <div className="relative flex w-full flex-row bg-card px-4 py-3 text-foreground">
           <div className="w-full pr-8">{children}</div>
           {action}
         </div>
@@ -50,7 +48,7 @@ export function AnnouncementBanner({
 }) {
   return (
     <AlertBox color={STYLE[type].color} icon={STYLE[type].icon}>
-      <h1 className="text-base font-bold">{title}</h1>
+      <h1 className="font-display font-bold text-base">{title}</h1>
       <div
         className="rich-text text-sm"
         dangerouslySetInnerHTML={{ __html: content }}

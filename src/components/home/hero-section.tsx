@@ -3,7 +3,7 @@ import {
   SectionHeading,
   sectionLinkClass,
 } from "@/components/layout/section-heading";
-import { PostCard } from "@/components/post/post-card";
+import { HOME_GRID_CLASS, PostCard } from "@/components/post/post-card";
 import type { PostCard as PostCardData } from "@/trpc/routers/post";
 
 export function HeroSection({ posts }: { posts: PostCardData[] }) {
@@ -19,9 +19,9 @@ export function HeroSection({ posts }: { posts: PostCardData[] }) {
           </Link>
         }
       />
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className={HOME_GRID_CLASS}>
         {posts.map((p) => (
-          <PostCard key={p.id} post={p} layout="grid" />
+          <PostCard key={p.id} post={p} layout="grid" prefetch />
         ))}
       </div>
     </section>

@@ -186,6 +186,8 @@ model Image {
   contentType String
   size        Int
   data        Bytes
+  /// tiny (~16px wide) webp data URL used as the blur-up placeholder while the full image loads
+  blur        String?
   createdAt   DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

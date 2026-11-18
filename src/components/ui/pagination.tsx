@@ -16,7 +16,7 @@ function pageItems(page: number, count: number): (number | "gap")[] {
 }
 
 const item =
-  "grid h-9 min-w-9 place-items-center rounded-full px-3 text-sm font-medium transition-colors";
+  "grid h-9 min-w-9 place-items-center rounded-none px-3 text-sm font-medium transition-colors";
 
 /** Link-based pager; `hrefFor` builds the URL for a page number. */
 export function Pagination({

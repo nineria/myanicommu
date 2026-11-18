@@ -10,7 +10,7 @@ export function ExternalNews({ items }: { items: ExternalNewsItem[] }) {
   return (
     <section
       aria-labelledby="external-news-title"
-      className="overflow-hidden rounded-lg bg-card shadow-sm"
+      className="overflow-hidden rounded-lg bg-card"
     >
       <div className="flex min-h-12 items-center justify-between gap-3 border-b px-4">
         <h2 id="external-news-title" className="text-base font-bold md:text-lg">
@@ -41,7 +41,7 @@ export function ExternalNews({ items }: { items: ExternalNewsItem[] }) {
               </span>
               <span className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
                 {n.category && (
-                  <span className="rounded-full bg-primary px-2 py-0.5 text-primary-foreground">
+                  <span className="rounded-none bg-primary px-2 py-0.5 text-primary-foreground">
                     {n.category}
                   </span>
                 )}

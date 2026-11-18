@@ -26,7 +26,7 @@ export function PostsPerMonthChart({ data }: { data: MonthDatum[] }) {
   return (
     <ChartContainer config={monthConfig} className="h-40 w-full">
       <BarChart accessibilityLayer data={data} margin={{ top: 8 }}>
-        <CartesianGrid vertical={false} />
+        <CartesianGrid vertical={false} stroke="var(--border)" />
         <XAxis
           dataKey="month"
           tickLine={false}
@@ -37,7 +37,7 @@ export function PostsPerMonthChart({ data }: { data: MonthDatum[] }) {
           cursor={false}
           content={<ChartTooltipContent hideLabel />}
         />
-        <Bar dataKey="posts" fill="var(--color-posts)" radius={6} />
+        <Bar dataKey="posts" fill="var(--color-posts)" radius={0} />
       </BarChart>
     </ChartContainer>
   );
@@ -59,8 +59,9 @@ export function PostKindChart({ data }: { data: KindDatum[] }) {
           data={data.map((d) => ({ ...d, fill: `var(--color-${d.kind})` }))}
           dataKey="count"
           nameKey="kind"
+          innerRadius={36}
           stroke="var(--card)"
-          strokeWidth={2}
+          strokeWidth={3}
         />
         <ChartLegend content={<ChartLegendContent nameKey="kind" />} />
       </PieChart>

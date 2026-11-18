@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import type { PostKind, Prisma } from "@/generated/prisma/client";
+import { getBlur, getBlurMap } from "@/lib/blur";
 import { KIND_BY_TAG } from "@/lib/constants";
 import { prisma } from "@/lib/db";
 import { sanitizeRichText } from "@/lib/sanitize";
@@ -49,6 +50,8 @@ export type PostCard = {
   id: string;
   title: string;
   image: string;
+  /** tiny blur-up placeholder for `image` (null for external urls) */
+  blur: string | null;
   kind: PostKind;
   tags: z.infer<typeof tagSchema>[];
   genres: string[];
@@ -59,12 +62,13 @@ export type PostCard = {
   stars: number;
 };
 
-export function toPostCard(p: CardRow): PostCard {
+export function toPostCard(p: CardRow, blur?: string): PostCard {
   const starCount = p.stars.length;
   return {
     id: p.id,
     title: p.title,
     image: p.image,
+    blur: blur ?? null,
     kind: p.kind,
     tags: p.tags as PostCard["tags"],
     genres: p.genres,
@@ -78,6 +82,12 @@ export function toPostCard(p: CardRow): PostCard {
         ) / 10
       : 0,
   };
+}
+
+/** Maps rows to cards, attaching each image's stored blur placeholder in one query. */
+export async function toPostCards(rows: CardRow[]): Promise<PostCard[]> {
+  const blurs = await getBlurMap(rows.map((r) => r.image));
+  return rows.map((r) => toPostCard(r, blurs.get(r.image)));
 }
 
 function kindOf(tags: { label: string }[]): PostKind {
@@ -107,7 +117,7 @@ export const postRouter = createTRPCRouter({
         take: input.take,
         select: postCardSelect,
       });
-      return rows.map(toPostCard);
+      return toPostCards(rows);
     }),
 
   listPage: baseProcedure
@@ -136,7 +146,7 @@ export const postRouter = createTRPCRouter({
         take: input.pageSize,
         select: postCardSelect,
       });
-      return { items: rows.map(toPostCard), total, page, pageCount };
+      return { items: await toPostCards(rows), total, page, pageCount };
     }),
 
   byAuthor: baseProcedure
@@ -147,7 +157,7 @@ export const postRouter = createTRPCRouter({
         orderBy: { createdAt: "desc" },
         select: postCardSelect,
       });
-      return rows.map(toPostCard);
+      return toPostCards(rows);
     }),
 
   byId: baseProcedure
@@ -178,6 +188,7 @@ export const postRouter = createTRPCRouter({
       const { stars, likes, ...rest } = post;
       return {
         ...rest,
+        imageBlur: await getBlur(post.image),
         tags: post.tags as z.infer<typeof tagSchema>[],
         content: sanitizeRichText(post.content),
         likeCount: post._count.likes,

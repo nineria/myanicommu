@@ -1,9 +1,15 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans_Thai, Prompt } from "next/font/google";
+import {
+  Archivo_Black,
+  IBM_Plex_Sans_Thai,
+  Prompt,
+  Work_Sans,
+} from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { AccentProvider } from "@/components/accent-provider";
+import { AuthSync } from "@/components/auth-sync";
 import { PreferencesProvider } from "@/components/preferences-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -33,19 +39,33 @@ const plexThai = IBM_Plex_Sans_Thai({
   variable: "--font-plex-thai",
   subsets: ["latin", "thai"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const archivo = Archivo_Black({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
 });
 
 const prompt = Prompt({
   variable: "--font-prompt",
   subsets: ["latin", "thai"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+  preload: false,
 });
 
 export const viewport: Viewport = {
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#181a1d" },
-    { media: "(prefers-color-scheme: light)", color: "#f2f2f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
   ],
 };
 
@@ -55,6 +75,7 @@ export const metadata: Metadata = {
   description: DEFAULT_DESCRIPTION,
   icons: {
     icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
       {
         url: "/my-anime-community-logo-32x32.png",
         sizes: "32x32",
@@ -81,7 +102,7 @@ export default function RootLayout({
       <TRPCReactProvider>
         <html lang="th" suppressHydrationWarning>
           <body
-            className={`${plexThai.variable} ${prompt.variable} font-sans antialiased`}
+            className={`${plexThai.variable} ${prompt.variable} ${archivo.variable} ${workSans.variable} font-sans antialiased`}
           >
             <ThemeProvider
               attribute="class"
@@ -91,6 +112,7 @@ export default function RootLayout({
             >
               <AccentProvider>
                 <PreferencesProvider>
+                  <AuthSync />
                   <a href="#main" className="skip-link">
                     ข้ามไปยังเนื้อหาหลัก
                   </a>

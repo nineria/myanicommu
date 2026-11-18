@@ -100,7 +100,7 @@ function Section({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="scroll-mt-24 rounded-lg bg-card shadow-sm"
+      className="scroll-mt-24 rounded-lg bg-card"
     >
       <div className="px-4 pt-4">
         <h2 id={`${id}-title`} className="text-lg font-bold">
@@ -175,7 +175,7 @@ function Segmented<T extends string>({
     <div
       role="radiogroup"
       aria-label={label}
-      className="inline-flex shrink-0 rounded-full border p-1"
+      className="inline-flex shrink-0 rounded-none border p-1"
     >
       {options.map(({ value: v, label: l, icon: Icon }) => (
         <button
@@ -185,7 +185,7 @@ function Segmented<T extends string>({
           aria-checked={value === v}
           onClick={() => onChange(v)}
           className={cn(
-            "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm transition",
+            "flex items-center gap-1.5 rounded-none px-3.5 py-1.5 text-sm transition",
             value === v
               ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:text-foreground",
@@ -228,7 +228,7 @@ function AppearanceSection() {
               )}
             >
               <span
-                className="size-5 rounded-full"
+                className="size-5 rounded-none"
                 style={{ background: t.color }}
               />
               {t.label}

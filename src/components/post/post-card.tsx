@@ -13,14 +13,29 @@ const fmt = (d: Date | string) =>
     day: "numeric",
   });
 
+/** The stored ~16px thumbnail, stretched to fill the frame: shows blurred while the real image loads and fills letterbox bars. */
+function blurBg(blur: string | null): React.CSSProperties | undefined {
+  return blur ? { backgroundImage: `url("${blur}")` } : undefined;
+}
+
+/**
+ * Home-page rows fetch 4 posts: only the 3-col desktop layout hides the 4th; phone (1 col) and
+ * tablet (2 cols) show all 4 so no cell is left empty.
+ */
+export const HOME_GRID_CLASS =
+  "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:[&>*:nth-child(n+4)]:hidden";
+
 export function PostCard({
   post,
   layout = "grid",
   priority,
+  prefetch,
 }: {
   post: PostCardData;
   layout?: "grid" | "list";
   priority?: boolean;
+  /** Fully prefetch the post page (data + RSC payload) so opening it is instant. */
+  prefetch?: boolean;
 }) {
   const href = `/posts/${post.author.username}/${post.id}`;
   const badges = post.tags.map((t) => (
@@ -47,16 +62,12 @@ export function PostCard({
     return (
       <Link
         href={href}
-        className="relative flex w-full overflow-hidden rounded-lg shadow-sm transition-[filter] hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring dark:hover:brightness-90"
+        className="group relative flex w-full overflow-hidden bg-card transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <div className="relative hidden h-[120px] w-[350px] shrink-0 overflow-hidden sm:block">
-          <Image
-            src={post.image}
-            alt=""
-            fill
-            sizes="350px"
-            className="scale-110 object-cover blur-[3px]"
-          />
+        <div
+          className="relative hidden h-[120px] w-[350px] shrink-0 overflow-hidden bg-muted bg-cover bg-center sm:block"
+          style={blurBg(post.blur)}
+        >
           <Image
             src={post.image}
             alt={post.title}
@@ -71,7 +82,7 @@ export function PostCard({
             {badges}
           </div>
           <h2
-            className="relative z-10 truncate text-base font-bold"
+            className="relative z-10 truncate font-display font-bold text-base"
             title={post.title}
           >
             {post.title}
@@ -85,18 +96,15 @@ export function PostCard({
   return (
     <Link
       href={href}
+      prefetch={prefetch}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-lg bg-card shadow-sm transition-[filter] hover:brightness-95 focus-visible:ring-2 focus-visible:ring-ring dark:hover:brightness-90",
+        "group relative flex h-full flex-col overflow-hidden bg-card transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
       )}
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden">
-        <Image
-          src={post.image}
-          alt=""
-          fill
-          sizes="(min-width:768px) 33vw, 100vw"
-          className="scale-110 object-cover blur-[3px]"
-        />
+      <div
+        className="relative aspect-[16/9] w-full overflow-hidden bg-muted bg-cover bg-center"
+        style={blurBg(post.blur)}
+      >
         <Image
           src={post.image}
           alt={post.title}
@@ -112,7 +120,7 @@ export function PostCard({
       <div className="@container relative flex flex-1 flex-col gap-3 overflow-hidden p-4 text-foreground">
         <Watermark kind={post.kind} />
         <h2
-          className="relative z-10 line-clamp-2 text-base leading-snug font-bold"
+          className="relative z-10 line-clamp-2 font-display font-bold text-lg leading-tight"
           title={post.title}
         >
           {post.title}
@@ -132,7 +140,7 @@ function Watermark({ kind }: { kind: string }) {
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute right-3 bottom-1 z-0 font-bold leading-none tracking-tighter uppercase opacity-[0.07] select-none"
+      className="pointer-events-none absolute right-3 bottom-1 z-0 font-display font-bold leading-none tracking-tighter uppercase opacity-[0.08] select-none"
       style={{
         fontSize: `min(calc(90cqw / ${(word.length * 0.62).toFixed(2)}), 5.5rem)`,
       }}

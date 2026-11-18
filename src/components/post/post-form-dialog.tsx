@@ -127,7 +127,7 @@ export function PostFormDialog({
                     type="button"
                     onClick={() => toggleTag(t)}
                     className={cn(
-                      "rounded-full opacity-50 transition",
+                      "rounded-none opacity-50 transition",
                       on && "opacity-100 ring-2 ring-primary",
                     )}
                   >

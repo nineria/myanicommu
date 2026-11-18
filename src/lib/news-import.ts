@@ -1,4 +1,5 @@
 import type { PrismaClient } from "@/generated/prisma/client";
+import { makeBlurDataURL } from "@/lib/blur-encode";
 import { MAX_IMAGE_BYTES, sniffImageType } from "@/lib/images";
 
 /**
@@ -144,7 +145,14 @@ async function mirrorThumbnail(
     if (!contentType) return null;
 
     const row = await db.image.create({
-      data: { userId, kind: "post", contentType, size: data.length, data },
+      data: {
+        userId,
+        kind: "post",
+        contentType,
+        size: data.length,
+        data,
+        blur: await makeBlurDataURL(data),
+      },
       select: { id: true },
     });
     return `/api/images/${row.id}`;

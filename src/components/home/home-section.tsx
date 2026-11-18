@@ -46,10 +46,10 @@ function Collapsible({
     } catch {}
   };
   return (
-    <section className="overflow-hidden rounded-lg bg-card shadow-sm">
+    <section className="overflow-hidden rounded-lg bg-card">
       <div
         className={cn(
-          "flex min-h-12 items-center justify-between gap-3 px-4 text-base font-bold text-foreground md:text-lg",
+          "flex min-h-12 items-center justify-between gap-3 px-4 font-display font-bold text-base text-foreground md:text-lg",
           open && "border-b",
         )}
       >
@@ -103,6 +103,7 @@ function Status({
       <div className="flex items-center justify-between gap-2">
         <Link
           href={headerLink || "/"}
+          prefetch
           className="truncate font-semibold hover:underline"
         >
           {header}
@@ -207,7 +208,7 @@ export function CreateHomePostButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="h-11 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        className="h-11 border-foreground bg-foreground px-6 text-sm font-bold tracking-[0.06em] text-background uppercase hover:bg-primary hover:text-primary-foreground"
       >
         สร้างโพสต์ +
       </button>

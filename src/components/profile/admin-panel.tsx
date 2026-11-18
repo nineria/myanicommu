@@ -36,7 +36,7 @@ import { RANKS, REPORT_REASONS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 
-const card = "rounded-lg bg-card p-4 shadow-sm";
+const card = "bg-card p-4";
 
 export function AdminPanel() {
   return (
@@ -67,10 +67,7 @@ function AdminStats() {
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
       {items.map((i) => (
-        <div
-          key={i.label}
-          className="rounded-lg bg-card p-3 text-center shadow-sm"
-        >
+        <div key={i.label} className="bg-card p-3 text-center">
           <div className="text-2xl font-bold text-foreground">
             {i.value ?? "-"}
           </div>
@@ -411,7 +408,7 @@ function AnnouncementControl() {
       <div
         role="tablist"
         aria-label="สถานะประกาศ"
-        className="mb-3 flex w-fit gap-1 rounded-full bg-muted p-1"
+        className="mb-3 flex w-fit gap-1 rounded-none bg-muted p-1"
       >
         {(
           [
@@ -426,8 +423,8 @@ function AnnouncementControl() {
             aria-selected={tab === k}
             onClick={() => setTab(k)}
             className={cn(
-              "min-h-9 rounded-full px-4 text-xs font-medium text-muted-foreground transition-colors",
-              tab === k && "bg-card text-primary shadow-sm",
+              "min-h-9 rounded-none px-4 text-xs font-medium text-muted-foreground transition-colors",
+              tab === k && "bg-card text-primary",
             )}
           >
             {label} ({n})
