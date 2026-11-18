@@ -1,9 +1,18 @@
-# MyAniCommu
-
-[https://myanimecommunity.vercel.app](https://myanimecommunity.vercel.app)
-
-<div align='center'>
-<img src="https://myanimecommunity.vercel.app/background.png">
+<div align="center">
+  <img src="public/my-anime-community-logo-500x500.png" alt="MyAniCommu logo" width="120">
+  <h1>MyAniCommu</h1>
+  <p>A community website for anime, manga and light novel fans.</p>
+  <p>
+    <a href="https://myanimecommunity.vercel.app">Live site</a> ·
+    <a href="https://github.com/nineria/myanicommu/issues">Report a bug</a> ·
+    <a href="CONTRIBUTING.md">Contribute</a>
+  </p>
+  <p>
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green.svg"></a>
+    <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-black">
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178c6">
+  </p>
+  <img src="docs/hero.png" alt="MyAniCommu home page" width="900">
 </div>
 
 ## Description
@@ -45,3 +54,12 @@ PRs go against `develop`. When CI passes and there is no conflict, the PR is squ
 
 Notifications (CI, merged PRs, deploys) go to Telegram through the shared `nineria/telegram-notify` relay via a repo webhook.
 
+## Contributing
+
+Contributions are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md). Report security issues privately as described in [SECURITY.md](SECURITY.md).
+
+## License & credits
+
+Released under the [MIT License](LICENSE). You are free to use, modify and distribute this project, but you must keep the copyright notice and license text in all copies or substantial portions.
+
+Created and maintained by **[Nineria](https://github.com/nineria)**. If you build on this project, please credit the original author and link back to <https://github.com/nineria/myanicommu>.
