@@ -40,8 +40,8 @@ currently fails `next build` for this Next version.
 
 ## Workflow
 
-PRs go against `develop`. When CI passes and there is no conflict, the PR is squash-merged automatically.
-`main` is released by a PR from `develop` that you merge by hand.
+PRs go against `main`. When CI passes and there is no conflict, the PR is squash-merged automatically.
+`develop` is only a local scratch branch for previewing deploys; it is not part of the release flow.
 
 Notifications (CI, merged PRs, deploys) go to Telegram through the shared `nineria/telegram-notify` relay via a repo webhook.
 

@@ -1,4 +1,4 @@
-# Squash-merges your own pull requests into develop once the "ci" workflow has passed on them and they have no conflict,
+# Squash-merges your own pull requests into main once the "ci" workflow has passed on them and they have no conflict,
 # and deletes their branch. A PR whose CI fails, or that conflicts, stays open. Drafts, forks and other people's PRs are
 # never merged. No code from a PR is ever run here.
 name: Auto-merge
@@ -30,9 +30,9 @@ jobs:
           PRS: ${{ join(github.event.workflow_run.pull_requests.*.number, ' ') }}
         run: |
           for pr in $PRS; do
-            # Only the exact commit CI passed on, from this repository, by the owner, aimed at develop. develop goes to main through a pull request you merge yourself.
+            # Only the exact commit CI passed on, from this repository, by the owner, aimed at main.
             ok=$(gh pr view "$pr" --repo "$REPO" --json isDraft,isCrossRepository,author,headRefOid,baseRefName \
-              --jq '(.isDraft | not) and (.isCrossRepository | not) and .author.login == env.OWNER and .headRefOid == env.SHA and .baseRefName == "develop"')
+              --jq '(.isDraft | not) and (.isCrossRepository | not) and .author.login == env.OWNER and .headRefOid == env.SHA and .baseRefName == "main"')
             if [ "$ok" != true ]; then echo "PR #$pr is not eligible, left alone"; continue; fi
             # GitHub works out "mergeable" in the background, so ask a few times.
             state=UNKNOWN
