@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChevronUp, Pencil } from "lucide-react";
+import { ChevronUp, Megaphone, Pencil } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -150,29 +150,48 @@ export function HomePostCard({ post }: { post: HomePostItem }) {
   const [editing, setEditing] = useState(false);
   return (
     <>
-      <Collapsible
-        title={post.title || "หัวข้อหลัก"}
-        titleLink={post.titleLink}
-        edit={
-          me?.role === "ADMIN" && (
-            <button
-              type="button"
-              onClick={() => setEditing(true)}
-              aria-label="แก้ไข"
-            >
-              <Pencil className="size-4 hover:opacity-75" />
-            </button>
-          )
-        }
+      <div
+        role="status"
+        className="flex gap-3 rounded-lg border-l-4 border-l-primary bg-card p-3 text-foreground shadow-md"
       >
-        <Status
-          html
-          header={post.header || "หัวข้อย่อย"}
-          headerLink={post.headerLink || "/"}
-          body={post.body}
-          date={fmt(post.updatedAt)}
-        />
-      </Collapsible>
+        <Megaphone className="mt-0.5 size-5 shrink-0 text-primary" />
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-2">
+            <div className="min-w-0">
+              <Link
+                href={post.titleLink || "/"}
+                className="text-xs text-foreground/60 hover:underline"
+              >
+                {post.title || "ประกาศ"}
+              </Link>
+              <Link
+                href={post.headerLink || "/"}
+                className="block font-bold hover:underline"
+              >
+                {post.header || "หัวข้อย่อย"}
+              </Link>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              <span className="text-xs text-muted-foreground">
+                {fmt(post.updatedAt)}
+              </span>
+              {me?.role === "ADMIN" && (
+                <button
+                  type="button"
+                  onClick={() => setEditing(true)}
+                  aria-label="แก้ไข"
+                >
+                  <Pencil className="size-4 hover:opacity-75" />
+                </button>
+              )}
+            </div>
+          </div>
+          <div
+            className="rich-text mt-1 text-sm opacity-80"
+            dangerouslySetInnerHTML={{ __html: post.body }}
+          />
+        </div>
+      </div>
       {editing && (
         <HomePostFormDialog
           open={editing}
