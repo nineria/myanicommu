@@ -161,6 +161,28 @@ export const userRouter = createTRPCRouter({
       return { ok: true };
     }),
 
+  /** Admin removes a member's app data (posts, comments... cascade). Not themselves, not other admins. */
+  deleteUser: adminProcedure
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (input.userId === ctx.user.id) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+      const target = await prisma.user.findUnique({
+        where: { id: input.userId },
+        select: { role: true },
+      });
+      if (!target) throw new TRPCError({ code: "NOT_FOUND" });
+      if (target.role === "ADMIN") {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "ต้องถอดสิทธิ์ผู้ดูแลก่อนลบผู้ใช้",
+        });
+      }
+      await prisma.user.delete({ where: { id: input.userId } });
+      return { ok: true };
+    }),
+
   setRole: adminProcedure
     .input(z.object({ userId: z.string(), role: z.enum(["MEMBER", "ADMIN"]) }))
     .mutation(async ({ ctx, input }) => {

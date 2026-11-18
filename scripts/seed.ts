@@ -5,6 +5,13 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { ADMIN_RANK_LABEL, DEFAULT_RANK, RANKS } from "../src/lib/constants";
+
+const rank = (label: string) => {
+  const r = RANKS.find((x) => x.label === label);
+  if (!r) throw new Error(`unknown rank ${label}`);
+  return r;
+};
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
@@ -22,10 +29,7 @@ async function main() {
       role: "ADMIN",
       bio: "ผู้ดูแลระบบ",
       ranks: {
-        create: [
-          { label: "ผู้ดูแลระบบ", colorFrom: "#FF004D", colorTo: "#9D0B28" },
-          { label: "สมาชิกใหม่", colorFrom: "#5C3D2E", colorTo: "#5C3D2E" },
-        ],
+        create: [rank(ADMIN_RANK_LABEL), rank("ตำนานแห่งชุมชน"), DEFAULT_RANK],
       },
     },
     update: {},
@@ -37,7 +41,7 @@ async function main() {
       username: "sakura",
       email: "sakura@example.com",
       ranks: {
-        create: { label: "สมาชิกใหม่", colorFrom: "#5C3D2E", colorTo: "#5C3D2E" },
+        create: [rank("นักเขียนรีวิวมือหนึ่ง"), rank("โอตาคุตัวยง")],
       },
     },
     update: {},

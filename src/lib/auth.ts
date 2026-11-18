@@ -2,7 +2,7 @@ import "server-only";
 
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { cache } from "react";
-import { RESERVED_USERNAMES, USERNAME_REGEX } from "./constants";
+import { DEFAULT_RANK, RESERVED_USERNAMES, USERNAME_REGEX } from "./constants";
 import { prisma } from "./db";
 import { env } from "./env";
 
@@ -38,7 +38,13 @@ async function uniqueUsername(base: string) {
  */
 export const getCurrentUser = cache(async () => {
   const { userId } = await auth();
-  if (!userId) return null;
+  if (!userId) {
+    // Dev only: act as a seeded user (e.g. DEV_AS_USER=hunter) without Clerk.
+    if (process.env.NODE_ENV === "development" && env.DEV_AS_USER) {
+      return prisma.user.findUnique({ where: { username: env.DEV_AS_USER } });
+    }
+    return null;
+  }
 
   const existing = await prisma.user.findUnique({ where: { clerkId: userId } });
   if (existing) return existing;
@@ -79,11 +85,7 @@ export const getCurrentUser = cache(async () => {
       avatar: cu.imageUrl,
       role: adminEmails.includes(email.toLowerCase()) ? "ADMIN" : "MEMBER",
       ranks: {
-        create: {
-          label: "สมาชิกใหม่",
-          colorFrom: "#5C3D2E",
-          colorTo: "#5C3D2E",
-        },
+        create: DEFAULT_RANK,
       },
     },
   });
