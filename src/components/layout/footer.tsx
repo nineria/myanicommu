@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { FaFacebook, FaGithub, FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { CONTAINER_CLASS } from "@/components/layout/container";
 import { Logo } from "@/components/layout/logo";
 import { SignOutLink } from "@/components/layout/sign-out-link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getCurrentUser } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 import { getApi } from "@/trpc/caller";
 
 const SOCIAL = [
@@ -27,8 +29,8 @@ const SOCIAL = [
 
 export function FooterSkeleton() {
   return (
-    <div className="mx-auto mt-6 w-full max-w-5xl px-4 pb-28 lg:pb-8">
-      <Skeleton className="h-40 w-full rounded-2xl" />
+    <div className={cn(CONTAINER_CLASS, "mt-6 pb-28 lg:pb-8")}>
+      <Skeleton className="h-40 w-full rounded-xl" />
     </div>
   );
 }
@@ -62,8 +64,8 @@ export async function Footer() {
   ];
 
   return (
-    <footer className="mx-auto mt-6 w-full max-w-5xl px-4 pb-28 lg:pb-8">
-      <div className="rounded-2xl border bg-card p-6 md:p-8">
+    <footer className={cn(CONTAINER_CLASS, "mt-6 pb-28 lg:pb-8")}>
+      <div className="rounded-xl border bg-card p-6 md:p-8">
         <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="max-w-sm">
             <Logo />

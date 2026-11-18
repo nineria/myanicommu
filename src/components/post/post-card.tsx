@@ -12,6 +12,27 @@ const fmt = (d: Date | string) =>
     day: "numeric",
   });
 
+const GHOST: Record<PostCardData["kind"], string> = {
+  NEWS: "News",
+  REVIEW: "Review",
+  QNA: "Question",
+  GENERAL: "Other",
+};
+
+function Ghost({
+  kind,
+  className,
+}: {
+  kind: PostCardData["kind"];
+  className?: string;
+}) {
+  return (
+    <span aria-hidden className={cn("ghost-word", className)}>
+      {GHOST[kind]}
+    </span>
+  );
+}
+
 function Meta({ post, className }: { post: PostCardData; className?: string }) {
   return (
     <div
@@ -51,6 +72,10 @@ function Tags({ post }: { post: PostCardData }) {
   );
 }
 
+const CARD =
+  "group relative flex overflow-hidden rounded-xl border bg-muted text-white outline-none transition-colors hover:border-foreground/40 focus-visible:ring-[3px] focus-visible:ring-ring/60";
+
+/** Signature card: the cover is the background, text sits on a flat scrim. */
 export function PostCard({
   post,
   layout = "grid",
@@ -61,84 +86,61 @@ export function PostCard({
   priority?: boolean;
 }) {
   const href = `/posts/${post.author.username}/${post.id}`;
-
-  if (layout === "feature") {
-    return (
-      <Link
-        href={href}
-        className="group relative flex h-full min-h-72 overflow-hidden rounded-3xl bg-card outline-none focus-visible:ring-[3px] focus-visible:ring-ring/60"
-      >
-        <Image
-          src={post.image}
-          alt=""
-          fill
-          priority={priority}
-          sizes="(min-width:1024px) 640px, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-        <div className="relative z-10 mt-auto flex w-full flex-col gap-2 p-5 text-white sm:p-6">
-          <Tags post={post} />
-          <h2 className="line-clamp-3 text-xl leading-snug font-bold sm:text-2xl">
-            {post.title}
-          </h2>
-          <Meta post={post} className="text-white/75" />
-        </div>
-      </Link>
-    );
-  }
-
-  if (layout === "list") {
-    return (
-      <Link
-        href={href}
-        className="group flex gap-4 rounded-2xl border bg-card p-2.5 transition-colors outline-none hover:bg-accent/50 focus-visible:ring-[3px] focus-visible:ring-ring/60"
-      >
-        <div className="relative aspect-[16/10] w-32 shrink-0 overflow-hidden rounded-xl bg-muted sm:w-52">
-          <Image
-            src={post.image}
-            alt=""
-            fill
-            sizes="208px"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        </div>
-        <div className="flex min-w-0 flex-1 flex-col justify-between gap-2 py-1 pr-2">
-          <div className="space-y-1.5">
-            <Tags post={post} />
-            <h2 className="line-clamp-2 font-semibold" title={post.title}>
-              {post.title}
-            </h2>
-          </div>
-          <Meta post={post} />
-        </div>
-      </Link>
-    );
-  }
-
+  const feature = layout === "feature";
+  const list = layout === "list";
   return (
     <Link
       href={href}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-all outline-none hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10 focus-visible:ring-[3px] focus-visible:ring-ring/60"
+      className={cn(
+        CARD,
+        feature && "h-full min-h-72",
+        list && "min-h-32",
+        layout === "grid" && "aspect-[4/3] h-full",
+      )}
     >
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
-        <Image
-          src={post.image}
-          alt=""
-          fill
-          priority={priority}
-          sizes="(min-width:1024px) 320px, (min-width:640px) 45vw, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute top-2 left-2 z-10">
-          <Tags post={post} />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-3.5">
-        <h2 className="line-clamp-2 font-semibold" title={post.title}>
+      <Image
+        src={post.image}
+        alt=""
+        fill
+        priority={priority}
+        sizes={
+          feature
+            ? "(min-width:1024px) 640px, 100vw"
+            : "(min-width:1024px) 320px, (min-width:640px) 45vw, 100vw"
+        }
+        className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+      />
+      <div className="absolute inset-0 bg-black/55 transition-colors group-hover:bg-black/45" />
+      <Ghost
+        kind={post.kind}
+        className={cn(
+          "text-white opacity-[0.14]",
+          feature
+            ? "text-[7rem] sm:text-[9rem]"
+            : list
+              ? "text-5xl"
+              : "text-6xl",
+        )}
+      />
+      <div
+        className={cn(
+          "relative z-10 mt-auto flex w-full flex-col gap-2",
+          feature ? "p-5 sm:p-6" : "p-3.5",
+        )}
+      >
+        <Tags post={post} />
+        <h2
+          className={cn(
+            "font-semibold",
+            feature
+              ? "line-clamp-3 text-xl leading-snug sm:text-2xl"
+              : "line-clamp-2",
+          )}
+          title={post.title}
+        >
           {post.title}
         </h2>
-        <Meta post={post} className="mt-auto" />
+        <Meta post={post} className="text-white/80" />
       </div>
     </Link>
   );

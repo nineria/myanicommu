@@ -20,7 +20,7 @@ export function Logo({
     >
       <span
         aria-hidden
-        className="grid size-8 shrink-0 place-items-center rounded-[10px] bg-primary text-base leading-none font-bold text-primary-foreground"
+        className="grid size-8 shrink-0 place-items-center rounded-md bg-primary text-base leading-none font-bold text-primary-foreground"
       >
         A
       </span>

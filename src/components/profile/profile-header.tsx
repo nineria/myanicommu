@@ -41,9 +41,9 @@ export function ProfileHeader({
   ];
 
   return (
-    <div className="overflow-hidden rounded-3xl border bg-card">
+    <div className="overflow-hidden rounded-xl border bg-card">
       <div
-        className="h-36 bg-gradient-to-br from-primary/60 to-opposite/50 bg-cover bg-center sm:h-52"
+        className="h-36 bg-muted bg-cover bg-center sm:h-52"
         style={
           user.banner ? { backgroundImage: `url(${user.banner})` } : undefined
         }
@@ -107,7 +107,7 @@ export function ProfileHeader({
         )}
         <div className="mt-4 grid grid-cols-4 gap-2 text-center">
           {stats.map((s) => (
-            <div key={s.label} className="rounded-2xl bg-muted py-3">
+            <div key={s.label} className="rounded-xl bg-muted py-3">
               <div className="text-xl font-bold text-foreground tabular-nums">
                 {kFormatter(s.value)}
               </div>

@@ -11,28 +11,32 @@ const NAMED: Record<string, string> = {
 };
 const c = (v: string) => NAMED[v] ?? v;
 
-/** Gradient pill used for post tags and user ranks. */
+/** Neutral label with a colour dot (post tags and user ranks). Text stays high-contrast. */
 export function TagBadge({
   label,
   from,
-  to,
-  deg = 30,
   className,
 }: {
   label: string;
   from: string;
-  to: string;
+  /** Kept for call-site compatibility; badges no longer render gradients. */
+  to?: string;
   deg?: number;
   className?: string;
 }) {
   return (
     <Badge
-      className={cn("border-0 px-2.5 text-white shadow-sm", className)}
-      style={{
-        backgroundImage: `linear-gradient(${deg}deg, ${c(from)}, ${c(to)})`,
-        textShadow: "0 1px 1px rgb(0 0 0 / 0.25)",
-      }}
+      variant="outline"
+      className={cn(
+        "gap-1.5 rounded-md border-border bg-card px-2 font-medium text-foreground",
+        className,
+      )}
     >
+      <span
+        aria-hidden
+        className="size-2 rounded-full"
+        style={{ backgroundColor: c(from) }}
+      />
       {label}
     </Badge>
   );
