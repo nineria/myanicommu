@@ -56,3 +56,6 @@ __pycache__
 CLAUDE.md
 /src/generated/prisma
 .claude/
+
+# graphify
+graphify-out/
