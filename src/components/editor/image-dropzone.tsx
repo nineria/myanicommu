@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { uploadImage } from "@/components/editor/image-upload";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useTRPC } from "@/trpc/client";
 
 export function ImageDropzone({
   value,
@@ -22,11 +21,8 @@ export function ImageDropzone({
   label?: string;
   className?: string;
 }) {
-  const trpc = useTRPC();
-  const presign = useMutation(trpc.upload.presign.mutationOptions());
-
   const upload = useMutation({
-    mutationFn: (file: File) => uploadImage(file, presign.mutateAsync, kind),
+    mutationFn: (file: File) => uploadImage(file, kind),
     onSuccess: (url) => onChange(url),
     onError: () => toast.error("อัปโหลดรูปภาพไม่สำเร็จ"),
   });

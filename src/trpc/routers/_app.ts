@@ -4,7 +4,6 @@ import { commentRouter } from "./comment";
 import { homePostRouter } from "./home-post";
 import { postRouter } from "./post";
 import { reportRouter } from "./report";
-import { uploadRouter } from "./upload";
 import { userRouter } from "./user";
 
 export const appRouter = createTRPCRouter({
@@ -14,7 +13,6 @@ export const appRouter = createTRPCRouter({
   announcement: announcementRouter,
   homePost: homePostRouter,
   report: reportRouter,
-  upload: uploadRouter,
 });
 
 export type AppRouter = typeof appRouter;

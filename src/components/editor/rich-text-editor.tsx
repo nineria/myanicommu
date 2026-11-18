@@ -1,6 +1,5 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -24,7 +23,6 @@ import { toast } from "sonner";
 import { uploadImage } from "@/components/editor/image-upload";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useTRPC } from "@/trpc/client";
 
 /** Tiptap replacement for the old @mantine/rte editor. Stores HTML. */
 export function RichTextEditor({
@@ -38,8 +36,6 @@ export function RichTextEditor({
   placeholder?: string;
   className?: string;
 }) {
-  const trpc = useTRPC();
-  const presign = useMutation(trpc.upload.presign.mutationOptions());
   const fileRef = useRef<HTMLInputElement>(null);
 
   const editor = useEditor({
@@ -88,7 +84,7 @@ export function RichTextEditor({
   const onFile = async (file?: File) => {
     if (!file) return;
     try {
-      const url = await uploadImage(file, presign.mutateAsync, "inline");
+      const url = await uploadImage(file, "inline");
       editor.chain().focus().setImage({ src: url }).run();
     } catch {
       toast.error("อัปโหลดรูปภาพไม่สำเร็จ");
