@@ -45,7 +45,3 @@ PRs go against `develop`. When CI passes and there is no conflict, the PR is squ
 
 Notifications (CI, merged PRs, deploys) go to Telegram through the shared `nineria/telegram-notify` relay via a repo webhook.
 
-## Migrating old Firestore data
-
-`bun run migrate:firestore` is a dry run; add `--apply` to write. See the header of
-`scripts/migrate-firestore.ts`. Users re-link to Clerk on first sign-in by matching email.
