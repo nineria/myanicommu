@@ -1,38 +1,17 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-/** Monogram tile + wordmark. The tile takes the active accent colour. */
-export function Logo({
-  className,
-  compact,
-}: {
-  className?: string;
-  compact?: boolean;
-}) {
+/** MyAniCommu wordmark: "My" blue, "A" accent, "niCommu" neutral. */
+export function Logo({ className }: { className?: string }) {
   return (
-    <Link
-      href="/"
-      aria-label="MyAniCommu"
-      className={cn(
-        "inline-flex items-center gap-2 rounded-xl font-semibold tracking-tight",
-        className,
-      )}
-    >
-      <span
-        aria-hidden
-        className="grid size-8 shrink-0 place-items-center rounded-[10px] bg-primary text-base leading-none font-bold text-primary-foreground"
-      >
-        A
-      </span>
-      {!compact && (
-        <span className="text-lg leading-none">
-          My<span className="text-primary">Ani</span>Commu
-        </span>
-      )}
+    <Link href="/" className={cn("font-display font-semibold", className)}>
+      <span className="text-[#4C6EF5]">My</span>
+      <span className="text-primary">A</span>
+      <span className="text-foreground opacity-80">niCommu</span>
     </Link>
   );
 }
 
 export function ResponsiveLogo() {
-  return <Logo />;
+  return <Logo className="text-3xl" />;
 }

@@ -8,7 +8,7 @@ export function BackLink() {
     <button
       type="button"
       onClick={() => router.back()}
-      className="block w-full text-sm text-muted-foreground hover:text-foreground"
+      className="block w-full opacity-80 hover:opacity-100"
     >
       {"< กลับไป"}
     </button>

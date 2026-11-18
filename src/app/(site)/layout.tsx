@@ -18,7 +18,7 @@ export default function SiteLayout({
     <HydrateClient>
       <div className="flex min-h-svh flex-col">
         <Navbar />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-6 sm:pt-6">
+        <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-10">
           {children}
         </main>
         <Suspense fallback={<FooterSkeleton />}>

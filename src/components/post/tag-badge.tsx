@@ -27,10 +27,9 @@ export function TagBadge({
 }) {
   return (
     <Badge
-      className={cn("border-0 px-2.5 text-white shadow-sm", className)}
+      className={cn("border-0 text-white shadow-md", className)}
       style={{
         backgroundImage: `linear-gradient(${deg}deg, ${c(from)}, ${c(to)})`,
-        textShadow: "0 1px 1px rgb(0 0 0 / 0.25)",
       }}
     >
       {label}
