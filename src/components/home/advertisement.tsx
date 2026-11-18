@@ -17,9 +17,6 @@ export function Advertisement() {
             loading="lazy"
             className="w-full transition-transform duration-500 group-hover:scale-[1.02]"
           />
-          <span className="absolute top-2 right-2 rounded-full bg-black/55 px-2 py-0.5 text-[10px] text-white backdrop-blur">
-            โฆษณา
-          </span>
         </Link>
       ))}
     </div>
