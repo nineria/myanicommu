@@ -2,7 +2,7 @@
  * Local-dev seed: a few users, posts, an announcement and a home post so every page has content.
  *   bun run db:seed
  */
-import "dotenv/config";
+import "./load-env";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { ADMIN_RANK_LABEL, DEFAULT_RANK, RANKS } from "../src/lib/constants";
