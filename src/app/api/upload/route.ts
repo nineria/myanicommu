@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/lib/auth";
+import { makeBlurDataURL } from "@/lib/blur-encode";
 import { prisma } from "@/lib/db";
 import { MAX_IMAGE_BYTES, sniffImageType } from "@/lib/images";
 
@@ -24,7 +25,14 @@ export async function POST(req: Request) {
     return Response.json({ error: "unsupported type" }, { status: 415 });
 
   const image = await prisma.image.create({
-    data: { userId: user.id, kind, contentType, size: data.length, data },
+    data: {
+      userId: user.id,
+      kind,
+      contentType,
+      size: data.length,
+      data,
+      blur: await makeBlurDataURL(data),
+    },
     select: { id: true },
   });
   return Response.json({ url: `/api/images/${image.id}` });

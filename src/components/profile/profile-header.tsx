@@ -10,6 +10,7 @@ type Profile = {
   username: string;
   avatar: string | null;
   banner: string | null;
+  bannerBlur?: string | null;
   bio: string;
   website: string | null;
   facebook: string | null;
@@ -43,6 +44,8 @@ export function ProfileHeader({
             alt={`ภาพปกของ ${user.username}`}
             fill
             priority
+            placeholder={user.bannerBlur ? "blur" : "empty"}
+            blurDataURL={user.bannerBlur ?? undefined}
             sizes="(min-width:1024px) 1024px, 100vw"
             className="object-cover"
           />
