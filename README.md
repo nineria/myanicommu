@@ -43,6 +43,9 @@ currently fails `next build` for this Next version.
 PRs go against `develop`. When CI passes and there is no conflict, the PR is squash-merged automatically.
 `main` is released by a PR from `develop` that you merge by hand.
 
+Notifications go to Telegram (`.github/workflows/telegram.yml`): add repo secrets `TELEGRAM_BOT_TOKEN` and
+`TELEGRAM_CHAT_ID`. CI results, merged PRs and Vercel deploys are posted there.
+
 ## Migrating old Firestore data
 
 `bun run migrate:firestore` is a dry run; add `--apply` to write. See the header of
