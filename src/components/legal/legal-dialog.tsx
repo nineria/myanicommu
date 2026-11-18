@@ -55,7 +55,7 @@ export function WebsiteRuleNotice() {
       <LegalDialog trigger="กฎ กติกา และ มารยาท" title="กฎ กติกา และมารยาท">
         <RulesContent />
       </LegalDialog>{" "}
-      ของเว็บไซต์ MyAnimeCommunity
+      ของเว็บไซต์ MyAniCommu
       <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
     </div>
   );
@@ -68,7 +68,7 @@ export function AgreeWebsiteRule() {
       <LegalDialog trigger="กฎ กติกา และมารยาท" title="กฎ กติกา และมารยาท">
         <RulesContent />
       </LegalDialog>{" "}
-      ของ MyAnimeCommunity
+      ของ MyAniCommu
     </span>
   );
 }
@@ -83,7 +83,7 @@ export function AgreePrivacyPolicy() {
       >
         <PrivacyContent />
       </LegalDialog>{" "}
-      ของ MyAnimeCommunity
+      ของ MyAniCommu
     </span>
   );
 }

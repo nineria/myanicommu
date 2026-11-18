@@ -12,6 +12,22 @@ import { TRPCReactProvider } from "@/trpc/client";
 
 import "./globals.css";
 
+// The Clerk instance is shared with other apps, so its application name ("Chatterbox") is overridden here.
+const clerkLocalization = {
+  signIn: {
+    start: {
+      title: "Sign in to MyAniCommu",
+      titleCombined: "Sign in to MyAniCommu",
+    },
+  },
+  signUp: {
+    start: {
+      title: "Create your MyAniCommu account",
+      titleCombined: "Create your MyAniCommu account",
+    },
+  },
+};
+
 const prompt = Prompt({
   variable: "--font-prompt",
   subsets: ["latin", "thai"],
@@ -43,7 +59,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider appearance={{ theme: shadcn }}>
+    <ClerkProvider
+      appearance={{ theme: shadcn }}
+      localization={clerkLocalization}
+    >
       <TRPCReactProvider>
         <html lang="th" suppressHydrationWarning>
           <body className={`${prompt.variable} font-sans antialiased`}>
