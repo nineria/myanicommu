@@ -1,4 +1,3 @@
-import { AdSide } from "@/components/layout/ad-side";
 import { WidePage } from "@/components/layout/page-shell";
 import { AnnouncementBanner } from "@/components/post/announcement-banner";
 import { PostListView } from "@/components/post/post-list-view";
@@ -24,19 +23,16 @@ export async function PostListPage({
   ]);
 
   return (
-    <>
-      <AdSide />
-      <WidePage className="space-y-4">
-        {announcements.map((a) => (
-          <AnnouncementBanner
-            key={a.id}
-            type={a.type}
-            title={a.title}
-            content={a.content}
-          />
-        ))}
-        <PostListView posts={posts} title={TITLES[kind ?? "ALL"]} />
-      </WidePage>
-    </>
+    <WidePage className="space-y-4">
+      {announcements.map((a) => (
+        <AnnouncementBanner
+          key={a.id}
+          type={a.type}
+          title={a.title}
+          content={a.content}
+        />
+      ))}
+      <PostListView posts={posts} title={TITLES[kind ?? "ALL"]} />
+    </WidePage>
   );
 }
